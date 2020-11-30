@@ -13,7 +13,8 @@ namespace Guardians_of_the_galaxy
     public class Hero:IGameObject,ITransform
     {
         private Texture2D heroTexture;
-        private Animatie animation;
+        private Animatie animationR, animationL,currentAnimation;
+        
         private Vector2 speed;
         private Vector2 acceleration;
         private Vector2 mouseVector;
@@ -29,13 +30,18 @@ namespace Guardians_of_the_galaxy
         public Hero(Texture2D texture,IInputReader reader)
         {
             heroTexture = texture;
-            animation = new Animatie();
-            animation.addFrame(new AnimationFrame(new Rectangle(0, 0, 144, 180)));
-            animation.addFrame(new AnimationFrame(new Rectangle(144, 0, 144, 180)));
-            animation.addFrame(new AnimationFrame(new Rectangle(288, 0, 144, 180)));
-            animation.addFrame(new AnimationFrame(new Rectangle(432, 0, 144, 180)));
-            animation.addFrame(new AnimationFrame(new Rectangle(576, 0, 144, 180)));
-            animation.addFrame(new AnimationFrame(new Rectangle(720, 0, 144, 180)));
+            animationR = new Animatie();
+            for (int i = 0; i < 721; i+= 144)
+            {
+                animationR.addFrame(new AnimationFrame(new Rectangle(i, 180, 144, 180)));
+
+            }
+            animationL = new Animatie();
+            for (int j = 0;j < 721; j+=144)
+            {
+                animationL.addFrame(new AnimationFrame(new Rectangle(j, 0, 144, 180)));
+            }
+
             //Postition = new Vector2(10, 10);
             speed = new Vector2(1, 1);
             acceleration = new Vector2(0.1f, 0.1f);
@@ -44,12 +50,14 @@ namespace Guardians_of_the_galaxy
             mouseReader = new MouseReader();
 
             moveCommand = new MoveCommand();
-            moveToCommand = new MoveToCommand(); 
+            moveToCommand = new MoveToCommand();
+
+            currentAnimation = animationR;
        }
 
         public void draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(heroTexture, Postition, animation.current.SourceRectangle, Color.White);
+            spriteBatch.Draw(heroTexture, Postition, currentAnimation.current.SourceRectangle, Color.White, 0, new Vector2(0, 0), 0.6f, SpriteEffects.None, 0);
         }
         private void Move(Vector2 mouse)
         {
@@ -76,15 +84,18 @@ namespace Guardians_of_the_galaxy
         }
         public void update(GameTime gameTime)
         {
+            KeyboardState keyboardState = Keyboard.GetState();
             var direction = inputReader.readInput();
-            moveHor(direction);
-           
-            if (inputReader.ReadFollower())
+            Postition += direction;
+            if (keyboardState.IsKeyDown(Keys.Left))
             {
-                Move(mouseReader.readInput());
-
+                currentAnimation = animationL;
             }
-            animation.update(gameTime);
+            else if(keyboardState.IsKeyDown(Keys.Right))
+            {
+                currentAnimation = animationR;
+            }
+            currentAnimation.update(gameTime);
         }
     }
 }
