@@ -5,9 +5,8 @@ using System.Text;
 
 namespace Guardians_of_the_galaxy.Interfaces
 {
-    public interface IInputReader
+    public interface IGameCommand
     {
-        Vector2 readInput();
-        bool ReadFollower();
+        void execute(ITransform transform, Vector2 direction);
     }
 }

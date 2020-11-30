@@ -1,6 +1,8 @@
 ﻿
 
 using Guardians_of_the_galaxy.Animation;
+using Guardians_of_the_galaxy.Command;
+using Guardians_of_the_galaxy.Input;
 using Guardians_of_the_galaxy.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,15 +10,22 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Guardians_of_the_galaxy
 {
-    public class Hero:IGameObject
+    public class Hero:IGameObject,ITransform
     {
         private Texture2D heroTexture;
         private Animatie animation;
-        private Vector2 positie;
         private Vector2 speed;
         private Vector2 acceleration;
-        IInputReader inputReader;
+        private Vector2 mouseVector;
 
+        private IInputReader inputReader;
+        private IInputReader mouseReader;
+
+        private IGameCommand moveCommand;
+        private IGameCommand moveToCommand;
+
+        public Vector2 Postition { get; set; }
+        
         public Hero(Texture2D texture,IInputReader reader)
         {
             heroTexture = texture;
@@ -27,57 +36,55 @@ namespace Guardians_of_the_galaxy
             animation.addFrame(new AnimationFrame(new Rectangle(432, 0, 144, 180)));
             animation.addFrame(new AnimationFrame(new Rectangle(576, 0, 144, 180)));
             animation.addFrame(new AnimationFrame(new Rectangle(720, 0, 144, 180)));
-            positie = new Vector2(10, 10);
+            //Postition = new Vector2(10, 10);
             speed = new Vector2(1, 1);
-            acceleration = new Vector2(0.2f, 0.1f);
+            acceleration = new Vector2(0.1f, 0.1f);
+
             this.inputReader = reader;
+            mouseReader = new MouseReader();
+
+            moveCommand = new MoveCommand();
+            moveToCommand = new MoveToCommand(); 
        }
 
         public void draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(heroTexture,positie,animation.current.SourceRectangle, Color.White);
+            spriteBatch.Draw(heroTexture, Postition, animation.current.SourceRectangle, Color.White);
         }
-        private void move(Vector2 mouse)
+        private void Move(Vector2 mouse)
         {
-
-            var direction = Vector2.Add(mouse, -positie);
-            direction.Normalize();
-
-            direction = Vector2.Multiply(direction, 6f);
-            speed += direction;
-            speed = limit(speed, 5);
-            positie += speed;
+            moveToCommand.execute(this, mouse);
+          
 
 
-            if (positie.X>600||positie.X<0)
-            {
+          /*  if (Postition.X>600|| Postition.X<0)
+            { 
                 speed.X *= -1;
                 acceleration.X *= -1;
             }
-            if (positie.Y>400||positie.Y<0)
+            if (Postition.Y>400|| Postition.Y<0)
             {
                 speed.Y *= -1;
                 acceleration.Y *= -1;
 
-            }
+            }*/
         }
-        private Vector2 limit(Vector2 v,float max)
+       
+        public void moveHor(Vector2 direction)
         {
-            if (v.Length() > max)
-            {
-                var ratio = max / v.Length();
-                v.X *= ratio;
-                v.Y *= ratio;
-            }
-            return v;
+            moveCommand.execute(this, direction);
         }
         public void update(GameTime gameTime)
         {
             var direction = inputReader.readInput();
-            direction *= 4;
-            positie += direction;
+            moveHor(direction);
+           
+            if (inputReader.ReadFollower())
+            {
+                Move(mouseReader.readInput());
+
+            }
             animation.update(gameTime);
         }
-
     }
 }
