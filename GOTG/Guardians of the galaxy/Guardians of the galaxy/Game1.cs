@@ -49,7 +49,7 @@ namespace Guardians_of_the_galaxy
                 Exit();
 
             // TODO: Add your update logic here
-            yondu.update();
+            yondu.update(gameTime);
             base.Update(gameTime);
         }
 
