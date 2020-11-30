@@ -27,7 +27,7 @@ namespace Guardians_of_the_galaxy.Animation
             current = frames[counter];
             frameMovement += current.SourceRectangle.Width * gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (frameMovement>=current.SourceRectangle.Width/5)
+            if (frameMovement>=current.SourceRectangle.Width/10)
             {
                 counter++;
                 frameMovement = 0;

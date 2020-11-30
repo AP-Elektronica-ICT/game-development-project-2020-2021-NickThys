@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Guardians_of_the_galaxy.Input;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -40,7 +41,7 @@ namespace Guardians_of_the_galaxy
 
         private void InitializeGameObjects()
         {
-            yondu = new Hero(YonduTexture);
+            yondu = new Hero(YonduTexture,new KeyBoardReader());
         }
 
         protected override void Update(GameTime gameTime)
