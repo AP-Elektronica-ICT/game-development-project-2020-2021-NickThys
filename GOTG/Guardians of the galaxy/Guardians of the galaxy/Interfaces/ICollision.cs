@@ -5,8 +5,8 @@ using System.Text;
 
 namespace Guardians_of_the_galaxy.Interfaces
 {
-    public interface IInputReader
+    interface ICollision
     {
-        Vector2 readInput();
+        Rectangle CollisionRectangle { get; set; }
     }
 }

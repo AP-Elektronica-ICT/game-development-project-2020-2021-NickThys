@@ -9,15 +9,6 @@ namespace Guardians_of_the_galaxy.Input
 {
     public class KeyBoardReader : IInputReader
     {
-        public bool ReadFollower()
-        {
-            KeyboardState state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.N))
-                return true;
-            else
-                return false;
-        }
-
         public Vector2 readInput()
         {
             var direction = Vector2.Zero;
@@ -27,10 +18,6 @@ namespace Guardians_of_the_galaxy.Input
 
             if (state.IsKeyDown(Keys.Right) || state.IsKeyDown(Keys.D))
                 direction = new Vector2(2, 0);
-
-            if (state.IsKeyDown(Keys.Space) || state.IsKeyDown(Keys.Z))
-                direction = new Vector2(0, -30);
-
 
             return direction;
         }

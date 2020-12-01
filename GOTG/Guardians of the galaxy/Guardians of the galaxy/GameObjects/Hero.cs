@@ -10,32 +10,32 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Guardians_of_the_galaxy
 {
-    public class Hero:IGameObject
+    public class Hero:IGameObject,ICollision
     {
         private Texture2D heroTexture;
         private Animatie animationR, animationL,currentAnimation,animationStanding,animationJumping;
-        
+        private MoveCommand moveCommand;
         private Vector2 speed;
         private Vector2 acceleration;
-        private Vector2 mouseVector;
 
         private IInputReader inputReader;
-        private IInputReader mouseReader;
 
-        private IGameCommand moveCommand;
-        private IGameCommand moveToCommand;
+
 
         public Vector2 Postition;
         public Vector2 startPosition;
-        float gravity = 0.3f;
+
+        public Rectangle CollisionRectangle { get; set; }
+        private Rectangle _collisionRectangle;
         public Hero(Texture2D texture,IInputReader reader)
         {
-            Postition = new Vector2(0, 300);
-            startPosition = new Vector2(0, 300);
+            Postition = new Vector2(050, 300);
+            startPosition = new Vector2(050, 300);
 
 
             heroTexture = texture;
             
+            #region add frames to animation       
             animationJumping = new Animatie();
             animationJumping.addFrame(new AnimationFrame(new Rectangle(0, 0, 144, 180)));
 
@@ -58,16 +58,12 @@ namespace Guardians_of_the_galaxy
                 animationR.addFrame(new AnimationFrame(new Rectangle(k, 540, 144, 180)));
 
             }
-
+            #endregion
+         
             speed = new Vector2(1, 1);
             acceleration = new Vector2(0.1f, 0.1f);
-
+            _collisionRectangle = new Rectangle((int)Postition.X, (int)Postition.Y, 144, 180);
             this.inputReader = reader;
-            mouseReader = new MouseReader();
-
-            moveCommand = new MoveCommand();
-            moveToCommand = new MoveToCommand();
-
             currentAnimation = animationR;
        }
 
@@ -76,57 +72,28 @@ namespace Guardians_of_the_galaxy
             spriteBatch.Draw(heroTexture, Postition, currentAnimation.current.SourceRectangle, Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
         }
 
-       
-  
-  
-        
         public void update(GameTime gameTime)
         {
-            KeyboardState keyboardState = Keyboard.GetState();
+ 
             var direction = inputReader.readInput();
             Postition += direction;
-            if (Postition.X < 0) Postition.X = 0;
-            if (Postition.X > 725) Postition.X = 750;
-            if (Postition.Y < 0) Postition.Y = 0;
-            if (Postition.Y < startPosition.Y)
-            {
-                Postition.Y += gravity;
-                gravity += 0.1f;
-                if (gravity>2f)
-                {
-                    gravity = 3f;
-                }
-            }
-
 
             #region keyboardread
-            if (keyboardState.IsKeyDown(Keys.Left))
+            if (direction.X==-2)
             {
                 currentAnimation = animationL;
             }
-            else if(keyboardState.IsKeyDown(Keys.Right))
+            else if(direction.X==2)
             {
                 currentAnimation = animationR;
-            }
-            else if (keyboardState.IsKeyDown(Keys.Space))
-            {
-                currentAnimation = animationJumping;
-            }
-            else if(currentAnimation==animationJumping&&Postition.Y<startPosition.Y) 
-            {
-                Postition.Y += gravity;
-                gravity += 0.1f;
-                if (gravity>2f)
-                {
-                    gravity = 2f;
-                }
             }
             else
             {
                 currentAnimation = animationStanding;
             }
-#endregion
-        
+            #endregion
+            _collisionRectangle.X = (int)Postition.X;
+            CollisionRectangle = _collisionRectangle;
             currentAnimation.update(gameTime);
         }
     }
