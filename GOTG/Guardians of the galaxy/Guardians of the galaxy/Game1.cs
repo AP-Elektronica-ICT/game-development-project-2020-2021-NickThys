@@ -34,7 +34,7 @@ namespace Guardians_of_the_galaxy
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            YonduTexture = Content.Load<Texture2D>("Yondu_RunningBoth");
+            YonduTexture = Content.Load<Texture2D>("Yondu_V2");
             InitializeGameObjects();
             // TODO: use this.Content to load your game content here
         }

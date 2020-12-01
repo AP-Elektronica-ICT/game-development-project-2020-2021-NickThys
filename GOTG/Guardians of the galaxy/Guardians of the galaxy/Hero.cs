@@ -10,10 +10,10 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Guardians_of_the_galaxy
 {
-    public class Hero:IGameObject,ITransform
+    public class Hero:IGameObject
     {
         private Texture2D heroTexture;
-        private Animatie animationR, animationL,currentAnimation;
+        private Animatie animationR, animationL,currentAnimation,animationStanding,animationJumping;
         
         private Vector2 speed;
         private Vector2 acceleration;
@@ -25,24 +25,40 @@ namespace Guardians_of_the_galaxy
         private IGameCommand moveCommand;
         private IGameCommand moveToCommand;
 
-        public Vector2 Postition { get; set; }
-        
+        public Vector2 Postition;
+        public Vector2 startPosition;
+        float gravity = 0.3f;
         public Hero(Texture2D texture,IInputReader reader)
         {
+            Postition = new Vector2(0, 300);
+            startPosition = new Vector2(0, 300);
+
+
             heroTexture = texture;
-            animationR = new Animatie();
-            for (int i = 0; i < 721; i+= 144)
+            
+            animationJumping = new Animatie();
+            animationJumping.addFrame(new AnimationFrame(new Rectangle(0, 0, 144, 180)));
+
+            animationStanding = new Animatie();
+            for (int i = 0; i < 433; i += 144)
             {
-                animationR.addFrame(new AnimationFrame(new Rectangle(i, 180, 144, 180)));
+                animationStanding.addFrame(new AnimationFrame(new Rectangle(i, 180, 144, 180)));
 
             }
+            
             animationL = new Animatie();
             for (int j = 0;j < 721; j+=144)
             {
-                animationL.addFrame(new AnimationFrame(new Rectangle(j, 0, 144, 180)));
+                animationL.addFrame(new AnimationFrame(new Rectangle(j, 360, 144, 180)));
+            }
+            
+            animationR = new Animatie();
+            for (int k = 0; k < 721; k += 144)
+            {
+                animationR.addFrame(new AnimationFrame(new Rectangle(k, 540, 144, 180)));
+
             }
 
-            //Postition = new Vector2(10, 10);
             speed = new Vector2(1, 1);
             acceleration = new Vector2(0.1f, 0.1f);
 
@@ -57,36 +73,33 @@ namespace Guardians_of_the_galaxy
 
         public void draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(heroTexture, Postition, currentAnimation.current.SourceRectangle, Color.White, 0, new Vector2(0, 0), 0.6f, SpriteEffects.None, 0);
+            spriteBatch.Draw(heroTexture, Postition, currentAnimation.current.SourceRectangle, Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
         }
-        private void Move(Vector2 mouse)
-        {
-            moveToCommand.execute(this, mouse);
-          
 
-
-          /*  if (Postition.X>600|| Postition.X<0)
-            { 
-                speed.X *= -1;
-                acceleration.X *= -1;
-            }
-            if (Postition.Y>400|| Postition.Y<0)
-            {
-                speed.Y *= -1;
-                acceleration.Y *= -1;
-
-            }*/
-        }
        
-        public void moveHor(Vector2 direction)
-        {
-            moveCommand.execute(this, direction);
-        }
+  
+  
+        
         public void update(GameTime gameTime)
         {
             KeyboardState keyboardState = Keyboard.GetState();
             var direction = inputReader.readInput();
             Postition += direction;
+            if (Postition.X < 0) Postition.X = 0;
+            if (Postition.X > 725) Postition.X = 750;
+            if (Postition.Y < 0) Postition.Y = 0;
+            if (Postition.Y < startPosition.Y)
+            {
+                Postition.Y += gravity;
+                gravity += 0.1f;
+                if (gravity>2f)
+                {
+                    gravity = 3f;
+                }
+            }
+
+
+            #region keyboardread
             if (keyboardState.IsKeyDown(Keys.Left))
             {
                 currentAnimation = animationL;
@@ -95,6 +108,25 @@ namespace Guardians_of_the_galaxy
             {
                 currentAnimation = animationR;
             }
+            else if (keyboardState.IsKeyDown(Keys.Space))
+            {
+                currentAnimation = animationJumping;
+            }
+            else if(currentAnimation==animationJumping&&Postition.Y<startPosition.Y) 
+            {
+                Postition.Y += gravity;
+                gravity += 0.1f;
+                if (gravity>2f)
+                {
+                    gravity = 2f;
+                }
+            }
+            else
+            {
+                currentAnimation = animationStanding;
+            }
+#endregion
+        
             currentAnimation.update(gameTime);
         }
     }
