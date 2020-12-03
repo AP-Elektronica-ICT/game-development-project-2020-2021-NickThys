@@ -1,4 +1,4 @@
-
+﻿
 
 using Guardians_of_the_galaxy.Animation;
 using Guardians_of_the_galaxy.Command;
@@ -78,6 +78,12 @@ namespace Guardians_of_the_galaxy
             var direction = inputReader.readInput();
             Postition += direction;
 
+            if (Postition.Y<startPosition.Y)
+            {
+                Postition.Y += 1f;
+            }
+
+
             #region keyboardread
             if (direction.X==-2)
             {
@@ -86,6 +92,10 @@ namespace Guardians_of_the_galaxy
             else if(direction.X==2)
             {
                 currentAnimation = animationR;
+            }
+            else if (direction.Y==-2)
+            {
+                currentAnimation = animationJumping;
             }
             else
             {

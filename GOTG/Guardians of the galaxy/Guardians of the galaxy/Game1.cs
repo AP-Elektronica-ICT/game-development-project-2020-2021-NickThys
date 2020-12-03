@@ -1,4 +1,4 @@
-using Guardians_of_the_galaxy.Collision;
+﻿using Guardians_of_the_galaxy.Collision;
 using Guardians_of_the_galaxy.GameObjects;
 using Guardians_of_the_galaxy.Input;
 using Microsoft.Xna.Framework;
@@ -52,8 +52,8 @@ namespace Guardians_of_the_galaxy
 
         private void InitializeGameObjects()
         {
-            yondu = new Hero(YonduTexture,new KeyBoardReader(), new Vector2(050, 300));
-            TestBock = new Block(BlockTexture, new Vector2(200, 300));
+            yondu = new Hero(YonduTexture,new KeyBoardReader(), new Vector2(400, 300));
+            TestBock = new Block(BlockTexture, new Vector2(200,420));
         }
 
         protected override void Update(GameTime gameTime)
@@ -65,13 +65,17 @@ namespace Guardians_of_the_galaxy
             yondu.update(gameTime);
             if (_collisionManager.CheckCollision(yondu,TestBock))
             {
-                if (yondu.Postition.X>TestBock._position.X-yondu.CollisionRectangle.Width&&yondu.Postition.X<TestBock._position.X)
+                if (yondu.Postition.X>=TestBock._position.X-yondu.CollisionRectangle.Width&&yondu.Postition.X<TestBock._position.X)
                 {
-                   yondu.Postition.X = TestBock._position.X - yondu.CollisionRectangle.Width;
+                    yondu.Postition.X = TestBock._position.X - yondu.CollisionRectangle.Width;
                 }
-                else if(yondu.Postition.X<TestBock._position.X+TestBock.CollisionRectangle.Width)
+                else if(yondu.Postition.X<=TestBock._position.X+TestBock.CollisionRectangle.Width)
                 {
                     yondu.Postition.X = TestBock._position.X + TestBock.CollisionRectangle.Width;
+                }
+                else if(yondu.Postition.Y>=TestBock._position.Y)
+                {
+                    yondu.Postition.Y = TestBock._position.Y;
                 }
             }
             base.Update(gameTime);
