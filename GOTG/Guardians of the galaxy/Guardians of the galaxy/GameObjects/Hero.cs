@@ -62,14 +62,14 @@ namespace Guardians_of_the_galaxy
          
             speed = new Vector2(1, 1);
             acceleration = new Vector2(0.1f, 0.1f);
-            _collisionRectangle = new Rectangle((int)Postition.X, (int)Postition.Y, 95, 180);
+            _collisionRectangle = new Rectangle((int)Postition.X, (int)Postition.Y, 55, 90);
             this.inputReader = reader;
             currentAnimation = animationR;
        }
 
         public void draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(heroTexture, Postition, currentAnimation.current.SourceRectangle, Color.White, 0, new Vector2(0, 0), 0.8f, SpriteEffects.None, 0);
+            spriteBatch.Draw(heroTexture, Postition, currentAnimation.current.SourceRectangle, Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
         }
 
         public void update(GameTime gameTime)
@@ -93,7 +93,7 @@ namespace Guardians_of_the_galaxy
             {
                 currentAnimation = animationR;
             }
-            else if (direction.Y==-2)
+            else if (direction.Y==-5)
             {
                 currentAnimation = animationJumping;
             }
@@ -102,6 +102,7 @@ namespace Guardians_of_the_galaxy
                 currentAnimation = animationStanding;
             }
             #endregion
+            _collisionRectangle.Y = (int)Postition.Y;
             _collisionRectangle.X = (int)Postition.X;
             CollisionRectangle = _collisionRectangle;
             currentAnimation.update(gameTime);

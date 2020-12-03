@@ -52,7 +52,7 @@ namespace Guardians_of_the_galaxy
 
         private void InitializeGameObjects()
         {
-            yondu = new Hero(YonduTexture,new KeyBoardReader(), new Vector2(400, 300));
+            yondu = new Hero(YonduTexture,new KeyBoardReader(), new Vector2(400, 600));
             TestBock = new Block(BlockTexture, new Vector2(200,420));
         }
 
@@ -65,17 +65,26 @@ namespace Guardians_of_the_galaxy
             yondu.update(gameTime);
             if (_collisionManager.CheckCollision(yondu,TestBock))
             {
-                if (yondu.Postition.X>=TestBock._position.X-yondu.CollisionRectangle.Width&&yondu.Postition.X<TestBock._position.X)
+
+                //right
+                if (yondu.Postition.X>TestBock._position.X -  TestBock.CollisionRectangle.Width && yondu.CollisionRectangle.Bottom > TestBock.CollisionRectangle.Bottom)
                 {
-                    yondu.Postition.X = TestBock._position.X - yondu.CollisionRectangle.Width;
+                    yondu.Postition.X += 3 ;
                 }
-                else if(yondu.Postition.X<=TestBock._position.X+TestBock.CollisionRectangle.Width)
+                //left
+                 if(yondu.Postition.X<TestBock._position.X + TestBock.CollisionRectangle.Width && yondu.CollisionRectangle.Bottom > TestBock.CollisionRectangle.Bottom)
                 {
-                    yondu.Postition.X = TestBock._position.X + TestBock.CollisionRectangle.Width;
+                    yondu.Postition.X -=3;
                 }
-                else if(yondu.Postition.Y>=TestBock._position.Y)
+                 //top
+                if(yondu.Postition.Y<TestBock._position.Y-66)
                 {
-                    yondu.Postition.Y = TestBock._position.Y;
+                    yondu.Postition.Y = TestBock._position.Y-yondu.CollisionRectangle.Height;
+                }
+                //bottom
+                 if (yondu.Postition.Y>TestBock._position.Y-66)
+                {
+                    yondu.Postition.Y = TestBock._position.Y+66;
                 }
             }
             base.Update(gameTime);

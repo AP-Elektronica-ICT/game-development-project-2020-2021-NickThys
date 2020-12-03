@@ -19,7 +19,7 @@ namespace Guardians_of_the_galaxy.Input
             if (state.IsKeyDown(Keys.Right) || state.IsKeyDown(Keys.D))
                 direction = new Vector2(2, 0);
             if (state.IsKeyDown(Keys.Space))
-                direction = new Vector2(0, -2);
+                direction = new Vector2(0, -5);
 
             return direction;
         }
