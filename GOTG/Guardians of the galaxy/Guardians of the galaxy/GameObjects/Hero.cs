@@ -1,4 +1,4 @@
-﻿
+
 
 using Guardians_of_the_galaxy.Animation;
 using Guardians_of_the_galaxy.Command;
@@ -62,7 +62,7 @@ namespace Guardians_of_the_galaxy
          
             speed = new Vector2(1, 1);
             acceleration = new Vector2(0.1f, 0.1f);
-            _collisionRectangle = new Rectangle((int)Postition.X, (int)Postition.Y, 115, 180);
+            _collisionRectangle = new Rectangle((int)Postition.X, (int)Postition.Y, 95, 180);
             this.inputReader = reader;
             currentAnimation = animationR;
        }

@@ -1,4 +1,4 @@
-﻿using Guardians_of_the_galaxy.Collision;
+using Guardians_of_the_galaxy.Collision;
 using Guardians_of_the_galaxy.GameObjects;
 using Guardians_of_the_galaxy.Input;
 using Microsoft.Xna.Framework;
@@ -19,9 +19,14 @@ namespace Guardians_of_the_galaxy
         Hero yondu;
         Block TestBock;
         CollisionManager _collisionManager;
+
+        int windowWidth = 1000;
+        int windowHeight = 800;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
+            _graphics.PreferredBackBufferWidth = windowWidth;
+            _graphics.PreferredBackBufferHeight = windowHeight;
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
