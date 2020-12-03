@@ -12,7 +12,7 @@ namespace Guardians_of_the_galaxy
 {
     public class Hero:IGameObject,ICollision
     {
-        private Texture2D heroTexture;
+        public Texture2D heroTexture { get; set; }
         private Animatie animationR, animationL,currentAnimation,animationStanding,animationJumping;
         private MoveCommand moveCommand;
         private Vector2 speed;
@@ -27,10 +27,10 @@ namespace Guardians_of_the_galaxy
 
         public Rectangle CollisionRectangle { get; set; }
         private Rectangle _collisionRectangle;
-        public Hero(Texture2D texture,IInputReader reader)
+        public Hero(Texture2D texture,IInputReader reader,Vector2 position)
         {
-            Postition = new Vector2(050, 300);
-            startPosition = new Vector2(050, 300);
+            Postition = position;
+            startPosition = position;
 
 
             heroTexture = texture;

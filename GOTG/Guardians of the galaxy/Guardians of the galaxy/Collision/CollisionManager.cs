@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Guardians_of_the_galaxy.GameObjects;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,9 +8,9 @@ namespace Guardians_of_the_galaxy.Collision
 {
     class CollisionManager
     {
-        public bool CheckCollision(Rectangle rect1,Rectangle rect2)
+        public bool CheckCollision(Hero hero,Block block)
         {
-            if (rect1.Intersects(rect2))
+            if (hero.CollisionRectangle.Intersects(block.CollisionRectangle))
                 return true;
             return false;
 

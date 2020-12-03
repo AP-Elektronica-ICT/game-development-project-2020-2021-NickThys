@@ -47,7 +47,7 @@ namespace Guardians_of_the_galaxy
 
         private void InitializeGameObjects()
         {
-            yondu = new Hero(YonduTexture,new KeyBoardReader());
+            yondu = new Hero(YonduTexture,new KeyBoardReader(), new Vector2(050, 300));
             TestBock = new Block(BlockTexture, new Vector2(200, 300));
         }
 
@@ -58,10 +58,16 @@ namespace Guardians_of_the_galaxy
 
             // TODO: Add your update logic here
             yondu.update(gameTime);
-            if (_collisionManager.CheckCollision(yondu.CollisionRectangle,TestBock.CollisionRectangle))
+            if (_collisionManager.CheckCollision(yondu,TestBock))
             {
-                CollidedCount++;
-                Debug.WriteLine("Collided"+CollidedCount);
+                if (yondu.Postition.X>TestBock._position.X-yondu.CollisionRectangle.Width&&yondu.Postition.X<TestBock._position.X)
+                {
+                   yondu.Postition.X = TestBock._position.X - yondu.CollisionRectangle.Width;
+                }
+                else if(yondu.Postition.X<TestBock._position.X+TestBock.CollisionRectangle.Width)
+                {
+                    yondu.Postition.X = TestBock._position.X + TestBock.CollisionRectangle.Width;
+                }
             }
             base.Update(gameTime);
         }
