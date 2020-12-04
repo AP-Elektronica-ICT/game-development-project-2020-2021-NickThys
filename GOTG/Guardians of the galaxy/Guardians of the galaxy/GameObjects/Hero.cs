@@ -48,7 +48,7 @@ namespace Guardians_of_the_galaxy
 
             }
             Position += Velocity;
-            Velocity = Vector2.Zero;
+            Velocity.X = 0;
         }
 
         private void Move()
@@ -59,7 +59,7 @@ namespace Guardians_of_the_galaxy
                 Velocity.X = speed;
             if (Keyboard.GetState().IsKeyDown(Input.Space)&&!isJumping)
             {
-                Position.Y -= 400;
+                Velocity.Y = -36f;
                 isJumping = true;
             }
             else if(isJumping)
