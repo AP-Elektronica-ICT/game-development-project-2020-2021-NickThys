@@ -71,6 +71,11 @@ namespace Guardians_of_the_galaxy
                     Position=new Vector2(0,600)
 
                 },
+                  new Block(_blockTexture)
+                {
+                    Position=new Vector2(0,534)
+
+                },
                 new Block(_blockTexture)
                 {
                     Position=new Vector2(66,600)
@@ -104,6 +109,10 @@ namespace Guardians_of_the_galaxy
                 new Block(_blockTexture)
                 {
                     Position=new Vector2(462,600)
+
+                }, new Block(_blockTexture)
+                {
+                    Position=new Vector2(462,600-66)
 
                 }
 

@@ -32,6 +32,10 @@ namespace Guardians_of_the_galaxy
                     this.Velocity.X = 0;
                 if ((this.Velocity.Y > 0 && this.IsTouchingTop(sprite) || this.Velocity.Y < 0 && this.IsTouchingBottom(sprite)))
                 {
+                    if (this.Velocity.Y < 0 && this.IsTouchingBottom(sprite))
+                    {
+                        this.Position.Y = sprite.Position.Y + sprite.Rectangle.Height;
+                    }
                     this.Velocity.Y = 0;
                     isJumping = false;
                     IsChanged = 1;
@@ -59,13 +63,13 @@ namespace Guardians_of_the_galaxy
                 Velocity.X = speed;
             if (Keyboard.GetState().IsKeyDown(Input.Space)&&!isJumping)
             {
-                Velocity.Y = -36f;
+                Velocity.Y = -40f;
                 isJumping = true;
             }
             else if(isJumping)
             {
                 Velocity.Y += gravity;
-                gravity+= 0.15f;
+                gravity+= 0.1f;
                 if (gravity>2f)
                 {
                     gravity = 2f;
