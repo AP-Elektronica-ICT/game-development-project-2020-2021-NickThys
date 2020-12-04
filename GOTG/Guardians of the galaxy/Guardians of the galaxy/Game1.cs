@@ -1,4 +1,4 @@
-﻿using Guardians_of_the_galaxy.Collision;
+using Guardians_of_the_galaxy.Collision;
 using Guardians_of_the_galaxy.GameObjects;
 using Guardians_of_the_galaxy.Input;
 using Microsoft.Xna.Framework;
