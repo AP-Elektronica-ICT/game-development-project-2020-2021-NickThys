@@ -1,10 +1,11 @@
-using Guardians_of_the_galaxy.Collision;
 using Guardians_of_the_galaxy.GameObjects;
 using Guardians_of_the_galaxy.Input;
+using Guardians_of_the_galaxy.Sprites;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Guardians_of_the_galaxy
@@ -14,11 +15,7 @@ namespace Guardians_of_the_galaxy
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private Texture2D YonduTexture,BlockTexture;
-        private int CollidedCount; 
-        Hero yondu;
-        Block TestBock;
-        CollisionManager _collisionManager;
+        private List<sprite> _sprites;
 
         int windowWidth = 1000;
         int windowHeight = 800;
@@ -37,23 +34,86 @@ namespace Guardians_of_the_galaxy
 
 
             base.Initialize();
-            _collisionManager = new CollisionManager();
-            CollidedCount = 0;
+           
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            YonduTexture = Content.Load<Texture2D>("Yondu_V2");
-            BlockTexture = Content.Load<Texture2D>("TestBlock");
-            InitializeGameObjects();
+            Texture2D _yonduTexture = Content.Load<Texture2D>("Yondu_jumping");
+            Texture2D _blockTexture= Content.Load<Texture2D>("TestBlock");
+            _sprites = new List<sprite>()
+            {
+                new Hero(_yonduTexture)
+                {
+                    Input=new input()
+                    {
+                        Left=Keys.Left,
+                        Right=Keys.Right,
+                        Space=Keys.Space,
+                        
+
+                    },Position=new Vector2(100,100),speed=5f
+                    
+                },
+                 new Block(_blockTexture)
+                {
+                    Position=new Vector2(200,300)
+
+                },
+                 new Block(_blockTexture)
+                {
+                    Position=new Vector2(200+66,300)
+
+                },
+                 new Block(_blockTexture)
+                {
+                    Position=new Vector2(0,600)
+
+                },
+                new Block(_blockTexture)
+                {
+                    Position=new Vector2(66,600)
+
+                },
+                new Block(_blockTexture)
+                {
+                    Position=new Vector2(132,600)
+
+                },
+                new Block(_blockTexture)
+                {
+                    Position=new Vector2(198,600)
+
+                },
+                new Block(_blockTexture)
+                {
+                    Position=new Vector2(264,600)
+
+                },
+                new Block(_blockTexture)
+                {
+                    Position=new Vector2(330,600)
+
+                },
+                new Block(_blockTexture)
+                {
+                    Position=new Vector2(396,600)
+
+                },
+                new Block(_blockTexture)
+                {
+                    Position=new Vector2(462,600)
+
+                }
+
+            };
             // TODO: use this.Content to load your game content here
         }
 
         private void InitializeGameObjects()
         {
-            yondu = new Hero(YonduTexture,new KeyBoardReader(), new Vector2(400, 600));
-            TestBock = new Block(BlockTexture, new Vector2(200,420));
+         
         }
 
         protected override void Update(GameTime gameTime)
@@ -61,32 +121,12 @@ namespace Guardians_of_the_galaxy
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
-            yondu.update(gameTime);
-            if (_collisionManager.CheckCollision(yondu,TestBock))
+            foreach (var sprite in _sprites)
             {
-
-                //right
-                if (yondu.Postition.X>TestBock._position.X -  TestBock.CollisionRectangle.Width && yondu.CollisionRectangle.Bottom > TestBock.CollisionRectangle.Bottom)
-                {
-                    yondu.Postition.X += 3 ;
-                }
-                //left
-                 if(yondu.Postition.X<TestBock._position.X + TestBock.CollisionRectangle.Width && yondu.CollisionRectangle.Bottom > TestBock.CollisionRectangle.Bottom)
-                {
-                    yondu.Postition.X -=3;
-                }
-                 //top
-                if(yondu.Postition.Y<TestBock._position.Y-66)
-                {
-                    yondu.Postition.Y = TestBock._position.Y-yondu.CollisionRectangle.Height;
-                }
-                //bottom
-                 if (yondu.Postition.Y>TestBock._position.Y-66)
-                {
-                    yondu.Postition.Y = TestBock._position.Y+66;
-                }
+                sprite.Update(gameTime, _sprites);
             }
+            // TODO: Add your update logic here
+           
             base.Update(gameTime);
         }
 
@@ -97,10 +137,10 @@ namespace Guardians_of_the_galaxy
             // TODO: Add your drawing code here
 
             _spriteBatch.Begin();
-
-            yondu.draw(_spriteBatch);
-            TestBock.Draw(_spriteBatch);
-
+            foreach (var sprite in _sprites)
+            {
+                sprite.Draw(_spriteBatch);
+            }
             _spriteBatch.End();
 
 
