@@ -1,6 +1,7 @@
 using Guardians_of_the_galaxy.GameObjects;
 using Guardians_of_the_galaxy.Input;
 using Guardians_of_the_galaxy.Sprites;
+using Guardians_of_the_galaxy.WorldDesign;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -14,7 +15,7 @@ namespace Guardians_of_the_galaxy
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-
+        private Level _level; 
         private List<sprite> _sprites;
 
         int windowWidth = 1000;
@@ -43,6 +44,8 @@ namespace Guardians_of_the_galaxy
             Texture2D _yonduNormalSize = Content.Load<Texture2D>("Yondu_jumping");
             Texture2D _yonduTexture = Content.Load<Texture2D>("Yondu_V2");
             Texture2D _blockTexture= Content.Load<Texture2D>("TestBlock");
+            _level = new Level(_blockTexture);
+            _level.CreateWorld();
             _sprites = new List<sprite>()
             {
                 new Hero(_yonduTexture,_yonduNormalSize)
@@ -56,7 +59,7 @@ namespace Guardians_of_the_galaxy
 
                     },Position=new Vector2(100,100),speed=5f
                     
-                },
+                }/*,
                  new Block(_blockTexture)
                 {
                     Position=new Vector2(200,300)
@@ -115,10 +118,12 @@ namespace Guardians_of_the_galaxy
                 {
                     Position=new Vector2(462,600-66)
 
-                }
+                }*/
 
             };
             // TODO: use this.Content to load your game content here
+            _sprites.AddRange(_level.getBlocks());
+            
         }
 
         private void InitializeGameObjects()
