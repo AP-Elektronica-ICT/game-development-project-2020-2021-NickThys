@@ -13,37 +13,45 @@ namespace Guardians_of_the_galaxy.WorldDesign
         Texture2D _texture;
         public byte[,] tileArray = new Byte[,]
         {
-            {0,0,0,0,0,0 },
-            {0,0,0,0,0,0 },
-            {1,0,1,0,1,0 },
-            {0,1,0,1,0,1 },
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 },
         };
-        private Block[,] blokArray = new Block[4, 6];
+        private Block[,] blokArray = new Block[12, 15];
         public Level(Texture2D texture)
         {
             _texture = texture;
         }
         public void CreateWorld()
         {
-            for (int x = 0; x < 4; x++)
+            for (int x = 0; x < 12; x++)
             {
-                for (int y = 0; y < 6; y++)
+                for (int y = 0; y < 15; y++)
                 {
                     if (tileArray[x, y] == 1)
                     {
-                        blokArray[x, y] = new Block(_texture) {Position= new Vector2(y * 128, x * 64) };
+                        blokArray[x, y] = new Block(_texture) { Position = new Vector2(y * 66, x * 66) };
                     }
                 }
             }
         }
         public List<sprite> getBlocks()
         {
-            List<sprite> allBlocks=new List<sprite>();
-            for (int x = 0; x < 4; x++)
+            List<sprite> allBlocks = new List<sprite>();
+            for (int x = 0; x < 12; x++)
             {
-                for (int y = 0; y < 6; y++)
+                for (int y = 0; y < 15; y++)
                 {
-                    if (blokArray[x, y] !=null)
+                    if (blokArray[x, y] != null)
                     {
                         allBlocks.Add(blokArray[x, y]);
                     }

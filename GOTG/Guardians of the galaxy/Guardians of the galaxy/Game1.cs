@@ -18,8 +18,8 @@ namespace Guardians_of_the_galaxy
         private Level _level; 
         private List<sprite> _sprites;
 
-        int windowWidth = 1000;
-        int windowHeight = 800;
+        int windowWidth = 990;
+        int windowHeight = 792;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -59,67 +59,7 @@ namespace Guardians_of_the_galaxy
 
                     },Position=new Vector2(100,100),speed=5f
                     
-                }/*,
-                 new Block(_blockTexture)
-                {
-                    Position=new Vector2(200,300)
-
-                },
-                 new Block(_blockTexture)
-                {
-                    Position=new Vector2(200+66,300)
-
-                },
-                 new Block(_blockTexture)
-                {
-                    Position=new Vector2(0,600)
-
-                },
-                  new Block(_blockTexture)
-                {
-                    Position=new Vector2(0,534)
-
-                },
-                new Block(_blockTexture)
-                {
-                    Position=new Vector2(66,600)
-
-                },
-                new Block(_blockTexture)
-                {
-                    Position=new Vector2(132,600)
-
-                },
-                new Block(_blockTexture)
-                {
-                    Position=new Vector2(198,600)
-
-                },
-                new Block(_blockTexture)
-                {
-                    Position=new Vector2(264,600)
-
-                },
-                new Block(_blockTexture)
-                {
-                    Position=new Vector2(330,600)
-
-                },
-                new Block(_blockTexture)
-                {
-                    Position=new Vector2(396,600)
-
-                },
-                new Block(_blockTexture)
-                {
-                    Position=new Vector2(462,600)
-
-                }, new Block(_blockTexture)
-                {
-                    Position=new Vector2(462,600-66)
-
-                }*/
-
+                }
             };
             // TODO: use this.Content to load your game content here
             _sprites.AddRange(_level.getBlocks());
