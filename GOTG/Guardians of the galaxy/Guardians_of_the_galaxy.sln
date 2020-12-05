@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guardians of the galaxy", "Guardians of the galaxy\Guardians of the galaxy.csproj", "{FDAC38D6-2606-487B-8907-0092A86014AE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guardians_of_the_galaxy", "Guardians of the galaxy\Guardians_of_the_galaxy.csproj", "{FDAC38D6-2606-487B-8907-0092A86014AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
