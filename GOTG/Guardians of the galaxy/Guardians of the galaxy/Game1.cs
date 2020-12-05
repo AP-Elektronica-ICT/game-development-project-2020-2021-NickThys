@@ -40,11 +40,12 @@ namespace Guardians_of_the_galaxy
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            Texture2D _yonduTexture = Content.Load<Texture2D>("Yondu_jumping");
+            Texture2D _yonduNormalSize = Content.Load<Texture2D>("Yondu_jumping");
+            Texture2D _yonduTexture = Content.Load<Texture2D>("Yondu_V2");
             Texture2D _blockTexture= Content.Load<Texture2D>("TestBlock");
             _sprites = new List<sprite>()
             {
-                new Hero(_yonduTexture)
+                new Hero(_yonduTexture,_yonduNormalSize)
                 {
                     Input=new input()
                     {
