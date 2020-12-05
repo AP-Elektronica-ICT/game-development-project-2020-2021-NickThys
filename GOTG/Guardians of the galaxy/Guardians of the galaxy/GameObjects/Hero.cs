@@ -15,13 +15,13 @@ namespace Guardians_of_the_galaxy
     {
         public Texture2D heroTexture { get; set; }
         private Animatie animationR, animationL, currentAnimation, animationStanding, animationJumping;
-
+        public SpriteEffects _spriteEffect;
         public bool isJumping;
         public float gravity = 0f;
         public Hero(Texture2D texture, Texture2D NormalTexture) : base(NormalTexture)
         {
             isJumping = true;
-
+            _spriteEffect =SpriteEffects.None;
             heroTexture = texture;
 
             #region add frames to animation       
@@ -53,12 +53,13 @@ namespace Guardians_of_the_galaxy
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(heroTexture, this.Position, currentAnimation.current.SourceRectangle, Color.White, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(heroTexture, this.Position, currentAnimation.current.SourceRectangle, Color.White, 0, new Vector2(0, 0), 1f, _spriteEffect, 0);
         }
         public override void Update(GameTime gameTime, List<sprite> sprites)
         {
             int IsChanged = 0;
             currentAnimation = animationStanding;
+            _spriteEffect = SpriteEffects.None;
 
             Move();
             foreach (var sprite in sprites)
@@ -100,6 +101,10 @@ namespace Guardians_of_the_galaxy
            if (Velocity.Y !=0)
             {
                 currentAnimation = animationJumping;
+                if (Velocity.X < 0)
+                {
+                    _spriteEffect = SpriteEffects.FlipHorizontally;
+                }
             }
            
             currentAnimation.update(gameTime);
