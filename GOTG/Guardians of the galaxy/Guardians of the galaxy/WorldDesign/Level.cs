@@ -24,7 +24,7 @@ namespace Guardians_of_the_galaxy.WorldDesign
             {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
             {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
             {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 },
+            {1,1,1,1,1,1,1,0,0,1,1,1,1,1,1 },
         };
         private Block[,] blokArray = new Block[12, 15];
         public Level(Texture2D texture)

@@ -18,6 +18,7 @@ namespace Guardians_of_the_galaxy
         public SpriteEffects _spriteEffect;
         public bool isJumping;
         public float gravity = 0f;
+        public bool HasDied = false;
         public Hero(Texture2D texture, Texture2D NormalTexture) : base(NormalTexture)
         {
             isJumping = true;
@@ -87,7 +88,10 @@ namespace Guardians_of_the_galaxy
 
                     }
                 }
-
+                if (this.Position.Y>792-180)
+                {
+                    HasDied = true;
+                }
 
             }
             if (Velocity.X <0)
