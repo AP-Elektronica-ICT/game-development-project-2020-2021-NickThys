@@ -13,6 +13,12 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Come and Get Your Love [8 Bit Tribute to Redbone & Guardians of the Galaxy] - 8 Bit Universe.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Come and Get Your Love [8 Bit Tribute to Redbone & Guardians of the Galaxy] - 8 Bit Universe.mp3
+
 #begin TestBlock.png
 /importer:TextureImporter
 /processor:TextureProcessor

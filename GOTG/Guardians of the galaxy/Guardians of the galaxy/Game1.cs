@@ -1,9 +1,12 @@
 using Guardians_of_the_galaxy.GameObjects;
 using Guardians_of_the_galaxy.Input;
 using Guardians_of_the_galaxy.Sprites;
+using Guardians_of_the_galaxy.WorldDesign;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,11 +17,12 @@ namespace Guardians_of_the_galaxy
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-
+        private Level _level; 
         private List<sprite> _sprites;
+        private Song _song;
 
-        int windowWidth = 1000;
-        int windowHeight = 800;
+        int windowWidth = 990;
+        int windowHeight = 792;
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -26,6 +30,7 @@ namespace Guardians_of_the_galaxy
             _graphics.PreferredBackBufferHeight = windowHeight;
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            MediaPlayer.IsRepeating = true;
         }
 
         protected override void Initialize()
@@ -43,6 +48,8 @@ namespace Guardians_of_the_galaxy
             Texture2D _yonduNormalSize = Content.Load<Texture2D>("Yondu_jumping");
             Texture2D _yonduTexture = Content.Load<Texture2D>("Yondu_V2");
             Texture2D _blockTexture= Content.Load<Texture2D>("TestBlock");
+            _level = new Level(_blockTexture);
+            _level.CreateWorld();
             _sprites = new List<sprite>()
             {
                 new Hero(_yonduTexture,_yonduNormalSize)
@@ -54,71 +61,16 @@ namespace Guardians_of_the_galaxy
                         Space=Keys.Space,
                         
 
-                    },Position=new Vector2(100,100),speed=5f
+                    },Position=new Vector2(66,200),speed=5f
                     
-                },
-                 new Block(_blockTexture)
-                {
-                    Position=new Vector2(200,300)
-
-                },
-                 new Block(_blockTexture)
-                {
-                    Position=new Vector2(200+66,300)
-
-                },
-                 new Block(_blockTexture)
-                {
-                    Position=new Vector2(0,600)
-
-                },
-                  new Block(_blockTexture)
-                {
-                    Position=new Vector2(0,534)
-
-                },
-                new Block(_blockTexture)
-                {
-                    Position=new Vector2(66,600)
-
-                },
-                new Block(_blockTexture)
-                {
-                    Position=new Vector2(132,600)
-
-                },
-                new Block(_blockTexture)
-                {
-                    Position=new Vector2(198,600)
-
-                },
-                new Block(_blockTexture)
-                {
-                    Position=new Vector2(264,600)
-
-                },
-                new Block(_blockTexture)
-                {
-                    Position=new Vector2(330,600)
-
-                },
-                new Block(_blockTexture)
-                {
-                    Position=new Vector2(396,600)
-
-                },
-                new Block(_blockTexture)
-                {
-                    Position=new Vector2(462,600)
-
-                }, new Block(_blockTexture)
-                {
-                    Position=new Vector2(462,600-66)
-
                 }
-
             };
             // TODO: use this.Content to load your game content here
+            _sprites.AddRange(_level.getBlocks());
+            _song = Content.Load<Song>("Come and Get Your Love [8 Bit Tribute to Redbone & Guardians of the Galaxy] - 8 Bit Universe");
+            MediaPlayer.Volume = 0.5f;
+
+            MediaPlayer.Play(_song);
         }
 
         private void InitializeGameObjects()
@@ -133,6 +85,7 @@ namespace Guardians_of_the_galaxy
 
             foreach (var sprite in _sprites)
             {
+                
                 sprite.Update(gameTime, _sprites);
             }
             // TODO: Add your update logic here
