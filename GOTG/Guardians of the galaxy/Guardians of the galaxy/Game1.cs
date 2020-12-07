@@ -61,7 +61,7 @@ namespace Guardians_of_the_galaxy
                         Space=Keys.Space,
                         
 
-                    },Position=new Vector2(66,200),speed=5f
+                    },Position=new Vector2(66,546),speed=5f
                     
                 }
             };
@@ -87,7 +87,17 @@ namespace Guardians_of_the_galaxy
             {
                 
                 sprite.Update(gameTime, _sprites);
+                if (sprite is Hero)
+                {
+                    Hero yondu = sprite as Hero;
+                    if (yondu.HasDied)
+                    {
+                        Exit();
+
+                    }
+                }
             }
+       
             // TODO: Add your update logic here
            
             base.Update(gameTime);
