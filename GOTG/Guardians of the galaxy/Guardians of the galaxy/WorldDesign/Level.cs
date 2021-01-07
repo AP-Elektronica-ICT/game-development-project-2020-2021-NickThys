@@ -8,48 +8,58 @@ using System.Text;
 
 namespace Guardians_of_the_galaxy.WorldDesign
 {
-    class Level
+   public class Level
     {
-        Texture2D _texture;
-        public byte[,] tileArray = new Byte[,]
+        Texture2D _texture,_flagTexture,_collectableTexture, _ronanTexture, _ronanNormalTexture;
+        private static byte[,] _tileArray;
+        private sprite[,] blokArray;
+        public Level(byte[,] _tileMap,Texture2D[] _textureArray)
         {
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-            {0,0,0,1,1,1,0,0,0,0,0,0,0,0,0 },
-            {0,0,0,0,0,0,1,1,0,0,0,0,0,0,0 },
-            {0,0,0,0,0,0,0,0,1,1,0,0,0,0,0 },
-            {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
-            {1,1,1,1,1,1,1,0,0,1,1,1,1,1,1 },
-        };
-        private Block[,] blokArray = new Block[12, 15];
-        public Level(Texture2D texture)
-        {
-            _texture = texture;
+            _tileArray = _tileMap;
+            _texture = _textureArray[0];
+            _flagTexture = _textureArray[1];
+            _collectableTexture = _textureArray[2];
+            _ronanTexture = _textureArray[3];
+            _ronanNormalTexture = _textureArray[4];
+            blokArray = new sprite[_tileArray.GetLength(0), _tileArray.GetLength(1)];
         }
+
         public void CreateWorld()
         {
-            for (int x = 0; x < 12; x++)
+            for (int x = 0; x < _tileArray.GetLength(0); x++)
             {
-                for (int y = 0; y < 15; y++)
+                for (int y = 0; y < _tileArray.GetLength(1); y++)
                 {
-                    if (tileArray[x, y] == 1)
+                    if (_tileArray[x, y] == 1)
                     {
-                        blokArray[x, y] = new Block(_texture) { Position = new Vector2(y * 66, x * 66) };
+                        blokArray[x, y] = new Block(_texture) { Position = new Vector2(y * _texture.Width, x * _texture.Height) };
                     }
+                    if (_tileArray[x, y] == 2)
+                    {
+                        blokArray[x, y] = new Flag(_flagTexture) { Position = new Vector2(y * _flagTexture.Width, x * _flagTexture.Height) };
+                    }
+                    if (_tileArray[x, y] == 3)
+                    {
+                        blokArray[x, y] = new Collectable(_collectableTexture) { 
+                            Position = new Vector2(y * _texture.Width, x * _texture.Height) };
+                    }
+                    if (_tileArray[x, y] == 4)
+                        blokArray[x, y] = new Enemy(
+                            _ronanTexture,
+                            _ronanNormalTexture,
+                            new Vector2(y * _texture.Width , (x+1) * _texture.Height-_ronanNormalTexture.Height),
+                            y * _texture.Width - 2 * _ronanNormalTexture.Width,
+                            y * _texture.Width + 2 * _ronanNormalTexture.Width);
+                    
                 }
             }
         }
         public List<sprite> getBlocks()
         {
             List<sprite> allBlocks = new List<sprite>();
-            for (int x = 0; x < 12; x++)
+            for (int x = 0; x < _tileArray.GetLength(0); x++)
             {
-                for (int y = 0; y < 15; y++)
+                for (int y = 0; y < _tileArray.GetLength(1); y++)
                 {
                     if (blokArray[x, y] != null)
                     {

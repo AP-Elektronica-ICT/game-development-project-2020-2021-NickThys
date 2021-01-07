@@ -1,4 +1,4 @@
-﻿using Guardians_of_the_galaxy.Interfaces;
+using Guardians_of_the_galaxy.Interfaces;
 using Guardians_of_the_galaxy.Sprites;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

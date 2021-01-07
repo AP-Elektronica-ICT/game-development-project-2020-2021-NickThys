@@ -1,4 +1,4 @@
-﻿using Guardians_of_the_galaxy.Input;
+using Guardians_of_the_galaxy.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -9,12 +9,16 @@ namespace Guardians_of_the_galaxy.Sprites
 {
    public  class sprite
     {
-        private int offset = 25;
+        #region Fields
+        private int offset =15;
         protected Texture2D _texture;
         public Vector2 Position;
         public Vector2 Velocity;
         public float speed;
         public input Input;
+        #endregion
+
+        #region Properties
         public Rectangle Rectangle
         {
             get
@@ -24,10 +28,16 @@ namespace Guardians_of_the_galaxy.Sprites
             set { 
             }
         }
+        #endregion
+ 
+        #region Constructor
         public sprite(Texture2D texture)
         {
             _texture = texture;
         }
+        #endregion
+
+        #region Methodes
         public virtual void Update(GameTime gameTime,List<sprite> sprites)
         {
 
@@ -65,6 +75,7 @@ namespace Guardians_of_the_galaxy.Sprites
                 this.Rectangle.Right > sprite.Rectangle.Left + offset &&
                 this.Rectangle.Left < sprite.Rectangle.Right;
         }
+        #endregion
         #endregion
     }
 }

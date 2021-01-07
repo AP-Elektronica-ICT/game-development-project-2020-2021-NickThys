@@ -1,6 +1,5 @@
-﻿
-
 using Guardians_of_the_galaxy.Animation;
+using Guardians_of_the_galaxy.GameObjects;
 using Guardians_of_the_galaxy.Input;
 using Guardians_of_the_galaxy.Interfaces;
 using Guardians_of_the_galaxy.Sprites;
@@ -13,12 +12,26 @@ namespace Guardians_of_the_galaxy
 {
     public class Hero : sprite
     {
+        #region Fields
         public Texture2D heroTexture { get; set; }
-        private Animatie animationR, animationL, currentAnimation, animationStanding, animationJumping;
         public SpriteEffects _spriteEffect;
         public bool isJumping;
         public float gravity = 0f;
-        public bool HasDied = false;
+        public bool HasDied = false,HasWon=false;
+        private Animatie animationR, animationL, currentAnimation, animationStanding, animationJumping;
+        private int _nbrOfCollectedItems;
+        #endregion
+
+        #region Properties
+        public int NbrOfCollectedItems
+        {
+            get { return _nbrOfCollectedItems; }
+            set { _nbrOfCollectedItems = value; }
+        }
+      
+        #endregion
+
+        #region Constructor
         public Hero(Texture2D texture, Texture2D NormalTexture) : base(NormalTexture)
         {
             isJumping = true;
@@ -27,73 +40,142 @@ namespace Guardians_of_the_galaxy
 
             #region add frames to animation       
             animationJumping = new Animatie();
-            animationJumping.addFrame(new AnimationFrame(new Rectangle(0, 0, 144, 180)));
+            animationJumping.addFrame(new AnimationFrame(new Rectangle(0, 0, 72, 90)));
 
             animationStanding = new Animatie();
-            for (int i = 0; i < 433; i += 144)
+            for (int i = 0; i < 217; i += 72)
             {
-                animationStanding.addFrame(new AnimationFrame(new Rectangle(i, 180, 144, 180)));
+                animationStanding.addFrame(new AnimationFrame(new Rectangle(i, 90, 72, 90)));
 
             }
 
             animationL = new Animatie();
-            for (int j = 0; j < 721; j += 144)
+            for (int j = 0; j < 361; j += 144)
             {
-                animationL.addFrame(new AnimationFrame(new Rectangle(j, 360, 144, 180)));
+                animationL.addFrame(new AnimationFrame(new Rectangle(j, 180, 72, 90)));
             }
 
             animationR = new Animatie();
-            for (int k = 0; k < 721; k += 144)
+            for (int k = 0; k < 361; k += 144)
             {
-                animationR.addFrame(new AnimationFrame(new Rectangle(k, 540, 144, 180)));
+                animationR.addFrame(new AnimationFrame(new Rectangle(k, 270, 72, 90)));
 
             }
             #endregion
             currentAnimation = animationStanding;
 
         }
+        #endregion
+
+        #region Methods
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(heroTexture, this.Position, currentAnimation.current.SourceRectangle, Color.White, 0, new Vector2(0, 0), 1f, _spriteEffect, 0);
         }
+ 
         public override void Update(GameTime gameTime, List<sprite> sprites)
         {
             int IsChanged = 0;
-            currentAnimation = animationStanding;
             _spriteEffect = SpriteEffects.None;
-
+            currentAnimation = animationStanding;
             Move();
             foreach (var sprite in sprites)
             {
+                #region Check if the sprite is the hero
                 if (sprite == this)
                     continue;
-                if (this.Velocity.X > 0 && this.IsTouchingLeft(sprite) || this.Velocity.X < 0 && this.IsTouchingRight(sprite))
-                    this.Velocity.X = 0;
-                if ((this.Velocity.Y > 0 && this.IsTouchingTop(sprite) || this.Velocity.Y < 0 && this.IsTouchingBottom(sprite)))
+                #endregion
+
+                #region Check if the sprite is a block
+                if (sprite is Block)
                 {
-                    if (this.Velocity.Y < 0 && this.IsTouchingBottom(sprite))
+                    #region Check if the hero has collided with the left or right side of the sprite
+                    if (this.Velocity.X > 0 && this.IsTouchingLeft(sprite) || this.Velocity.X < 0 && this.IsTouchingRight(sprite))
+                        this.Velocity.X = 0;
+                    #endregion
+
+                    #region Check if the hero has collided with the left or right side of the sprite
+                    if ((this.Velocity.Y > 0 && this.IsTouchingTop(sprite) || this.Velocity.Y < 0 && this.IsTouchingBottom(sprite)))
                     {
-                        this.Position.Y = sprite.Position.Y + sprite.Rectangle.Height;
-                    }
-                    this.Velocity.Y = 0;
-                    isJumping = false;
-                    IsChanged = 1;
+                        if (this.Velocity.Y < 0 && this.IsTouchingBottom(sprite))
+                        {
+                            this.Position.Y = sprite.Position.Y + sprite.Rectangle.Height;
 
-                }
-                else
-                {
-                    if (IsChanged == 0)
+                        }
+                        if (this.IsTouchingTop(sprite))
+                        {
+                            isJumping = false;
+                            IsChanged = 1;
+
+                        }
+                        this.Velocity.Y = 0;
+
+                    }
+                    #endregion
+
+                    else
                     {
-                        isJumping = true;
+                         if (IsChanged == 0)
+                           {
+                               isJumping = true;
+
+                           }
+                         }
+                    if (this.Position.Y > 792 - currentAnimation.current.SourceRectangle.Height)
+                    {
+                        HasDied = true;
+                    }
+                  /*  if (Position.Y < 0)
+                    {
+                        this.Position.Y = 0;
+                    }*/
+                }
+                #endregion
+
+                #region Check if the hero has colided with the flag
+                if (sprite is Flag)
+                {
+                    if (this.Rectangle.Intersects(sprite.Rectangle))
+                    {
+                        HasWon = true;
+                    }
+                }
+                #endregion
+
+                #region Check if hero has Colided with a Collectable
+                if (sprite is Collectable)
+                {
+                    if (this.Rectangle.Intersects(sprite.Rectangle))
+                    {
+                        Collectable _collectable = sprite as Collectable;
+                        if(!_collectable.IsCollected)
+                            _nbrOfCollectedItems++;
+
+                        _collectable.IsCollected = true;
 
                     }
                 }
-                if (this.Position.Y>792-180)
-                {
-                    HasDied = true;
-                }
+                #endregion
 
+                #region Check if the hero has collided with the enemy
+                if (sprite is Enemy)
+                {
+                    Enemy _ronan = sprite as Enemy;
+
+                    if (this.Rectangle.Intersects(_ronan.Rectangle))
+                    {
+                        if (!_ronan.HasDied)
+                        {
+                            if (this.IsTouchingTop(_ronan))
+                                _ronan.HasDied = true;
+                            else if (this.IsTouchingLeft(_ronan) || this.IsTouchingRight(_ronan))
+                                this.HasDied = true;
+                        }
+                    }
+                }
+                #endregion
             }
+            #region Set animation
             if (Velocity.X <0)
             {
                 currentAnimation = animationL;
@@ -102,7 +184,7 @@ namespace Guardians_of_the_galaxy
             {
                 currentAnimation = animationR;
             }
-           if (Velocity.Y !=0)
+           if (Velocity.Y != 0)
             {
                 currentAnimation = animationJumping;
                 if (Velocity.X < 0)
@@ -110,10 +192,14 @@ namespace Guardians_of_the_galaxy
                     _spriteEffect = SpriteEffects.FlipHorizontally;
                 }
             }
-           
             currentAnimation.update(gameTime);
-            Position += Velocity;
+            #endregion
+
+            #region set Velocity
+            Position.X += Velocity.X;
+            Position.Y += Velocity.Y;
             Velocity.X = 0;
+            #endregion
         }
 
         private void Move()
@@ -124,117 +210,21 @@ namespace Guardians_of_the_galaxy
                 Velocity.X = speed;
             if (Keyboard.GetState().IsKeyDown(Input.Space) && !isJumping)
             {
-                Velocity.Y = -40f;
+                Position.Y -= 10f;
+                Velocity.Y = -25f;
                 isJumping = true;
             }
-            else if (isJumping)
+            if (isJumping)
             {
-                Velocity.Y += gravity;
-                gravity += 0.1f;
-                if (gravity > 2f)
-                {
-                    gravity = 2f;
-                }
+                float i =1;
+                Velocity.Y += 1.5f * i;
+            }
+            if (!isJumping)
+            {
+                Velocity.Y = 0f;
             }
 
         }
-
-
-
-
-
-        /*  public Texture2D heroTexture { get; set; }
-          private Animatie animationR, animationL,currentAnimation,animationStanding,animationJumping;
-          private Vector2 speed;
-          private Vector2 acceleration;
-
-
-
-
-          public Vector2 Postition;
-          public Vector2 startPosition;
-
-          public Rectangle CollisionRectangle { get; set; }
-          private Rectangle _collisionRectangle;
-          public Hero(Texture2D texture,Vector2 position)
-          {
-              Postition = position;
-              startPosition = position;
-
-
-              heroTexture = texture;
-
-              #region add frames to animation       
-              animationJumping = new Animatie();
-              animationJumping.addFrame(new AnimationFrame(new Rectangle(0, 0, 144, 180)));
-
-              animationStanding = new Animatie();
-              for (int i = 0; i < 433; i += 144)
-              {
-                  animationStanding.addFrame(new AnimationFrame(new Rectangle(i, 180, 144, 180)));
-
-              }
-
-              animationL = new Animatie();
-              for (int j = 0;j < 721; j+=144)
-              {
-                  animationL.addFrame(new AnimationFrame(new Rectangle(j, 360, 144, 180)));
-              }
-
-              animationR = new Animatie();
-              for (int k = 0; k < 721; k += 144)
-              {
-                  animationR.addFrame(new AnimationFrame(new Rectangle(k, 540, 144, 180)));
-
-              }
-              #endregion
-
-              speed = new Vector2(1, 1);
-              acceleration = new Vector2(0.1f, 0.1f);
-              _collisionRectangle = new Rectangle((int)Postition.X, (int)Postition.Y, 55, 90);
-              currentAnimation = animationR;
-         }
-
-          public void draw(SpriteBatch spriteBatch)
-          {
-              spriteBatch.Draw(heroTexture, Postition, currentAnimation.current.SourceRectangle, Color.White, 0, new Vector2(0, 0), 0.5f, SpriteEffects.None, 0);
-          }
-
-          public void update(GameTime gameTime)
-          {
-
-              var direction = new Vector2(0,3) ;
-              Postition += direction;
-
-              if (Postition.Y<startPosition.Y)
-              {
-                  Postition.Y += 1f;
-              }
-
-
-              #region keyboardread
-              if (direction.X==-2)
-              {
-                  currentAnimation = animationL;
-              }
-              else if(direction.X==2)
-              {
-                  currentAnimation = animationR;
-              }
-              else if (direction.Y==-5)
-              {
-                  currentAnimation = animationJumping;
-              }
-              else
-              {
-                  currentAnimation = animationStanding;
-              }
-              #endregion
-              _collisionRectangle.Y = (int)Postition.Y;
-              _collisionRectangle.X = (int)Postition.X;
-              CollisionRectangle = _collisionRectangle;
-              currentAnimation.update(gameTime);
-          }
-        */
+        #endregion
     }
 }
