@@ -1,5 +1,6 @@
 using Guardians_of_the_galaxy.Input;
 using Guardians_of_the_galaxy.Interfaces;
+using Guardians_of_the_galaxy.Collision;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -11,7 +12,8 @@ namespace Guardians_of_the_galaxy.Sprites
    public class sprite:IGameObject,ICollision
     {
         #region Fields
-        private int offset =15;
+        private CollisionManager _collisionManager;
+        private int offset ;
         protected Texture2D _texture;
         public Vector2 Position;
         public Vector2 Velocity;
@@ -29,56 +31,32 @@ namespace Guardians_of_the_galaxy.Sprites
             set { 
             }
         }
+
+        public Rectangle CollisionRectangle { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public CollisionManager CollisionManager
+        {
+            get { return _collisionManager; }
+        }
         #endregion
- 
+
         #region Constructor
         public sprite(Texture2D texture)
         {
+            offset = 15;
             _texture = texture;
+            _collisionManager = new CollisionManager(this, offset);
         }
         #endregion
 
         #region Methodes
-        public virtual void update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime, List<sprite> sprites)
         {
         }
 
-        public virtual void draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(_texture, Position, Color.White);
         }
-        #region collision
-        protected bool IsTouchingLeft(sprite sprite)
-        {
-            return this.Rectangle.Right + this.Velocity.X > sprite.Rectangle.Left+ offset &&
-                this.Rectangle.Left < sprite.Rectangle.Left &&
-                this.Rectangle.Bottom > sprite.Rectangle.Top &&
-                this.Rectangle.Top < sprite.Rectangle.Bottom;
-        }
-        protected bool IsTouchingRight(sprite sprite)
-        {
-            return this.Rectangle.Left + this.Velocity.X < sprite.Rectangle.Right &&
-                this.Rectangle.Right > sprite.Rectangle.Right&&
-                this.Rectangle.Bottom > sprite.Rectangle.Top &&
-                this.Rectangle.Top < sprite.Rectangle.Bottom;
-        }
-        protected bool IsTouchingTop(sprite sprite)
-        {
-            return this.Rectangle.Bottom + this.Velocity.Y > sprite.Rectangle.Top &&
-                this.Rectangle.Top < sprite.Rectangle.Top &&
-                this.Rectangle.Right > sprite.Rectangle.Left + offset &&
-                this.Rectangle.Left < sprite.Rectangle.Right;
-        }
-        protected bool IsTouchingBottom(sprite sprite)
-        {
-            return this.Rectangle.Top + this.Velocity.Y < sprite.Rectangle.Bottom &&
-                this.Rectangle.Bottom > sprite.Rectangle.Bottom &&
-                this.Rectangle.Right > sprite.Rectangle.Left + offset &&
-                this.Rectangle.Left < sprite.Rectangle.Right;
-        }
-
-      
-        #endregion
         #endregion
     }
 }

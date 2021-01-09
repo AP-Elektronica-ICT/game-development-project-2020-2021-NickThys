@@ -68,6 +68,8 @@ namespace Guardians_of_the_galaxy
         #endregion
 
         #region Methods
+
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(heroTexture, this.Position, currentAnimation.Current.SourceRectangle, Color.White, 0, new Vector2(0, 0), 1f, _spriteEffect, 0);
@@ -90,19 +92,19 @@ namespace Guardians_of_the_galaxy
                 if (sprite is Block)
                 {
                     #region Check if the hero has collided with the left or right side of the sprite
-                    if (this.Velocity.X > 0 && this.IsTouchingLeft(sprite) || this.Velocity.X < 0 && this.IsTouchingRight(sprite))
+                    if (this.Velocity.X > 0 && this.CollisionManager.IsTouchingLeft(sprite) || this.Velocity.X < 0 && this.CollisionManager.IsTouchingRight(sprite))
                         this.Velocity.X = 0;
                     #endregion
 
                     #region Check if the hero has collided with the left or right side of the sprite
-                    if ((this.Velocity.Y > 0 && this.IsTouchingTop(sprite) || this.Velocity.Y < 0 && this.IsTouchingBottom(sprite)))
+                    if ((this.Velocity.Y > 0 && this.CollisionManager.IsTouchingTop(sprite) || this.Velocity.Y < 0 && this.CollisionManager.IsTouchingBottom(sprite)))
                     {
-                        if (this.Velocity.Y < 0 && this.IsTouchingBottom(sprite))
+                        if (this.Velocity.Y < 0 && this.CollisionManager.IsTouchingBottom(sprite))
                         {
                             this.Position.Y = sprite.Position.Y + sprite.Rectangle.Height;
 
                         }
-                        if (this.IsTouchingTop(sprite))
+                        if (this.CollisionManager.IsTouchingTop(sprite))
                         {
                             isJumping = false;
                             IsChanged = 1;
@@ -125,10 +127,7 @@ namespace Guardians_of_the_galaxy
                     {
                         HasDied = true;
                     }
-                  /*  if (Position.Y < 0)
-                    {
-                        this.Position.Y = 0;
-                    }*/
+                  
                 }
                 #endregion
 
@@ -166,9 +165,9 @@ namespace Guardians_of_the_galaxy
                     {
                         if (!_ronan.HasDied)
                         {
-                            if (this.IsTouchingTop(_ronan))
+                            if (this.CollisionManager.IsTouchingTop(_ronan))
                                 _ronan.HasDied = true;
-                            else if (this.IsTouchingLeft(_ronan) || this.IsTouchingRight(_ronan))
+                            else if (this.CollisionManager.IsTouchingLeft(_ronan) || this.CollisionManager.IsTouchingRight(_ronan))
                                 this.HasDied = true;
                         }
                     }
