@@ -21,15 +21,14 @@ namespace Guardians_of_the_galaxy.States
             Texture2D _restartBtnTexture = _content.Load<Texture2D>("Buttons/Replay_BTN");
             Texture2D _exitBtnTexture = _content.Load<Texture2D>("Buttons/Close_BTN");
             Texture2D _headerTexture = _content.Load<Texture2D>("Headers/LostHeader");
-            SpriteFont _buttonFont = _content.Load<SpriteFont>("Font1");
             #endregion
             #region Create buttons & header
-            button _reStartBtn = new button(_restartBtnTexture, _buttonFont)
+            button _reStartBtn = new button(_restartBtnTexture)
             {
                 Position = new Vector2(_game.windowWidth /3 - _restartBtnTexture.Width / 2, _game.windowHeight / 3 + _restartBtnTexture.Height/2),
             };
             _reStartBtn.Click += _reStartBtn_Click;
-            button _exitBtn = new button(_exitBtnTexture, _buttonFont)
+            button _exitBtn = new button(_exitBtnTexture)
             {
                 Position = new Vector2(_game.windowWidth / 3*2 - _restartBtnTexture.Width / 2, _game.windowHeight / 3 + _restartBtnTexture.Height / 2),
 

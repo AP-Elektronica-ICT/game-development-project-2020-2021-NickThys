@@ -14,7 +14,6 @@ namespace Guardians_of_the_galaxy.States
         private List<Component> _components;
         private button _newGameButton, _exitButton, _soundButton;
         private Texture2D _startButttonTexture, _endButttonTexture, _soundButttonTexture, _activeSoundButttonTexture;
-        private SpriteFont _buttonFont;
 #endregion
 
         #region Constructor
@@ -24,25 +23,22 @@ namespace Guardians_of_the_galaxy.States
              _endButttonTexture = _content.Load<Texture2D>("Buttons/Exit_BTN");
              _soundButttonTexture = _content.Load<Texture2D>("Buttons/Sound_BTN");
              _activeSoundButttonTexture = _content.Load<Texture2D>("Buttons/ActiveSound_BTN");
-             _buttonFont = _content.Load<SpriteFont>("Font1");
-            _newGameButton = new button(_startButttonTexture, _buttonFont)
+
+            _newGameButton = new button(_startButttonTexture)
             {
                 Position=new Vector2(_game.windowWidth/2- _startButttonTexture.Width/2,
-                                     _game.windowHeight/2- _startButttonTexture.Height),
-                Text=""
+                                     _game.windowHeight/2- _startButttonTexture.Height)
             };
             _newGameButton.Click += NewGameButton_Click;
-            _exitButton = new button(_endButttonTexture, _buttonFont)
+            _exitButton = new button(_endButttonTexture)
             {
                 Position = new Vector2(_game.windowWidth / 2 - _endButttonTexture.Width/2,
-                                       _game.windowHeight / 2 + _endButttonTexture.Height/2),
-                Text = ""
+                                       _game.windowHeight / 2 + _endButttonTexture.Height/2)
             };
             _exitButton.Click += ExitButton_Click;
-            _soundButton = new button(_soundButttonTexture, _buttonFont)
+            _soundButton = new button(_soundButttonTexture)
             {
-                Position = new Vector2(50,50),
-                Text = "",
+                Position = new Vector2(50,50)
             };
             _soundButton.Click += _soundButton_Click;
            

@@ -121,13 +121,6 @@
 /processorParam:TextureFormat=Color
 /build:Buttons/Start_BTN.png
 
-#begin Font1.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:Font1.spritefont
-
 #begin Headers/LostHeader.png
 /importer:TextureImporter
 /processor:TextureProcessor
