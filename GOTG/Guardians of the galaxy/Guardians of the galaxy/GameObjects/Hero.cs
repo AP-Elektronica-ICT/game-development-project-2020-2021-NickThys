@@ -13,13 +13,11 @@ namespace Guardians_of_the_galaxy
     public class Hero : sprite
     {
         #region Fields
-        public Texture2D heroTexture { get; set; }
-        public SpriteEffects _spriteEffect;
-        public bool isJumping;
-        public float gravity = 0f;
-        public bool HasDied = false,HasWon=false;
+        private Texture2D _heroTexture;
+        private SpriteEffects _spriteEffect;
+        private bool _isJumping,_hasDied,_hasWon;
         private Animatie animationR, animationL, currentAnimation, animationStanding, animationJumping;
-        private int _nbrOfCollectedItems;
+        private int _nbrOfCollectedItems, _isChanged;
         #endregion
 
         #region Properties
@@ -28,15 +26,25 @@ namespace Guardians_of_the_galaxy
             get { return _nbrOfCollectedItems; }
             set { _nbrOfCollectedItems = value; }
         }
-      
+        public bool HasDied {
+            get {return _hasDied; }
+            set {_hasDied=value; } 
+        }
+        public bool HasWon
+        {
+            get { return _hasWon; }
+            set { _hasWon = value; }
+        }
         #endregion
 
         #region Constructor
         public Hero(Texture2D texture, Texture2D NormalTexture) : base(NormalTexture)
         {
-            isJumping = true;
+            _isJumping = true;
+            _hasDied = false;
+            _hasWon = false;
             _spriteEffect =SpriteEffects.None;
-            heroTexture = texture;
+            _heroTexture = texture;
 
             #region add frames to animation       
             animationJumping = new Animatie();
@@ -63,21 +71,18 @@ namespace Guardians_of_the_galaxy
             }
             #endregion
             currentAnimation = animationStanding;
-
         }
         #endregion
 
         #region Methods
-
-
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(heroTexture, this.Position, currentAnimation.Current.SourceRectangle, Color.White, 0, new Vector2(0, 0), 1f, _spriteEffect, 0);
+            spriteBatch.Draw(_heroTexture, this.Position, currentAnimation.Current.SourceRectangle, Color.White, 0, new Vector2(0, 0), 1f, _spriteEffect, 0);
         }
  
         public override void Update(GameTime gameTime, List<sprite> sprites)
         {
-            int IsChanged = 0;
+             _isChanged = 0;
             _spriteEffect = SpriteEffects.None;
             currentAnimation = animationStanding;
             Move();
@@ -106,8 +111,8 @@ namespace Guardians_of_the_galaxy
                         }
                         if (this.CollisionManager.IsTouchingTop(sprite))
                         {
-                            isJumping = false;
-                            IsChanged = 1;
+                            _isJumping = false;
+                            _isChanged = 1;
 
                         }
                         this.Velocity.Y = 0;
@@ -117,15 +122,14 @@ namespace Guardians_of_the_galaxy
 
                     else
                     {
-                         if (IsChanged == 0)
+                         if (_isChanged == 0)
                            {
-                               isJumping = true;
-
-                           }
+                               _isJumping = true;
+                          }
                          }
                     if (this.Position.Y > 792 - currentAnimation.Current.SourceRectangle.Height)
                     {
-                        HasDied = true;
+                        _hasDied = true;
                     }
                   
                 }
@@ -133,17 +137,13 @@ namespace Guardians_of_the_galaxy
 
                 #region Check if the hero has colided with the flag
                 if (sprite is Flag)
-                {
                     if (this.CollisionRectangle.Intersects(sprite.CollisionRectangle))
-                    {
-                        HasWon = true;
-                    }
-                }
+                        _hasWon = true;
+
                 #endregion
 
                 #region Check if hero has Colided with a Collectable
                 if (sprite is Collectable)
-                {
                     if (this.CollisionRectangle.Intersects(sprite.CollisionRectangle))
                     {
                         Collectable _collectable = sprite as Collectable;
@@ -153,7 +153,6 @@ namespace Guardians_of_the_galaxy
                         _collectable.IsCollected = true;
 
                     }
-                }
                 #endregion
 
                 #region Check if the hero has collided with the enemy
@@ -176,20 +175,14 @@ namespace Guardians_of_the_galaxy
             }
             #region Set animation
             if (Velocity.X <0)
-            {
                 currentAnimation = animationL;
-            }
             else if (Velocity.X >0)
-            {
                 currentAnimation = animationR;
-            }
            if (Velocity.Y != 0)
             {
                 currentAnimation = animationJumping;
                 if (Velocity.X < 0)
-                {
                     _spriteEffect = SpriteEffects.FlipHorizontally;
-                }
             }
             currentAnimation.update(gameTime);
             #endregion
@@ -207,22 +200,19 @@ namespace Guardians_of_the_galaxy
                 Velocity.X = -speed;
             else if (Keyboard.GetState().IsKeyDown(Input.Right))
                 Velocity.X = speed;
-            if (Keyboard.GetState().IsKeyDown(Input.Space) && !isJumping)
+            if (Keyboard.GetState().IsKeyDown(Input.Space) && !_isJumping)
             {
                 Position.Y -= 10f;
                 Velocity.Y = -25f;
-                isJumping = true;
+                _isJumping = true;
             }
-            if (isJumping)
+            if (_isJumping)
             {
                 float i =1;
                 Velocity.Y += 1.5f * i;
             }
-            if (!isJumping)
-            {
+            if (!_isJumping)
                 Velocity.Y = 0f;
-            }
-
         }
         #endregion
     }
