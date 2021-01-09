@@ -13,7 +13,5 @@ namespace Guardians_of_the_galaxy.GameObjects
         public Block(Texture2D texture) : base(texture)
         {
         }
-
-
     }
 }

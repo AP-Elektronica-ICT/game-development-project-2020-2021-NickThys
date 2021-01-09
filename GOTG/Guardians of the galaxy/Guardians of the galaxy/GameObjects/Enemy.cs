@@ -11,18 +11,24 @@ namespace Guardians_of_the_galaxy.GameObjects
     class Enemy : sprite
     {
         #region Fields
-        public Texture2D EnemyTexture { get; set; }
-        public SpriteEffects _spriteEffect;
-        public bool HasDied;
+        private SpriteEffects _spriteEffect;
+        private bool _hasDied;
         private int _boundryLeft,_boundryRight,_dir;
         private Animatie _animationRunning;
         #endregion
-
+        #region Properties
+        public bool HasDied
+        {
+            get {return _hasDied; }
+            set { _hasDied = value; }
+        }
+        public Texture2D EnemyTexture { get; }
+        #endregion
         #region Constructor
         public Enemy(Texture2D texture,Texture2D _normalTexture, Vector2 _position,int _boundryLeft, int _boundryRight) : base(_normalTexture)
         {
             EnemyTexture = texture;
-            HasDied = false;
+            _hasDied = false;
             _spriteEffect = SpriteEffects.None;
             this.Position = _position;
             this._boundryLeft = _boundryLeft;
@@ -37,10 +43,10 @@ namespace Guardians_of_the_galaxy.GameObjects
         }
         #endregion
 
+        #region Methodes
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(EnemyTexture, this.Position, _animationRunning.current.SourceRectangle, Color.White, 0, new Vector2(0, 0), 1f, _spriteEffect, 0);
-
+            spriteBatch.Draw(EnemyTexture, this.Position, _animationRunning.Current.SourceRectangle, Color.White, 0, new Vector2(0, 0), 1f, _spriteEffect, 0);
         }
 
         public override void Update(GameTime gameTime, List<sprite> sprites)
@@ -53,38 +59,31 @@ namespace Guardians_of_the_galaxy.GameObjects
                 if (sprite == this)
                 {
                     if (Position.X >= _boundryRight)
-                        if(_dir!=-3)
-                        _dir = -3;
+                        if (_dir != -3)
+                            _dir = -3;
                     if (Position.X <= _boundryLeft)
-                            if (_dir != 3)
-                                _dir = 3;
-
+                        if (_dir != 3)
+                            _dir = 3;
                 }
                 #endregion
-
-
-
-
-
             }
             #region Set animation
             if (Velocity.X < 0)
             {
                 _spriteEffect = SpriteEffects.FlipHorizontally;
             }
-        
             _animationRunning.update(gameTime);
             #endregion
 
             #region set Velocity
             Position.X += Velocity.X;
-           // Velocity.X = 0;
             #endregion
         }
+
         private void Move()
         {
             Velocity.X = _dir;
-
-        }
+        } 
+        #endregion
     }
 }

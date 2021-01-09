@@ -58,7 +58,7 @@ namespace Guardians_of_the_galaxy.States
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             
-            Vector2 PlayerPosition = new Vector2(_sprites[0].Rectangle.X + (_sprites[0].Rectangle.Width / 2) - 400,0);
+            Vector2 PlayerPosition = new Vector2(_sprites[0].CollisionRectangle.X + (_sprites[0].CollisionRectangle.Width / 2) - 400,0);
             var _viewMatrix = _camera.GetViewMatrix(PlayerPosition);
             spriteBatch.Begin(transformMatrix: _viewMatrix);
             foreach (var sprite in _sprites)
