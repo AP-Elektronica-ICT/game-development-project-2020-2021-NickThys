@@ -33,6 +33,10 @@ namespace Guardians_of_the_galaxy.Sprites
         }
 
         public Rectangle CollisionRectangle { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public CollisionManager CollisionManager
+        {
+            get { return _collisionManager; }
+        }
         #endregion
 
         #region Constructor
@@ -45,11 +49,11 @@ namespace Guardians_of_the_galaxy.Sprites
         #endregion
 
         #region Methodes
-        public virtual void update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime, List<sprite> sprites)
         {
         }
 
-        public virtual void draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(_texture, Position, Color.White);
         }

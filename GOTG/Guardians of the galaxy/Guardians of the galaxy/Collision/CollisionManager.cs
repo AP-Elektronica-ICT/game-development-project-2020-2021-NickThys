@@ -23,28 +23,28 @@ namespace Guardians_of_the_galaxy.Collision
 
         #endregion
         #region Methodes
-        protected bool IsTouchingLeft(sprite sprite)
+        public bool IsTouchingLeft(sprite sprite)
         {
             return _thisSprite.Rectangle.Right + _thisSprite.Velocity.X > sprite.Rectangle.Left + _offset &&
                 _thisSprite.Rectangle.Left < sprite.Rectangle.Left &&
                 _thisSprite.Rectangle.Bottom > sprite.Rectangle.Top &&
                 _thisSprite.Rectangle.Top < sprite.Rectangle.Bottom;
         }
-        protected bool IsTouchingRight(sprite sprite)
+        public bool IsTouchingRight(sprite sprite)
         {
             return _thisSprite.Rectangle.Left + _thisSprite.Velocity.X < sprite.Rectangle.Right &&
                 _thisSprite.Rectangle.Right > sprite.Rectangle.Right &&
                 _thisSprite.Rectangle.Bottom > sprite.Rectangle.Top &&
                 _thisSprite.Rectangle.Top < sprite.Rectangle.Bottom;
         }
-        protected bool IsTouchingTop(sprite sprite)
+        public bool IsTouchingTop(sprite sprite)
         {
             return _thisSprite.Rectangle.Bottom + _thisSprite.Velocity.Y > sprite.Rectangle.Top &&
                 _thisSprite.Rectangle.Top < sprite.Rectangle.Top &&
                 _thisSprite.Rectangle.Right > sprite.Rectangle.Left + _offset &&
                 _thisSprite.Rectangle.Left < sprite.Rectangle.Right;
         }
-        protected bool IsTouchingBottom(sprite sprite)
+        public bool IsTouchingBottom(sprite sprite)
         {
             return _thisSprite.Rectangle.Top + _thisSprite.Velocity.Y < sprite.Rectangle.Bottom &&
                 _thisSprite.Rectangle.Bottom > sprite.Rectangle.Bottom &&
