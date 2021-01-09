@@ -1,4 +1,5 @@
 using Guardians_of_the_galaxy.Input;
+using Guardians_of_the_galaxy.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace Guardians_of_the_galaxy.Sprites
 {
-   public  class sprite
+   public class sprite:IGameObject,ICollision
     {
         #region Fields
         private int offset =15;
@@ -38,11 +39,11 @@ namespace Guardians_of_the_galaxy.Sprites
         #endregion
 
         #region Methodes
-        public virtual void Update(GameTime gameTime,List<sprite> sprites)
+        public virtual void update(GameTime gameTime)
         {
-
         }
-        public virtual void Draw(SpriteBatch spriteBatch)
+
+        public virtual void draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(_texture, Position, Color.White);
         }
@@ -75,6 +76,8 @@ namespace Guardians_of_the_galaxy.Sprites
                 this.Rectangle.Right > sprite.Rectangle.Left + offset &&
                 this.Rectangle.Left < sprite.Rectangle.Right;
         }
+
+      
         #endregion
         #endregion
     }
