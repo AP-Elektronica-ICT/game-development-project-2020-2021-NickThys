@@ -70,7 +70,7 @@ namespace Guardians_of_the_galaxy
         #region Methods
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(heroTexture, this.Position, currentAnimation.current.SourceRectangle, Color.White, 0, new Vector2(0, 0), 1f, _spriteEffect, 0);
+            spriteBatch.Draw(heroTexture, this.Position, currentAnimation.Current.SourceRectangle, Color.White, 0, new Vector2(0, 0), 1f, _spriteEffect, 0);
         }
  
         public override void Update(GameTime gameTime, List<sprite> sprites)
@@ -121,7 +121,7 @@ namespace Guardians_of_the_galaxy
 
                            }
                          }
-                    if (this.Position.Y > 792 - currentAnimation.current.SourceRectangle.Height)
+                    if (this.Position.Y > 792 - currentAnimation.Current.SourceRectangle.Height)
                     {
                         HasDied = true;
                     }
