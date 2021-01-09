@@ -7,6 +7,6 @@ namespace Guardians_of_the_galaxy.Interfaces
 {
     interface ICollision
     {
-        Rectangle CollisionRectangle { get; set; }
+        Rectangle CollisionRectangle { get; }
     }
 }

@@ -101,7 +101,7 @@ namespace Guardians_of_the_galaxy
                     {
                         if (this.Velocity.Y < 0 && this.CollisionManager.IsTouchingBottom(sprite))
                         {
-                            this.Position.Y = sprite.Position.Y + sprite.Rectangle.Height;
+                            this.Position.Y = sprite.Position.Y + sprite.CollisionRectangle.Height;
 
                         }
                         if (this.CollisionManager.IsTouchingTop(sprite))
@@ -134,7 +134,7 @@ namespace Guardians_of_the_galaxy
                 #region Check if the hero has colided with the flag
                 if (sprite is Flag)
                 {
-                    if (this.Rectangle.Intersects(sprite.Rectangle))
+                    if (this.CollisionRectangle.Intersects(sprite.CollisionRectangle))
                     {
                         HasWon = true;
                     }
@@ -144,7 +144,7 @@ namespace Guardians_of_the_galaxy
                 #region Check if hero has Colided with a Collectable
                 if (sprite is Collectable)
                 {
-                    if (this.Rectangle.Intersects(sprite.Rectangle))
+                    if (this.CollisionRectangle.Intersects(sprite.CollisionRectangle))
                     {
                         Collectable _collectable = sprite as Collectable;
                         if(!_collectable.IsCollected)
@@ -161,7 +161,7 @@ namespace Guardians_of_the_galaxy
                 {
                     Enemy _ronan = sprite as Enemy;
 
-                    if (this.Rectangle.Intersects(_ronan.Rectangle))
+                    if (this.CollisionRectangle.Intersects(_ronan.CollisionRectangle))
                     {
                         if (!_ronan.HasDied)
                         {

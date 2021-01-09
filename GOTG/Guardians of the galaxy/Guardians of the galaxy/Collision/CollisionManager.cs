@@ -25,31 +25,31 @@ namespace Guardians_of_the_galaxy.Collision
         #region Methodes
         public bool IsTouchingLeft(sprite sprite)
         {
-            return _thisSprite.Rectangle.Right + _thisSprite.Velocity.X > sprite.Rectangle.Left + _offset &&
-                _thisSprite.Rectangle.Left < sprite.Rectangle.Left &&
-                _thisSprite.Rectangle.Bottom > sprite.Rectangle.Top &&
-                _thisSprite.Rectangle.Top < sprite.Rectangle.Bottom;
+            return _thisSprite.CollisionRectangle.Right + _thisSprite.Velocity.X > sprite.CollisionRectangle.Left + _offset &&
+                _thisSprite.CollisionRectangle.Left < sprite.CollisionRectangle.Left &&
+                _thisSprite.CollisionRectangle.Bottom > sprite.CollisionRectangle.Top &&
+                _thisSprite.CollisionRectangle.Top < sprite.CollisionRectangle.Bottom;
         }
         public bool IsTouchingRight(sprite sprite)
         {
-            return _thisSprite.Rectangle.Left + _thisSprite.Velocity.X < sprite.Rectangle.Right &&
-                _thisSprite.Rectangle.Right > sprite.Rectangle.Right &&
-                _thisSprite.Rectangle.Bottom > sprite.Rectangle.Top &&
-                _thisSprite.Rectangle.Top < sprite.Rectangle.Bottom;
+            return _thisSprite.CollisionRectangle.Left + _thisSprite.Velocity.X < sprite.CollisionRectangle.Right &&
+                _thisSprite.CollisionRectangle.Right > sprite.CollisionRectangle.Right &&
+                _thisSprite.CollisionRectangle.Bottom > sprite.CollisionRectangle.Top &&
+                _thisSprite.CollisionRectangle.Top < sprite.CollisionRectangle.Bottom;
         }
         public bool IsTouchingTop(sprite sprite)
         {
-            return _thisSprite.Rectangle.Bottom + _thisSprite.Velocity.Y > sprite.Rectangle.Top &&
-                _thisSprite.Rectangle.Top < sprite.Rectangle.Top &&
-                _thisSprite.Rectangle.Right > sprite.Rectangle.Left + _offset &&
-                _thisSprite.Rectangle.Left < sprite.Rectangle.Right;
+            return _thisSprite.CollisionRectangle.Bottom + _thisSprite.Velocity.Y > sprite.CollisionRectangle.Top &&
+                _thisSprite.CollisionRectangle.Top < sprite.CollisionRectangle.Top &&
+                _thisSprite.CollisionRectangle.Right > sprite.CollisionRectangle.Left + _offset &&
+                _thisSprite.CollisionRectangle.Left < sprite.CollisionRectangle.Right;
         }
         public bool IsTouchingBottom(sprite sprite)
         {
-            return _thisSprite.Rectangle.Top + _thisSprite.Velocity.Y < sprite.Rectangle.Bottom &&
-                _thisSprite.Rectangle.Bottom > sprite.Rectangle.Bottom &&
-                _thisSprite.Rectangle.Right > sprite.Rectangle.Left + _offset &&
-                _thisSprite.Rectangle.Left < sprite.Rectangle.Right;
+            return _thisSprite.CollisionRectangle.Top + _thisSprite.Velocity.Y < sprite.CollisionRectangle.Bottom &&
+                _thisSprite.CollisionRectangle.Bottom > sprite.CollisionRectangle.Bottom &&
+                _thisSprite.CollisionRectangle.Right > sprite.CollisionRectangle.Left + _offset &&
+                _thisSprite.CollisionRectangle.Left < sprite.CollisionRectangle.Right;
         }
         #endregion
     }

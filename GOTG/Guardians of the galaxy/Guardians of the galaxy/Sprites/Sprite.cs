@@ -22,17 +22,13 @@ namespace Guardians_of_the_galaxy.Sprites
         #endregion
 
         #region Properties
-        public Rectangle Rectangle
-        {
+        public Rectangle CollisionRectangle {
             get
             {
-                return new Rectangle((int)Position.X,(int) Position.Y, _texture.Width, _texture.Height);
+                return new Rectangle((int)Position.X, (int)Position.Y, _texture.Width, _texture.Height);
             }
-            set { 
-            }
+           
         }
-
-        public Rectangle CollisionRectangle { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public CollisionManager CollisionManager
         {
             get { return _collisionManager; }
