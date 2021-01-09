@@ -27,7 +27,6 @@ namespace Guardians_of_the_galaxy.States
             Texture2D _headerTexture = _content.Load<Texture2D>("Headers/WonHeader");
             Texture2D _emptyStarTexture = _content.Load<Texture2D>("Score/Star_empty");
             Texture2D _goldStarTexture = _content.Load<Texture2D>("Score/Star_filled");
-            SpriteFont _buttonFont = _content.Load<SpriteFont>("Font1");
             #endregion
     
             #region Assing value to the fields
@@ -38,17 +37,17 @@ namespace Guardians_of_the_galaxy.States
     
             #region Create Compontents
             #region Buttons
-            button _replayLevelBtn = new button(_replayBtnTexture, _buttonFont)
+            button _replayLevelBtn = new button(_replayBtnTexture)
             {
                 Position = new Vector2((int)(_game.windowWidth * (1.5 /6)) - _replayBtnTexture.Width / 2, _positionBtns),
             };
             _replayLevelBtn.Click += _replayLevelBtn_Click;
-            button _nextLevelBtn = new button(_nextLevelBtnTexture, _buttonFont)
+            button _nextLevelBtn = new button(_nextLevelBtnTexture)
             {
                 Position = new Vector2((int)(_game.windowWidth * (3.0 / 6)) - _nextLevelBtnTexture.Width / 2, _positionBtns),
             };
             _nextLevelBtn.Click += _nextLevelBtn_Click;
-            button _exitBtn = new button(_exitBtnTexture, _buttonFont)
+            button _exitBtn = new button(_exitBtnTexture)
             {
                 Position = new Vector2((int)(_game.windowWidth * (4.5 / 6)) - _nextLevelBtnTexture.Width / 2, _positionBtns),
 
