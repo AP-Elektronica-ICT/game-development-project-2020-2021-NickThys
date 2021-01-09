@@ -129,15 +129,15 @@ namespace Guardians_of_the_galaxy
             #region Load content
             _yonduNormalSize = Content.Load<Texture2D>("Sprites/Yondu_jumping_rsz");
             _yonduTexture = Content.Load<Texture2D>("Sprites/Yondu_V2_rsz");
-            _blockTexture = Content.Load<Texture2D>("TestBlock");
-            _flagTexture = Content.Load<Texture2D>("Flag");
-            _collectableTexture = Content.Load<Texture2D>("STAR");
+            _blockTexture = Content.Load<Texture2D>("Sprites/TestBlock");
+            _flagTexture = Content.Load<Texture2D>("Sprites/Flag");
+            _collectableTexture = Content.Load<Texture2D>("Sprites/STAR");
             _ronanTexture = Content.Load<Texture2D>("Sprites/RonanSprite");
             _ronanNormalTexture = Content.Load<Texture2D>("Sprites/Ronan");
             _backGround=Content.Load<Texture2D>("BackGround/BackGround");
-            _mainTheme = Content.Load<Song>("MainTheme");
-            _song1 = Content.Load<Song>("Come and Get Your Love [8 Bit Tribute to Redbone & Guardians of the Galaxy] - 8 Bit Universe");
-            _song2 = Content.Load<Song>("MrBlueSky");
+            _mainTheme = Content.Load<Song>("Music/MainTheme");
+            _song1 = Content.Load<Song>("Music/ComeAndGetYourLove");
+            _song2 = Content.Load<Song>("Music/MrBlueSky");
             #endregion
             _texturesLevel1 = new Texture2D[]
             {
