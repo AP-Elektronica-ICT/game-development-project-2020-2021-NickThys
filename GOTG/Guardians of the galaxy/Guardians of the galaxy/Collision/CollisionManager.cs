@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Guardians_of_the_galaxy.CollisionManager
+namespace Guardians_of_the_galaxy.Collision
 {
-    class CollisionManager
+   public class CollisionManager
     {
         #region Fields
         private sprite _thisSprite;
