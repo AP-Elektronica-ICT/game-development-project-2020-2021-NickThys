@@ -26,25 +26,31 @@ namespace Guardians_of_the_galaxy
         static private Texture2D _backGround,_yonduNormalSize, _yonduTexture, _blockTexture, _flagTexture, _collectableTexture,_ronanTexture, _ronanNormalTexture;
         public int windowWidth = 990;
         public int windowHeight = 792;
+        private Camera _camera;
+        private Level _level;
+        private List<sprite> _sprites;
+
+        private int _levelNr;
         #endregion
 
         #region Properties
-        private Camera _camera;
-
+        public int LevelNr
+        {
+            get { return _levelNr; }
+            set { _levelNr = value; }
+        }
         public Camera Camera
         {
             get { return _camera; }
             set { _camera = value; }
         }
 
-        private Level _level;
 
         public Level Level
         {
             get { return _level; }
             set { _level = value; }
         }
-        private List<sprite> _sprites;
 
         public List<sprite> sprites
         {
@@ -138,6 +144,7 @@ namespace Guardians_of_the_galaxy
             _mainTheme = Content.Load<Song>("Music/MainTheme");
             _song1 = Content.Load<Song>("Music/ComeAndGetYourLove");
             _song2 = Content.Load<Song>("Music/MrBlueSky");
+            _levelNr = 1;
             #endregion
             _texturesLevel1 = new Texture2D[]
             {
