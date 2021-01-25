@@ -122,6 +122,7 @@ namespace Guardians_of_the_galaxy.States
 
         private void _nextLevelBtn_Click(object sender, EventArgs e)
         {
+            _game.LevelNr = 2;
             _game.CreateLevel(_game.Level2,_game.TexturesLevel2);
             _game.ChangeState(new GameState(_content, _graphicsDevice, _game, _game.Level,_game.Song2));
         }

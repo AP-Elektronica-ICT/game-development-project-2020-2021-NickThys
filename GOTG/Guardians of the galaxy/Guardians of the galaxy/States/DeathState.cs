@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,6 +13,7 @@ namespace Guardians_of_the_galaxy.States
     {
         #region Fields
         private List<Component> _components;
+        private Song _levelSong;
         #endregion
 
         #region Constructor
@@ -60,7 +62,18 @@ namespace Guardians_of_the_galaxy.States
 
         private void _reStartBtn_Click(object sender, EventArgs e)
         {
-            _game.ChangeState(new GameState(_content, _graphicsDevice, _game,_game.Level,_game.Song2));
+
+            switch (_game.LevelNr)
+            {
+                case 1:
+                    _levelSong = _game.Song1;
+                    break;
+                case 2:
+                    _levelSong = _game.Song2;
+                    break;
+               
+            }
+            _game.ChangeState(new GameState(_content, _graphicsDevice, _game,_game.Level,_levelSong));
         }
         #endregion 
 
