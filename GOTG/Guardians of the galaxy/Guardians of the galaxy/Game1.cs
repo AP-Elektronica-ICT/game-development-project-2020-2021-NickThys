@@ -18,14 +18,12 @@ namespace Guardians_of_the_galaxy
     {
         #region Fields
         private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
         private State _currentState, _nextState;
-        private Song _mainTheme,_song1,_song2;
+        private Song _mainTheme, _song1, _song2;
         private Texture2D[] _texturesLevel1, _texturesLevel2;
         private bool _musicIsPlaying;
-        static private Texture2D _backGround,_yonduNormalSize, _yonduTexture, _blockTexture, _flagTexture, _collectableTexture,_ronanTexture, _ronanNormalTexture;
-        public int windowWidth = 990;
-        public int windowHeight = 792;
+        static private Texture2D _yonduNormalSize, _yonduTexture, _blockTexture, _flagTexture, _collectableTexture, _ronanTexture, _ronanNormalTexture;
+        private Background _background;
         private Camera _camera;
         private Level _level;
         private List<sprite> _sprites;
@@ -112,8 +110,7 @@ namespace Guardians_of_the_galaxy
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
-            _graphics.PreferredBackBufferWidth = windowWidth;
-            _graphics.PreferredBackBufferHeight = windowHeight;
+
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             MediaPlayer.IsRepeating = true;
@@ -124,14 +121,21 @@ namespace Guardians_of_the_galaxy
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            Globals.WindowWidth = 990;
+            Globals.WindowHeight = 792;
+            _graphics.PreferredBackBufferWidth = Globals.WindowWidth;
+            _graphics.PreferredBackBufferHeight = Globals.WindowHeight;
+            _graphics.ApplyChanges();
+
             _musicIsPlaying = true;
             base.Initialize();
-            
+
         }
 
         protected override void LoadContent()
         {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            Globals.SpriteBatch = new SpriteBatch(GraphicsDevice);
+            Globals.ContentLoader = this.Content;
             #region Load content
             _yonduNormalSize = Content.Load<Texture2D>("Sprites/Yondu_jumping_rsz");
             _yonduTexture = Content.Load<Texture2D>("Sprites/Yondu_V2_rsz");
@@ -139,8 +143,10 @@ namespace Guardians_of_the_galaxy
             _flagTexture = Content.Load<Texture2D>("Sprites/Flag");
             _collectableTexture = Content.Load<Texture2D>("Sprites/STAR");
             _ronanTexture = Content.Load<Texture2D>("Sprites/RonanSprite");
+
             _ronanNormalTexture = Content.Load<Texture2D>("Sprites/Ronan");
-            _backGround=Content.Load<Texture2D>("BackGround/BackGround");
+            _background = new Background("BackGround/BackGround");
+
             _mainTheme = Content.Load<Song>("Music/MainTheme");
             _song1 = Content.Load<Song>("Music/ComeAndGetYourLove");
             _song2 = Content.Load<Song>("Music/MrBlueSky");
@@ -163,19 +169,19 @@ namespace Guardians_of_the_galaxy
                 _ronanNormalTexture,
            };
             _camera = new Camera(GraphicsDevice.Viewport);
-                       
-           
+
+
             _currentState = new MenuState(Content, GraphicsDevice, this);
-            
+
             #region Music
-             MediaPlayer.Volume = 0.15f;
-             MediaPlayer.Play(_mainTheme);
+            MediaPlayer.Volume = 0.15f;
+            MediaPlayer.Play(_mainTheme);
             #endregion
         }
-        public void CreateLevel(byte[,] _tileMap,Texture2D[] _textureArary)
+        public void CreateLevel(byte[,] _tileMap, Texture2D[] _textureArary)
         {
-            
-            _level = new Level(_tileMap,_textureArary);
+
+            _level = new Level(_tileMap, _textureArary);
             _level.CreateWorld();
             _sprites = new List<sprite>()
             {
@@ -191,7 +197,7 @@ namespace Guardians_of_the_galaxy
                     },Position=new Vector2(66,546),speed=6f
 
                 },
-                
+
             };
             _sprites.AddRange(_level.getBlocks());
         }
@@ -200,15 +206,10 @@ namespace Guardians_of_the_galaxy
             _nextState = state;
         }
 
-        private void InitializeContent()
-        {
-        }
-
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-            if(_musicIsPlaying)
+
+            if (_musicIsPlaying)
                 MediaPlayer.Volume = 0.15f;
             else
                 MediaPlayer.Volume = 0f;
@@ -219,19 +220,18 @@ namespace Guardians_of_the_galaxy
             }
             _currentState.Update(gameTime);
             _currentState.PostUpdate(gameTime);
-           
+
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.BurlyWood);
-            _spriteBatch.Begin();
+            Globals.SpriteBatch.Begin();
 
-            _spriteBatch.Draw(_backGround, new Rectangle(0, 0, windowWidth, windowHeight), Color.White);
-
-            _spriteBatch.End();
-            _currentState.Draw(gameTime, _spriteBatch);
+            _background.Draw();
+            Globals.SpriteBatch.End();
+            _currentState.Draw(gameTime, Globals.SpriteBatch);
 
             base.Draw(gameTime);
         }

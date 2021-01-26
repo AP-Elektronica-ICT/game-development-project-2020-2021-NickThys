@@ -26,14 +26,14 @@ namespace Guardians_of_the_galaxy.States
 
             _newGameButton = new button(_startButttonTexture)
             {
-                Position=new Vector2(_game.windowWidth/2- _startButttonTexture.Width/2,
-                                     _game.windowHeight/2- _startButttonTexture.Height)
+                Position=new Vector2(Globals.WindowWidth/2- _startButttonTexture.Width/2,
+                                     Globals.WindowHeight/2- _startButttonTexture.Height)
             };
             _newGameButton.Click += NewGameButton_Click;
             _exitButton = new button(_endButttonTexture)
             {
-                Position = new Vector2(_game.windowWidth / 2 - _endButttonTexture.Width/2,
-                                       _game.windowHeight / 2 + _endButttonTexture.Height/2)
+                Position = new Vector2(Globals.WindowWidth/ 2 - _endButttonTexture.Width/2,
+                                       Globals.WindowHeight/ 2 + _endButttonTexture.Height/2)
             };
             _exitButton.Click += ExitButton_Click;
             _soundButton = new button(_soundButttonTexture)

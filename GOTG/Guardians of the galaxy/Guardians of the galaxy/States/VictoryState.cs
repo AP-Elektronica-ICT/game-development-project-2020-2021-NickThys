@@ -30,26 +30,26 @@ namespace Guardians_of_the_galaxy.States
             #endregion
     
             #region Assing value to the fields
-            _positionHeader = _game.windowHeight / 2 - _headerTexture.Height / 2+50;
-            _positionStars = (int)(_game.windowHeight * (1.0 / 4)) - _emptyStarTexture.Height / 2+10;
-            _positionBtns = (int)(_game.windowHeight * (3.0/4)) - _nextLevelBtnTexture.Height / 2+50;
+            _positionHeader = Globals.WindowHeight/ 2 - _headerTexture.Height / 2+50;
+            _positionStars = (int)(Globals.WindowHeight* (1.0 / 4)) - _emptyStarTexture.Height / 2+10;
+            _positionBtns = (int)(Globals.WindowHeight* (3.0/4)) - _nextLevelBtnTexture.Height / 2+50;
             #endregion
     
             #region Create Compontents
             #region Buttons
             button _replayLevelBtn = new button(_replayBtnTexture)
             {
-                Position = new Vector2((int)(_game.windowWidth * (1.5 /6)) - _replayBtnTexture.Width / 2, _positionBtns),
+                Position = new Vector2((int)(Globals.WindowWidth * (1.5 /6)) - _replayBtnTexture.Width / 2, _positionBtns),
             };
             _replayLevelBtn.Click += _replayLevelBtn_Click;
             button _nextLevelBtn = new button(_nextLevelBtnTexture)
             {
-                Position = new Vector2((int)(_game.windowWidth * (3.0 / 6)) - _nextLevelBtnTexture.Width / 2, _positionBtns),
+                Position = new Vector2((int)(Globals.WindowWidth * (3.0 / 6)) - _nextLevelBtnTexture.Width / 2, _positionBtns),
             };
             _nextLevelBtn.Click += _nextLevelBtn_Click;
             button _exitBtn = new button(_exitBtnTexture)
             {
-                Position = new Vector2((int)(_game.windowWidth * (4.5 / 6)) - _nextLevelBtnTexture.Width / 2, _positionBtns),
+                Position = new Vector2((int)(Globals.WindowWidth * (4.5 / 6)) - _nextLevelBtnTexture.Width / 2, _positionBtns),
 
             };
             _exitBtn.Click += _exitBtn_Click;
@@ -60,7 +60,7 @@ namespace Guardians_of_the_galaxy.States
             #region Header
             Header _victoryHeader = new Header(_headerTexture)
             {
-                Position = new Vector2(_game.windowWidth / 2 - _headerTexture.Width / 2,_positionHeader),
+                Position = new Vector2(Globals.WindowWidth/ 2 - _headerTexture.Width / 2,_positionHeader),
 
             };
             #endregion
@@ -68,15 +68,15 @@ namespace Guardians_of_the_galaxy.States
             #region Score
             Star _firstStar = new Star(_emptyStarTexture)
             {
-                Position = new Vector2((int)(_game.windowWidth / 1.2 - _emptyStarTexture.Width / 2 -50), _positionStars),
+                Position = new Vector2((int)(Globals.WindowWidth / 1.2 - _emptyStarTexture.Width / 2 -50), _positionStars),
             };
             Star _secondStar = new Star(_emptyStarTexture)
             {
-                Position = new Vector2(_game.windowWidth / 2 - _emptyStarTexture.Width / 2, _positionStars-50),
+                Position = new Vector2(Globals.WindowWidth / 2 - _emptyStarTexture.Width / 2, _positionStars-50),
             };
             Star _thirdStar = new Star(_emptyStarTexture)
             {
-                Position = new Vector2(_game.windowWidth / 6 - _emptyStarTexture.Width / 2+50, _positionStars),
+                Position = new Vector2(Globals.WindowWidth / 6 - _emptyStarTexture.Width / 2+50, _positionStars),
             };
             #endregion
 

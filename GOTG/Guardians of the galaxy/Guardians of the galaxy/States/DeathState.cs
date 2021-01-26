@@ -27,19 +27,19 @@ namespace Guardians_of_the_galaxy.States
             #region Create buttons & header
             button _reStartBtn = new button(_restartBtnTexture)
             {
-                Position = new Vector2(_game.windowWidth /3 - _restartBtnTexture.Width / 2, _game.windowHeight / 3 + _restartBtnTexture.Height/2),
+                Position = new Vector2(Globals.WindowWidth/3 - _restartBtnTexture.Width / 2, Globals.WindowHeight / 3 + _restartBtnTexture.Height/2),
             };
             _reStartBtn.Click += _reStartBtn_Click;
             button _exitBtn = new button(_exitBtnTexture)
             {
-                Position = new Vector2(_game.windowWidth / 3*2 - _restartBtnTexture.Width / 2, _game.windowHeight / 3 + _restartBtnTexture.Height / 2),
+                Position = new Vector2(Globals.WindowWidth / 3*2 - _restartBtnTexture.Width / 2, Globals.WindowHeight / 3 + _restartBtnTexture.Height / 2),
 
             };
             _exitBtn.Click += _exitBtn_Click;
 
             Header _deathHeader = new Header(_headerTexture)
             {
-                Position = new Vector2(_game.windowWidth /2 - _headerTexture.Width / 2, _game.windowHeight / 6 + _headerTexture.Height / 2),
+                Position = new Vector2(Globals.WindowWidth / 2 - _headerTexture.Width / 2, Globals.WindowHeight / 6 + _headerTexture.Height / 2),
 
             };
             #endregion
