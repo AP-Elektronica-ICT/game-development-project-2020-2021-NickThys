@@ -19,17 +19,29 @@ namespace Guardians_of_the_galaxy.States
         private Level _level;
         private List<sprite> _sprites;
         private Camera _camera;
+        private Song _song;
         #endregion
 
         #region Constructor
-        public GameState(ContentManager content, GraphicsDevice graphicsDevice, Game1 game,Level _level,Song _song) : base(content, graphicsDevice, game)
+        public GameState( Game1 game) : base( game)
         {
             HeroDied = false;
-            this._level = _level;
-            _sprites = game.sprites;
+            switch (Globals.CurrentLevel)
+            {
+                case 1:
+                    _level = Globals.Level1;
+                    _sprites = Globals.SpritesLevel1;
+                    _song = Globals.SongLevel1;
+                    break;
+                default:
+                    _level = Globals.Level2;
+                    _sprites = Globals.SpritesLevel2;
+                    _song = Globals.SongLevel2;
+                    break;
+            }
+
             _camera = game.Camera;
             _game = game;
-            _graphicsDevice = graphicsDevice;
             foreach (sprite _sprite in _sprites)
             {
                 if (_sprite is Hero)
@@ -55,19 +67,19 @@ namespace Guardians_of_the_galaxy.States
         #endregion
 
         #region Methods
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Draw(GameTime gameTime)
         {
             
             Vector2 PlayerPosition = new Vector2(_sprites[0].CollisionRectangle.X + (_sprites[0].CollisionRectangle.Width / 2) - 400,0);
             var _viewMatrix = _camera.GetViewMatrix(PlayerPosition);
-            spriteBatch.Begin(transformMatrix: _viewMatrix);
+            Globals.SpriteBatch.Begin(transformMatrix: _viewMatrix);
             foreach (var sprite in _sprites)
             {
                 if (sprite is Collectable)
                 {
                     Collectable _collectable = sprite as Collectable;
                     if (!_collectable.IsCollected)
-                        _collectable.Draw(spriteBatch);
+                        _collectable.Draw();
                     //else
                        // _nbrOfCollectedItems++;
                 }
@@ -75,19 +87,15 @@ namespace Guardians_of_the_galaxy.States
                 {
                     Enemy _enemy = sprite as Enemy;
                     if (!_enemy.HasDied)
-                        _enemy.Draw(spriteBatch);
+                        _enemy.Draw();
                     //else
                     // _nbrOfCollectedItems++;
                 }
                 else
-                sprite.Draw(spriteBatch);
+                sprite.Draw();
             }
 
-            spriteBatch.End();
-        }
-
-        public override void PostUpdate(GameTime gameTime)
-        {
+            Globals.SpriteBatch.End();
         }
 
         public override void Update(GameTime gameTime)
@@ -102,11 +110,12 @@ namespace Guardians_of_the_galaxy.States
                     if (yondu.HasDied)
                     {
                         HeroDied = true;
-                        _game.ChangeState(new DeathState(_content, _graphicsDevice, _game));
+                        _game.ChangeState(new DeathState( _game));
                     }
                     if (yondu.HasWon)
                     {
-                        _game.ChangeState(new VictoryState(_content, _graphicsDevice, _game,yondu.NbrOfCollectedItems));
+                        Globals.CurrentLevel++;
+                        _game.ChangeState(new VictoryState( _game,yondu.NbrOfCollectedItems));
                     }
                 }
             }

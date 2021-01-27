@@ -36,9 +36,9 @@ namespace Guardians_of_the_galaxy.Components
         #endregion
 
         #region Methodes
-        public override void Draw(GameTime _gameTime, SpriteBatch _spriteBatch)
+        public override void Draw(GameTime _gameTime )
         {
-            _spriteBatch.Draw(_starTexture, Rectangle, Color.White);
+            Globals.SpriteBatch.Draw(_starTexture, Rectangle, Color.White);
         }
 
         public override void Update(GameTime _gameTime)

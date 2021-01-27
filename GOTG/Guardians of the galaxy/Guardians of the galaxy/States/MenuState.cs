@@ -17,12 +17,12 @@ namespace Guardians_of_the_galaxy.States
 #endregion
 
         #region Constructor
-        public MenuState(ContentManager content, GraphicsDevice graphicsDevice, Game1 game) : base(content, graphicsDevice, game)
+        public MenuState( Game1 game) : base( game)
         {
-             _startButttonTexture = _content.Load<Texture2D>("Buttons/Start_BTN");
-             _endButttonTexture = _content.Load<Texture2D>("Buttons/Exit_BTN");
-             _soundButttonTexture = _content.Load<Texture2D>("Buttons/Sound_BTN");
-             _activeSoundButttonTexture = _content.Load<Texture2D>("Buttons/ActiveSound_BTN");
+             _startButttonTexture = Globals.ContentLoader.Load<Texture2D>("Buttons/Start_BTN");
+             _endButttonTexture = Globals.ContentLoader.Load<Texture2D>("Buttons/Exit_BTN");
+             _soundButttonTexture = Globals.ContentLoader.Load<Texture2D>("Buttons/Sound_BTN");
+             _activeSoundButttonTexture = Globals.ContentLoader.Load<Texture2D>("Buttons/ActiveSound_BTN");
 
             _newGameButton = new button(_startButttonTexture)
             {
@@ -61,35 +61,29 @@ namespace Guardians_of_the_galaxy.States
 
         private void NewGameButton_Click(object sender, EventArgs e)
         {
-            _game.CreateLevel(_game.Level1,_game.TexturesLevel1);
-            _game.ChangeState(new GameState(_content, _graphicsDevice, _game,_game.Level,_game.Song1));
+            _game.ChangeState(new GameState( _game));
         }
         private void _soundButton_Click(object sender, EventArgs e)
         {
-            _game.MusicIsPlaying = !_game.MusicIsPlaying;
+            Globals.MusicIsPlaying = !Globals.MusicIsPlaying;
         }
         #endregion
 
         #region Methodes
-        public override void Draw(GameTime _gameTime, SpriteBatch _spriteBatch)
+        public override void Draw(GameTime _gameTime)
         {
-            _spriteBatch.Begin();
+            Globals.SpriteBatch.Begin();
             foreach (var component in _components)
-            {
-                component.Draw(_gameTime, _spriteBatch);
-            }
-            _spriteBatch.End();
+                component.Draw(_gameTime);
+            Globals.SpriteBatch.End();
         }
 
-        public override void PostUpdate(GameTime _gameTime)
-        {
-        }
-
+   
         public override void Update(GameTime _gameTime)
         {
             foreach (var component in _components)
                 component.Update(_gameTime);
-            if (_game.MusicIsPlaying)
+            if (Globals.MusicIsPlaying)
                 _soundButton.Texture = _activeSoundButttonTexture;
             else
                 _soundButton.Texture = _soundButttonTexture;

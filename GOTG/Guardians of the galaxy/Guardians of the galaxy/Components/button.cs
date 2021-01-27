@@ -38,12 +38,12 @@ namespace Guardians_of_the_galaxy.Components
         }
         #endregion
         #region Methods
-        public override void Draw(GameTime _gameTime, SpriteBatch _spriteBatch)
+        public override void Draw(GameTime _gameTime)
         {
             var colour = Color.White;
             if (_isHovering)
                 colour = Color.Gray;
-            _spriteBatch.Draw(_texture, Rectangle, colour);
+            Globals.SpriteBatch.Draw(_texture, Rectangle, colour);
           
         }
 

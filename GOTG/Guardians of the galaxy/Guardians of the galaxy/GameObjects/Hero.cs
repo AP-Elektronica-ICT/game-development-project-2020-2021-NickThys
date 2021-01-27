@@ -75,9 +75,9 @@ namespace Guardians_of_the_galaxy
         #endregion
 
         #region Methods
-        public override void Draw(SpriteBatch spriteBatch)
+        public override void Draw()
         {
-            spriteBatch.Draw(_heroTexture, this.Position, currentAnimation.Current.SourceRectangle, Color.White, 0, new Vector2(0, 0), 1f, _spriteEffect, 0);
+            Globals.SpriteBatch.Draw(_heroTexture, this.Position, currentAnimation.Current.SourceRectangle, Color.White, 0, new Vector2(0, 0), 1f, _spriteEffect, 0);
         }
  
         public override void Update(GameTime gameTime, List<sprite> sprites)

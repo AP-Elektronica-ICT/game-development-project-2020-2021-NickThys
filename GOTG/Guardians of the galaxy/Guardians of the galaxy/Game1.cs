@@ -21,22 +21,16 @@ namespace Guardians_of_the_galaxy
         private State _currentState, _nextState;
         private Song _mainTheme, _song1, _song2;
         private Texture2D[] _texturesLevel1, _texturesLevel2;
-        private bool _musicIsPlaying;
         static private Texture2D _yonduNormalSize, _yonduTexture, _blockTexture, _flagTexture, _collectableTexture, _ronanTexture, _ronanNormalTexture;
         private Background _background;
         private Camera _camera;
         private Level _level;
         private List<sprite> _sprites;
 
-        private int _levelNr;
         #endregion
 
         #region Properties
-        public int LevelNr
-        {
-            get { return _levelNr; }
-            set { _levelNr = value; }
-        }
+      
         public Camera Camera
         {
             get { return _camera; }
@@ -103,7 +97,6 @@ namespace Guardians_of_the_galaxy
         {
             get { return _song2; }
         }
-        public bool MusicIsPlaying { get { return _musicIsPlaying; } set { _musicIsPlaying = value; } }
         #endregion
 
         #region Constructor
@@ -123,11 +116,12 @@ namespace Guardians_of_the_galaxy
             // TODO: Add your initialization logic here
             Globals.WindowWidth = 990;
             Globals.WindowHeight = 792;
+            Globals.CurrentLevel = 1;
             _graphics.PreferredBackBufferWidth = Globals.WindowWidth;
             _graphics.PreferredBackBufferHeight = Globals.WindowHeight;
             _graphics.ApplyChanges();
 
-            _musicIsPlaying = true;
+            Globals.MusicIsPlaying = true;
             base.Initialize();
 
         }
@@ -136,21 +130,16 @@ namespace Guardians_of_the_galaxy
         {
             Globals.SpriteBatch = new SpriteBatch(GraphicsDevice);
             Globals.ContentLoader = this.Content;
+
             #region Load content
             _yonduNormalSize = Content.Load<Texture2D>("Sprites/Yondu_jumping_rsz");
             _yonduTexture = Content.Load<Texture2D>("Sprites/Yondu_V2_rsz");
-            _blockTexture = Content.Load<Texture2D>("Sprites/TestBlock");
-            _flagTexture = Content.Load<Texture2D>("Sprites/Flag");
-            _collectableTexture = Content.Load<Texture2D>("Sprites/STAR");
-            _ronanTexture = Content.Load<Texture2D>("Sprites/RonanSprite");
 
-            _ronanNormalTexture = Content.Load<Texture2D>("Sprites/Ronan");
             _background = new Background("BackGround/BackGround");
 
             _mainTheme = Content.Load<Song>("Music/MainTheme");
-            _song1 = Content.Load<Song>("Music/ComeAndGetYourLove");
-            _song2 = Content.Load<Song>("Music/MrBlueSky");
-            _levelNr = 1;
+            Globals.SongLevel1 = Content.Load<Song>("Music/ComeAndGetYourLove");
+            Globals.SongLevel2 = Content.Load<Song>("Music/MrBlueSky");
             #endregion
             _texturesLevel1 = new Texture2D[]
             {
@@ -169,23 +158,11 @@ namespace Guardians_of_the_galaxy
                 _ronanNormalTexture,
            };
             _camera = new Camera(GraphicsDevice.Viewport);
-
-
-            _currentState = new MenuState(Content, GraphicsDevice, this);
-
-            #region Music
-            MediaPlayer.Volume = 0.15f;
-            MediaPlayer.Play(_mainTheme);
-            #endregion
-        }
-        public void CreateLevel(byte[,] _tileMap, Texture2D[] _textureArary)
-        {
-
-            _level = new Level(_tileMap, _textureArary);
-            _level.CreateWorld();
-            _sprites = new List<sprite>()
+            Globals.Level1 = new Level(Level1, TexturesLevel1);
+            Globals.Level1.CreateWorld();
+            Globals.SpritesLevel1 = new List<sprite>()
             {
-                new Hero(_yonduTexture,_yonduNormalSize)
+                  new Hero(_yonduTexture,_yonduNormalSize)
                 {
                     Input=new input()
                     {
@@ -199,8 +176,36 @@ namespace Guardians_of_the_galaxy
                 },
 
             };
-            _sprites.AddRange(_level.getBlocks());
+            Globals.SpritesLevel1.AddRange(Globals.Level1.getBlocks());
+
+            Globals.Level2 = new Level(Level2, TexturesLevel2);
+            Globals.Level2.CreateWorld();
+            Globals.SpritesLevel2 = new List<sprite>()
+            {
+                  new Hero(_yonduTexture,_yonduNormalSize)
+                {
+                    Input=new input()
+                    {
+                        Left=Keys.Left,
+                        Right=Keys.Right,
+                        Space=Keys.Space,
+
+
+                    },Position=new Vector2(66,546),speed=6f
+
+                },
+
+            };
+            Globals.SpritesLevel2.AddRange(Globals.Level2.getBlocks());
+
+            _currentState = new MenuState(this);
+
+            #region Music
+            MediaPlayer.Volume = 0.15f;
+            MediaPlayer.Play(_mainTheme);
+            #endregion
         }
+        
         public void ChangeState(State state)
         {
             _nextState = state;
@@ -209,7 +214,7 @@ namespace Guardians_of_the_galaxy
         protected override void Update(GameTime gameTime)
         {
 
-            if (_musicIsPlaying)
+            if (Globals.MusicIsPlaying)
                 MediaPlayer.Volume = 0.15f;
             else
                 MediaPlayer.Volume = 0f;
@@ -219,7 +224,6 @@ namespace Guardians_of_the_galaxy
                 _nextState = null;
             }
             _currentState.Update(gameTime);
-            _currentState.PostUpdate(gameTime);
 
             base.Update(gameTime);
         }
@@ -231,7 +235,7 @@ namespace Guardians_of_the_galaxy
 
             _background.Draw();
             Globals.SpriteBatch.End();
-            _currentState.Draw(gameTime, Globals.SpriteBatch);
+            _currentState.Draw(gameTime);
 
             base.Draw(gameTime);
         }

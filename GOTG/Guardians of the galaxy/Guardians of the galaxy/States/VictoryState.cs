@@ -12,25 +12,24 @@ namespace Guardians_of_the_galaxy.States
     {
         #region Fields
         private List<Component> _components;
-        private int _collectedItems,_positionHeader,_positionStars,_positionBtns;
+        private int _collectedItems,_positionStars,_positionBtns;
         #endregion
 
         #region Constructor
-        public VictoryState(ContentManager _content, GraphicsDevice _graphicsDevice, Game1 _game, int _CollectedItems) : base(_content, _graphicsDevice, _game)
+        public VictoryState( Game1 _game, int _CollectedItems) : base(  _game)
         {
             this._collectedItems = _CollectedItems;
            
             #region Load Content
-            Texture2D _nextLevelBtnTexture = _content.Load<Texture2D>("Buttons/Play_BTN");
-            Texture2D _exitBtnTexture = _content.Load<Texture2D>("Buttons/Close_BTN");
-            Texture2D _replayBtnTexture = _content.Load<Texture2D>("Buttons/Replay_BTN");
-            Texture2D _headerTexture = _content.Load<Texture2D>("Headers/WonHeader");
-            Texture2D _emptyStarTexture = _content.Load<Texture2D>("Score/Star_empty");
-            Texture2D _goldStarTexture = _content.Load<Texture2D>("Score/Star_filled");
+            Texture2D _nextLevelBtnTexture = Globals.ContentLoader.Load<Texture2D>("Buttons/Play_BTN");
+            Texture2D _exitBtnTexture = Globals.ContentLoader.Load<Texture2D>("Buttons/Close_BTN");
+            Texture2D _replayBtnTexture = Globals.ContentLoader.Load<Texture2D>("Buttons/Replay_BTN");
+            Texture2D _headerTexture = Globals.ContentLoader.Load<Texture2D>("Headers/WonHeader");
+            Texture2D _emptyStarTexture = Globals.ContentLoader.Load<Texture2D>("Score/Star_empty");
+            Texture2D _goldStarTexture = Globals.ContentLoader.Load<Texture2D>("Score/Star_filled");
             #endregion
     
             #region Assing value to the fields
-            _positionHeader = Globals.WindowHeight/ 2 - _headerTexture.Height / 2+50;
             _positionStars = (int)(Globals.WindowHeight* (1.0 / 4)) - _emptyStarTexture.Height / 2+10;
             _positionBtns = (int)(Globals.WindowHeight* (3.0/4)) - _nextLevelBtnTexture.Height / 2+50;
             #endregion
@@ -60,9 +59,9 @@ namespace Guardians_of_the_galaxy.States
             #region Header
             Header _victoryHeader = new Header(_headerTexture)
             {
-                Position = new Vector2(Globals.WindowWidth/ 2 - _headerTexture.Width / 2,_positionHeader),
+                Position = new Vector2(Globals.WindowWidth / 2 - _headerTexture.Width / 2, Globals.WindowHeight / 2 - _headerTexture.Height / 2 + 50),
 
-            };
+        };
             #endregion
 
             #region Score
@@ -94,9 +93,9 @@ namespace Guardians_of_the_galaxy.States
                 _firstStar,
             };
             int i = 1;
+            //Show number of collected stars
             foreach (Component _component  in _components)
             {
-               
                 if (_component is Star && i<=_collectedItems)
                 {
                     Star _star = _component as Star;
@@ -112,7 +111,7 @@ namespace Guardians_of_the_galaxy.States
         #region On click handlers
         private void _replayLevelBtn_Click(object sender, EventArgs e)
         {
-            _game.ChangeState(new GameState(_content, _graphicsDevice, _game, _game.Level,_game.Song1));
+            _game.ChangeState(new GameState( _game));
         }
 
         private void _exitBtn_Click(object sender, EventArgs e)
@@ -122,26 +121,27 @@ namespace Guardians_of_the_galaxy.States
 
         private void _nextLevelBtn_Click(object sender, EventArgs e)
         {
-            _game.LevelNr = 2;
-            _game.CreateLevel(_game.Level2,_game.TexturesLevel2);
-            _game.ChangeState(new GameState(_content, _graphicsDevice, _game, _game.Level,_game.Song2));
+            if (Globals.CurrentLevel != 3)
+            {
+                _game.ChangeState(new GameState( _game));
+            }
+            else
+            {
+                //End game state
+            }
+
         }
         #endregion 
 
         #region Methodes
-        public override void Draw(GameTime _gameTime, SpriteBatch _spriteBatch)
+        public override void Draw(GameTime _gameTime)
         {
-            _spriteBatch.Begin();
+            Globals.SpriteBatch.Begin();
             foreach (var component in _components)
-            {
-                component.Draw(_gameTime, _spriteBatch);
-            }
-            _spriteBatch.End();
+                component.Draw(_gameTime);
+            Globals.SpriteBatch.End();
         }
 
-        public override void PostUpdate(GameTime _gameTime)
-        {
-        }
 
         public override void Update(GameTime _gameTime)
         {

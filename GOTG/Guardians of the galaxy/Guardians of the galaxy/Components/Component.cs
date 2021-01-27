@@ -8,7 +8,7 @@ namespace Guardians_of_the_galaxy.Components
 {
    public abstract class Component
     {
-        public abstract void Draw(GameTime _gameTime, SpriteBatch _spriteBatch);
+        public abstract void Draw(GameTime _gameTime);
         public abstract void Update(GameTime _gameTime);
     }
 }

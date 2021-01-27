@@ -49,9 +49,9 @@ namespace Guardians_of_the_galaxy.Sprites
         {
         }
 
-        public virtual void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw()
         {
-            spriteBatch.Draw(_texture, Position, Color.White);
+            Globals.SpriteBatch.Draw(_texture, Position, Color.White);
         }
         #endregion
     }
