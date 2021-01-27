@@ -114,7 +114,7 @@ namespace Guardians_of_the_galaxy.States
                     }
                     if (yondu.HasWon)
                     {
-                        Globals.CurrentLevel++;
+
                         _game.ChangeState(new VictoryState( _game,yondu.NbrOfCollectedItems));
                     }
                 }

@@ -17,7 +17,7 @@ namespace Guardians_of_the_galaxy.WorldDesign
         #endregion
 
         #region Constructor
-        public Level(byte[,] _tileMap, Texture2D[] _textureArray)
+        public Level(byte[,] _tileMap)
         {
             _tileArray = _tileMap;
             _blockTexture = Globals.ContentLoader.Load<Texture2D>("Sprites/TestBlock");
@@ -26,12 +26,7 @@ namespace Guardians_of_the_galaxy.WorldDesign
             _ronanTexture = Globals.ContentLoader.Load<Texture2D>("Sprites/RonanSprite");
             _ronanNormalTexture = Globals.ContentLoader.Load<Texture2D>("Sprites/Ronan");
             _blokArray = new sprite[_tileArray.GetLength(0), _tileArray.GetLength(1)];
-           
-        }
-        #endregion
-        #region Methodes
-        public void CreateWorld()
-        {
+
             for (int x = 0; x < _tileArray.GetLength(0); x++)
             {
                 for (int y = 0; y < _tileArray.GetLength(1); y++)
@@ -46,7 +41,11 @@ namespace Guardians_of_the_galaxy.WorldDesign
                         _blokArray[x, y] = new Enemy(_ronanTexture, _ronanNormalTexture, new Vector2(y * _blockTexture.Width, (x + 1) * _blockTexture.Height - _ronanNormalTexture.Height), y * _blockTexture.Width - 2 * _ronanNormalTexture.Width, y * _blockTexture.Width + 2 * _ronanNormalTexture.Width);
                 }
             }
+
         }
+        #endregion
+        #region Methodes
+     
         public List<sprite> getBlocks()
         {
             List<sprite> allBlocks = new List<sprite>();

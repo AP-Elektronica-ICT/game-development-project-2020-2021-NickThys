@@ -121,6 +121,7 @@ namespace Guardians_of_the_galaxy.States
 
         private void _nextLevelBtn_Click(object sender, EventArgs e)
         {
+            Globals.CurrentLevel++;
             if (Globals.CurrentLevel != 3)
             {
                 _game.ChangeState(new GameState( _game));

@@ -19,9 +19,8 @@ namespace Guardians_of_the_galaxy
         #region Fields
         private GraphicsDeviceManager _graphics;
         private State _currentState, _nextState;
-        private Song _mainTheme, _song1, _song2;
-        private Texture2D[] _texturesLevel1, _texturesLevel2;
-        static private Texture2D _yonduNormalSize, _yonduTexture, _blockTexture, _flagTexture, _collectableTexture, _ronanTexture, _ronanNormalTexture;
+        private Song _mainTheme;
+        static private Texture2D _yonduNormalSize, _yonduTexture;
         private Background _background;
         private Camera _camera;
         private Level _level;
@@ -81,23 +80,8 @@ namespace Guardians_of_the_galaxy
             {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
             };
 
-        public Texture2D[] TexturesLevel1
-        {
-            get { return _texturesLevel1; }
-        }
-        public Texture2D[] TexturesLevel2
-        {
-            get { return _texturesLevel2; }
-        }
-        public Song Song1
-        {
-            get { return _song1; }
-        }
-        public Song Song2
-        {
-            get { return _song2; }
-        }
-        #endregion
+       
+    #endregion
 
         #region Constructor
         public Game1()
@@ -141,25 +125,9 @@ namespace Guardians_of_the_galaxy
             Globals.SongLevel1 = Content.Load<Song>("Music/ComeAndGetYourLove");
             Globals.SongLevel2 = Content.Load<Song>("Music/MrBlueSky");
             #endregion
-            _texturesLevel1 = new Texture2D[]
-            {
-                _blockTexture,
-                _flagTexture,
-                _collectableTexture,
-                                _ronanTexture,
-                _ronanNormalTexture,
-            };
-            _texturesLevel2 = new Texture2D[]
-           {
-                _blockTexture,
-                _flagTexture,
-                _collectableTexture,
-                                _ronanTexture,
-                _ronanNormalTexture,
-           };
             _camera = new Camera(GraphicsDevice.Viewport);
-            Globals.Level1 = new Level(Level1, TexturesLevel1);
-            Globals.Level1.CreateWorld();
+            Globals.Level1 = new Level(Level1);
+
             Globals.SpritesLevel1 = new List<sprite>()
             {
                   new Hero(_yonduTexture,_yonduNormalSize)
@@ -178,8 +146,7 @@ namespace Guardians_of_the_galaxy
             };
             Globals.SpritesLevel1.AddRange(Globals.Level1.getBlocks());
 
-            Globals.Level2 = new Level(Level2, TexturesLevel2);
-            Globals.Level2.CreateWorld();
+            Globals.Level2 = new Level(Level2);
             Globals.SpritesLevel2 = new List<sprite>()
             {
                   new Hero(_yonduTexture,_yonduNormalSize)
