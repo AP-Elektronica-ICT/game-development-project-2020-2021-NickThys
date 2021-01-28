@@ -1,4 +1,5 @@
 ﻿using Guardians_of_the_galaxy.Sprites;
+using Guardians_of_the_galaxy.States;
 using Guardians_of_the_galaxy.WorldDesign;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -20,5 +21,7 @@ namespace Guardians_of_the_galaxy
         public static Song SongLevel1, SongLevel2;
         public static List<sprite> SpritesLevel1, SpritesLevel2;
         public static int CurrentLevel;
+        public static Camera GameCamera;
+        public static StateManager StateManager;
     }
 }

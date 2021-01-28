@@ -31,14 +31,26 @@ namespace Guardians_of_the_galaxy.WorldDesign
             {
                 for (int y = 0; y < _tileArray.GetLength(1); y++)
                 {
-                    if (_tileArray[x, y] == 1)
-                        _blokArray[x, y] = new Block(_blockTexture) { Position = new Vector2(y * _blockTexture.Width, x * _blockTexture.Height) };
-                    if (_tileArray[x, y] == 2)
-                        _blokArray[x, y] = new Flag(_flagTexture) { Position = new Vector2(y * _flagTexture.Width, x * _flagTexture.Height) };
-                    if (_tileArray[x, y] == 3)
-                        _blokArray[x, y] = new Collectable(_collectableTexture) { Position = new Vector2(y * _blockTexture.Width, x * _blockTexture.Height) };
-                    if (_tileArray[x, y] == 4)
-                        _blokArray[x, y] = new Enemy(_ronanTexture, _ronanNormalTexture, new Vector2(y * _blockTexture.Width, (x + 1) * _blockTexture.Height - _ronanNormalTexture.Height), y * _blockTexture.Width - 2 * _ronanNormalTexture.Width, y * _blockTexture.Width + 2 * _ronanNormalTexture.Width);
+                    switch(_tileArray[x, y])
+                    {
+                        case 1:
+                            _blokArray[x, y] = new Block(_blockTexture) { Position = new Vector2(y * _blockTexture.Width, x * _blockTexture.Height) };
+                            break;
+                        case 2:
+                            _blokArray[x, y] = new Flag(_flagTexture) { Position = new Vector2(y * _flagTexture.Width, x * _flagTexture.Height) };
+                            break;
+                        case 3:
+                            _blokArray[x, y] = new Collectable(_collectableTexture) { Position = new Vector2(y * _blockTexture.Width, x * _blockTexture.Height) };
+                            break;
+                        case 4:
+                            _blokArray[x, y] = new Enemy(_ronanTexture,
+                            _ronanNormalTexture,
+                            new Vector2(y * _blockTexture.Width, (x + 1) * _blockTexture.Height - _ronanNormalTexture.Height),
+                            y * _blockTexture.Width - 2 * _ronanNormalTexture.Width,
+                            y * _blockTexture.Width +  _ronanNormalTexture.Width);
+                            break;
+                    }
+
                 }
             }
 

@@ -61,7 +61,7 @@ namespace Guardians_of_the_galaxy.States
 
         private void NewGameButton_Click(object sender, EventArgs e)
         {
-            _game.ChangeState(new GameState( _game));
+            Globals.StateManager.ChangeState(new GameState( _game));
         }
         private void _soundButton_Click(object sender, EventArgs e)
         {

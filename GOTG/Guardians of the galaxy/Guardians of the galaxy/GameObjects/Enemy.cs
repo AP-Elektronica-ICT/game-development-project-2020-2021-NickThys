@@ -32,7 +32,7 @@ namespace Guardians_of_the_galaxy.GameObjects
             _spriteEffect = SpriteEffects.None;
             this.Position = _position;
             this._boundryLeft = _boundryLeft;
-            this._boundryRight = _boundryRight- 94;
+            this._boundryRight = _boundryRight;
             Velocity.X = 3;
             _dir = 3;
             _animationRunning = new Animatie();

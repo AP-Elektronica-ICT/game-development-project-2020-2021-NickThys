@@ -60,7 +60,7 @@ namespace Guardians_of_the_galaxy.States
 
         private void _reStartBtn_Click(object sender, EventArgs e)
         {
-            _game.ChangeState(new GameState(_game));
+            Globals.StateManager.ChangeState(new GameState(_game));
         }
         #endregion 
 

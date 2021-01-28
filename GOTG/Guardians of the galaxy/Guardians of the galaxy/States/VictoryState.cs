@@ -111,7 +111,7 @@ namespace Guardians_of_the_galaxy.States
         #region On click handlers
         private void _replayLevelBtn_Click(object sender, EventArgs e)
         {
-            _game.ChangeState(new GameState( _game));
+            Globals.StateManager.ChangeState(new GameState( _game));
         }
 
         private void _exitBtn_Click(object sender, EventArgs e)
@@ -124,7 +124,7 @@ namespace Guardians_of_the_galaxy.States
             Globals.CurrentLevel++;
             if (Globals.CurrentLevel != 3)
             {
-                _game.ChangeState(new GameState( _game));
+                Globals.StateManager.ChangeState(new GameState( _game));
             }
             else
             {
@@ -138,9 +138,11 @@ namespace Guardians_of_the_galaxy.States
         public override void Draw(GameTime _gameTime)
         {
             Globals.SpriteBatch.Begin();
+
             foreach (var component in _components)
                 component.Draw(_gameTime);
             Globals.SpriteBatch.End();
+
         }
 
 
