@@ -11,7 +11,7 @@ namespace Guardians_of_the_galaxy.States
    public class MenuState : State
     {
         #region Fields
-        private List<Component> _components;
+        private List<IComponent> _components;
         private button _newGameButton, _exitButton, _soundButton;
         private Texture2D _startButttonTexture, _endButttonTexture, _soundButttonTexture, _activeSoundButttonTexture;
 #endregion
@@ -42,7 +42,7 @@ namespace Guardians_of_the_galaxy.States
             };
             _soundButton.Click += _soundButton_Click;
            
-            _components = new List<Component>()
+            _components = new List<IComponent>()
             {
                 _newGameButton,
                 _exitButton,

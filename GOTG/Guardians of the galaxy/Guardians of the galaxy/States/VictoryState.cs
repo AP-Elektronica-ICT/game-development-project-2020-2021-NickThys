@@ -11,7 +11,7 @@ namespace Guardians_of_the_galaxy.States
     class VictoryState:State
     {
         #region Fields
-        private List<Component> _components;
+        private List<IComponent> _components;
         private int _collectedItems,_positionStars,_positionBtns;
         #endregion
 
@@ -82,7 +82,7 @@ namespace Guardians_of_the_galaxy.States
             #endregion
 
             #region Add components to the list
-            _components = new List<Component>()
+            _components = new List<IComponent>()
             {
                 _replayLevelBtn,
                 _nextLevelBtn,
@@ -94,7 +94,7 @@ namespace Guardians_of_the_galaxy.States
             };
             int i = 1;
             //Show number of collected stars
-            foreach (Component _component  in _components)
+            foreach (IComponent _component  in _components)
             {
                 if (_component is Star && i<=_collectedItems)
                 {

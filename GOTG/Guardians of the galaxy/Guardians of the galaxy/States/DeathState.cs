@@ -12,7 +12,7 @@ namespace Guardians_of_the_galaxy.States
     public class DeathState : State
     {
         #region Fields
-        private List<Component> _components;
+        private List<IComponent> _components;
         #endregion
 
         #region Constructor
@@ -42,7 +42,7 @@ namespace Guardians_of_the_galaxy.States
             };
             #endregion
             #region Add buttons to the list
-            _components = new List<Component>()
+            _components = new List<IComponent>()
             {
                 _reStartBtn,
                 _exitBtn,

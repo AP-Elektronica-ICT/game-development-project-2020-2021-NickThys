@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Guardians_of_the_galaxy.Components
 {
-   public class button : Component
+   public class button : IComponent
     {
         #region Fields
         private MouseState _currentMouse,_previousMouse;
@@ -38,7 +38,7 @@ namespace Guardians_of_the_galaxy.Components
         }
         #endregion
         #region Methods
-        public override void Draw(GameTime _gameTime)
+        public void Draw(GameTime _gameTime)
         {
             var colour = Color.White;
             if (_isHovering)
@@ -47,7 +47,7 @@ namespace Guardians_of_the_galaxy.Components
           
         }
 
-        public override void Update(GameTime _gameTime)
+        public void Update(GameTime _gameTime)
         {
             _previousMouse = _currentMouse;
             _currentMouse = Mouse.GetState();
