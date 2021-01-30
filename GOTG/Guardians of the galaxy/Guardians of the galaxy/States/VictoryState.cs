@@ -17,10 +17,10 @@ namespace Guardians_of_the_galaxy.States
         #endregion
 
         #region Constructor
-        public VictoryState( Game1 _game, int _CollectedItems) : base(  _game)
+        public VictoryState(Game1 _game, int _CollectedItems) : base(_game)
         {
             this._collectedItems = _CollectedItems;
-           
+
             #region Load Content
             Texture2D _nextLevelBtnTexture = Globals.ContentLoader.Load<Texture2D>("Buttons/Play_BTN");
             Texture2D _exitBtnTexture = Globals.ContentLoader.Load<Texture2D>("Buttons/Close_BTN");
@@ -29,29 +29,22 @@ namespace Guardians_of_the_galaxy.States
             Texture2D _emptyStarTexture = Globals.ContentLoader.Load<Texture2D>("Score/Star_empty");
             Texture2D _goldStarTexture = Globals.ContentLoader.Load<Texture2D>("Score/Star_filled");
             #endregion
-    
+
             #region Assing value to the fields
-            _positionStars = (int)(Globals.WindowHeight* (1.0 / 4)) - _emptyStarTexture.Height / 2+10;
-            _positionBtns = (int)(Globals.WindowHeight* (3.0/4)) - _nextLevelBtnTexture.Height / 2+50;
+            _positionStars = (int)(Globals.WindowHeight * (1.0 / 4)) - _emptyStarTexture.Height / 2 + 10;
+            _positionBtns = (int)(Globals.WindowHeight * (3.0 / 4)) - _nextLevelBtnTexture.Height / 2 + 50;
             #endregion
-    
+
             #region Create Compontents
             #region Buttons
-            button _replayLevelBtn = new button(_replayBtnTexture)
-            {
-                Position = new Vector2((int)(Globals.WindowWidth * (1.5 /6)) - _replayBtnTexture.Width / 2, _positionBtns),
-            };
-            _replayLevelBtn.Click += _replayLevelBtn_Click;
-            button _nextLevelBtn = new button(_nextLevelBtnTexture)
-            {
-                Position = new Vector2((int)(Globals.WindowWidth * (3.0 / 6)) - _nextLevelBtnTexture.Width / 2, _positionBtns),
-            };
-            _nextLevelBtn.Click += _nextLevelBtn_Click;
-            button _exitBtn = new button(_exitBtnTexture)
-            {
-                Position = new Vector2((int)(Globals.WindowWidth * (4.5 / 6)) - _nextLevelBtnTexture.Width / 2, _positionBtns),
+            button _replayLevelBtn = new RegularButton(_replayBtnTexture, new Vector2((int)(Globals.WindowWidth * (1.5 / 6)) - _replayBtnTexture.Width / 2, _positionBtns)) { };
 
-            };
+            _replayLevelBtn.Click += _replayLevelBtn_Click;
+            button _nextLevelBtn = new RegularButton(_nextLevelBtnTexture, new Vector2((int)(Globals.WindowWidth * (3.0 / 6)) - _nextLevelBtnTexture.Width / 2, _positionBtns)) { };
+
+            _nextLevelBtn.Click += _nextLevelBtn_Click;
+            button _exitBtn = new RegularButton(_exitBtnTexture, new Vector2((int)(Globals.WindowWidth * (4.5 / 6)) - _nextLevelBtnTexture.Width / 2, _positionBtns)) { };
+
             _exitBtn.Click += _exitBtn_Click;
           
             

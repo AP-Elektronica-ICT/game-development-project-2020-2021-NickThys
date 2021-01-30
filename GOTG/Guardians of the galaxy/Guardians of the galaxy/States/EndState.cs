@@ -21,16 +21,9 @@ namespace Guardians_of_the_galaxy.States
             Texture2D _headerTexture = Globals.ContentLoader.Load<Texture2D>("Headers/WonHeader");
             #endregion
             #region Create buttons & header
-            button _reStartBtn = new button(_restartBtnTexture)
-            {
-                Position = new Vector2(Globals.WindowWidth / 3 - _restartBtnTexture.Width / 2, Globals.WindowHeight / 3 + _restartBtnTexture.Height / 2),
-            };
+            button _reStartBtn = new RegularButton(_restartBtnTexture, new Vector2(Globals.WindowWidth / 3 - _restartBtnTexture.Width / 2, Globals.WindowHeight / 3 + _restartBtnTexture.Height / 2)) { };
             _reStartBtn.Click += _reStartBtn_Click;
-            button _exitBtn = new button(_exitBtnTexture)
-            {
-                Position = new Vector2(Globals.WindowWidth / 3 * 2 - _restartBtnTexture.Width / 2, Globals.WindowHeight / 3 + _restartBtnTexture.Height / 2),
-
-            };
+            button _exitBtn = new RegularButton(_exitBtnTexture, new Vector2(Globals.WindowWidth / 3 * 2 - _exitBtnTexture.Width / 2, Globals.WindowHeight / 3 + _exitBtnTexture.Height / 2)){ };
             _exitBtn.Click += _exitBtn_Click;
 
             Header _deathHeader = new Header(_headerTexture)

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Guardians_of_the_galaxy.Components
 {
-   public class button : IComponent
+   public abstract class button : IComponent
     {
         #region Fields
         private MouseState _currentMouse,_previousMouse;
@@ -19,10 +19,12 @@ namespace Guardians_of_the_galaxy.Components
         public event EventHandler Click;
         public bool Clicked { get; private set; }
         public Vector2 Position { get; set; }
+
         public Texture2D Texture {
             get { return _texture; }
             set { _texture = value; }
         }
+
         public Rectangle Rectangle {
             get
             {
@@ -31,14 +33,11 @@ namespace Guardians_of_the_galaxy.Components
         }
         #endregion
 
-        #region Constructor
-        public button(Texture2D texture)
-        {
-            _texture = texture;
-        }
-        #endregion
+        
+       
+        
         #region Methods
-        public void Draw(GameTime _gameTime)
+        public virtual void Draw(GameTime _gameTime)
         {
             var colour = Color.White;
             if (_isHovering)
@@ -47,7 +46,7 @@ namespace Guardians_of_the_galaxy.Components
           
         }
 
-        public void Update(GameTime _gameTime)
+        public virtual void Update(GameTime _gameTime)
         {
             _previousMouse = _currentMouse;
             _currentMouse = Mouse.GetState();

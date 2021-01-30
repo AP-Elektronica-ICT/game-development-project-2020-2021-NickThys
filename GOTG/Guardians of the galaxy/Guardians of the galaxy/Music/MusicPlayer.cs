@@ -7,16 +7,20 @@ namespace Guardians_of_the_galaxy.Music
 {
     public class MusicPlayer
     {
+        private Song _currentSong;
         public MusicPlayer()
         {
             MediaPlayer.Volume = Globals.Volume;
             MediaPlayer.IsRepeating = true;
-            MediaPlayer.Volume = 10f;
+            MediaPlayer.Volume = 1f;
         }
         public void PlaySong(Song song)
         {
-            MediaPlayer.Play(song);
-           
+            if (!MediaPlayer.Equals(_currentSong,song))
+            {
+                MediaPlayer.Play(song);
+                _currentSong = song;
+            }
         }
         public void Update()
         {
