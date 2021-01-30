@@ -20,7 +20,7 @@ namespace Guardians_of_the_galaxy
         public static Level Level1, Level2;
         public static Song SongLevel1, SongLevel2;
         public static List<sprite> SpritesLevel1, SpritesLevel2;
-        public static int CurrentLevel;
+        public static int CurrentLevel,Offset;
         public static Camera GameCamera;
         public static StateManager StateManager;
     }

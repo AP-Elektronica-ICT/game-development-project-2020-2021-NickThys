@@ -47,6 +47,7 @@ namespace Guardians_of_the_galaxy
             Globals.WindowWidth = 990;
             Globals.WindowHeight = 792;
             Globals.CurrentLevel = 1;
+            Globals.Offset = 15;
             Globals.SpritesLevel1  = new List<sprite>();
             Globals.SpritesLevel2 = new List<sprite>();
             _graphics.PreferredBackBufferWidth = Globals.WindowWidth;
@@ -99,7 +100,7 @@ namespace Guardians_of_the_galaxy
             Globals.SpriteBatch = new SpriteBatch(GraphicsDevice);
             Globals.ContentLoader = this.Content;
             Globals.StateManager = new StateManager(new MenuState(this));
-
+            Globals.GameCamera = new Camera(GraphicsDevice.Viewport);
             #region Load content
             _yonduNormalSize = Content.Load<Texture2D>("Sprites/Yondu_jumping_rsz");
             _yonduTexture = Content.Load<Texture2D>("Sprites/Yondu_V2_rsz");
@@ -110,7 +111,7 @@ namespace Guardians_of_the_galaxy
             Globals.SongLevel1 = Content.Load<Song>("Music/ComeAndGetYourLove");
             Globals.SongLevel2 = Content.Load<Song>("Music/MrBlueSky");
             #endregion
-            Globals.GameCamera = new Camera(GraphicsDevice.Viewport);
+
             Globals.Level1 = new Level(_level1Map);
 
             SpriteList _tempList = new SpriteList();

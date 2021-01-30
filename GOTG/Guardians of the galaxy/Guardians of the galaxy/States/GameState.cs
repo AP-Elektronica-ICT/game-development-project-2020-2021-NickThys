@@ -14,9 +14,7 @@ namespace Guardians_of_the_galaxy.States
     public class GameState : State
     {
         #region Fields
-        private bool HeroDied;
-        private int _nbrOfCollectedItems;
-        private Level _level;
+       //private Level _level;
         private List<sprite> _sprites;
         private Camera _camera;
         private Song _song;
@@ -25,16 +23,15 @@ namespace Guardians_of_the_galaxy.States
         #region Constructor
         public GameState(Game1 game) : base(game)
         {
-            HeroDied = false;
             switch (Globals.CurrentLevel)
             {
                 case 1:
-                    _level = Globals.Level1;
+                  //  _level = Globals.Level1;
                     _sprites = Globals.SpritesLevel1;
                     _song = Globals.SongLevel1;
                     break;
                 default:
-                    _level = Globals.Level2;
+                  //  _level = Globals.Level2;
                     _sprites = Globals.SpritesLevel2;
                     _song = Globals.SongLevel2;
                     break;
@@ -106,7 +103,6 @@ namespace Guardians_of_the_galaxy.States
                     Hero yondu = sprite as Hero;
                     if (yondu.HasDied)
                     {
-                        HeroDied = true;
                         Globals.StateManager.ChangeState(new DeathState(_game));
                     }
                     if (yondu.HasWon)

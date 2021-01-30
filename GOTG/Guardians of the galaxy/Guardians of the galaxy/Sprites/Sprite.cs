@@ -13,7 +13,6 @@ namespace Guardians_of_the_galaxy.Sprites
     {
         #region Fields
         private CollisionManager _collisionManager;
-        private int offset ;
         protected Texture2D _texture;
         public Vector2 Position;
         public Vector2 Velocity;
@@ -38,9 +37,8 @@ namespace Guardians_of_the_galaxy.Sprites
         #region Constructor
         public sprite(Texture2D texture)
         {
-            offset = 15;
             _texture = texture;
-            _collisionManager = new CollisionManager(this, offset);
+            _collisionManager = new CollisionManager(this, Globals.Offset);
         }
         #endregion
 
