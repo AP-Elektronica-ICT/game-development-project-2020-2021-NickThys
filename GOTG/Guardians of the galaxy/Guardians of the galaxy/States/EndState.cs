@@ -19,14 +19,6 @@ namespace Guardians_of_the_galaxy.States
 
       
 
-        public override void Draw(GameTime _gameTime)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Update(GameTime _gameTime)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }

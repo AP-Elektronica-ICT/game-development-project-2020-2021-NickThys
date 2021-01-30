@@ -11,9 +11,7 @@ namespace Guardians_of_the_galaxy.States
 {
     public class DeathState : State
     {
-        #region Fields
-        private List<IComponent> _components;
-        #endregion
+   
 
         #region Constructor
         public DeathState(Game1 _game) : base(_game)
@@ -42,7 +40,7 @@ namespace Guardians_of_the_galaxy.States
             };
             #endregion
             #region Add buttons to the list
-            _components = new List<IComponent>()
+            Components = new List<IComponent>()
             {
                 _reStartBtn,
                 _exitBtn,
@@ -64,23 +62,6 @@ namespace Guardians_of_the_galaxy.States
         }
         #endregion 
 
-        #region Methodes
-        public override void Draw(GameTime _gameTime)
-        {
-            Globals.SpriteBatch.Begin();
-            foreach (var component in _components)
-            {
-                component.Draw(_gameTime);
-            }
-            Globals.SpriteBatch.End();
-        }
-
-        public override void Update(GameTime _gameTime)
-        {
-            foreach (var component in _components)
-                component.Update(_gameTime);
-
-        }
-        #endregion
+      
     }
 }
