@@ -48,6 +48,7 @@ namespace Guardians_of_the_galaxy.States
                 _exitButton,
                 _soundButton
             };
+            Globals.MusicPlayer.PlaySong(Globals.MainTheme);
         }
 
 
