@@ -6,9 +6,9 @@ using System.Text;
 
 namespace Guardians_of_the_galaxy.Components
 {
-   public abstract class Component
+   public interface IComponent
     {
-        public abstract void Draw(GameTime _gameTime, SpriteBatch _spriteBatch);
-        public abstract void Update(GameTime _gameTime);
+        public  void Draw(GameTime _gameTime);
+        public  void Update(GameTime _gameTime);
     }
 }

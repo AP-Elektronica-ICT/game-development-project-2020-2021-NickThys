@@ -1,5 +1,6 @@
 using Guardians_of_the_galaxy.GameObjects;
 using Guardians_of_the_galaxy.Input;
+using Guardians_of_the_galaxy.Music;
 using Guardians_of_the_galaxy.Sprites;
 using Guardians_of_the_galaxy.States;
 using Guardians_of_the_galaxy.WorldDesign;
@@ -18,47 +19,46 @@ namespace Guardians_of_the_galaxy
     {
         #region Fields
         private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
         private State _currentState, _nextState;
-        private Song _mainTheme,_song1,_song2;
-        private Texture2D[] _texturesLevel1, _texturesLevel2;
-        private bool _musicIsPlaying;
-        static private Texture2D _backGround,_yonduNormalSize, _yonduTexture, _blockTexture, _flagTexture, _collectableTexture,_ronanTexture, _ronanNormalTexture;
-        public int windowWidth = 990;
-        public int windowHeight = 792;
-        private Camera _camera;
-        private Level _level;
-        private List<sprite> _sprites;
-
-        private int _levelNr;
+        static private Texture2D _yonduNormalSize, _yonduTexture;
+        private Background _background;
+        private byte[,] _level1Map, _level2Map;
         #endregion
 
-        #region Properties
-        public int LevelNr
-        {
-            get { return _levelNr; }
-            set { _levelNr = value; }
-        }
-        public Camera Camera
-        {
-            get { return _camera; }
-            set { _camera = value; }
-        }
 
-
-        public Level Level
+        #region Constructor
+        public Game1()
         {
-            get { return _level; }
-            set { _level = value; }
-        }
+            _graphics = new GraphicsDeviceManager(this);
 
-        public List<sprite> sprites
+            Content.RootDirectory = "Content";
+            IsMouseVisible = true;
+        }
+        #endregion
+
+        #region Methodes
+        protected override void Initialize()
         {
-            get { return _sprites; }
-            set { _sprites = value; }
-        }
-
-        public byte[,] Level1 { get; } = new Byte[,]
+            // TODO: Add your initialization logic here
+            Globals.WindowWidth = 990;
+            Globals.WindowHeight = 792;
+            Globals.CurrentLevel = 1;
+            Globals.Offset = 15;
+            Globals.SpritesLevel1  = new List<sprite>();
+            Globals.SpritesLevel2 = new List<sprite>();
+            Globals.Volume = 0.15f;
+            Globals.MusicPlayer = new MusicPlayer();
+            Globals.MusicIsPlaying = true;
+            _graphics.PreferredBackBufferWidth = Globals.WindowWidth;
+            _graphics.PreferredBackBufferHeight = Globals.WindowHeight;
+            _graphics.ApplyChanges();
+            /*
+             1=blok
+             2=Flag
+             3=Collectable
+             4=Enemy
+             */
+            _level1Map = new Byte[,]
         {
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -73,7 +73,7 @@ namespace Guardians_of_the_galaxy
             {1,0,0,0,2,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1},
          };
-        public byte[,] Level2 { get; } = new Byte[,]
+            _level2Map = new Byte[,]
       {
             {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
             {0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -89,149 +89,93 @@ namespace Guardians_of_the_galaxy
             {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
             };
 
-        public Texture2D[] TexturesLevel1
-        {
-            get { return _texturesLevel1; }
-        }
-        public Texture2D[] TexturesLevel2
-        {
-            get { return _texturesLevel2; }
-        }
-        public Song Song1
-        {
-            get { return _song1; }
-        }
-        public Song Song2
-        {
-            get { return _song2; }
-        }
-        public bool MusicIsPlaying { get { return _musicIsPlaying; } set { _musicIsPlaying = value; } }
-        #endregion
-
-        #region Constructor
-        public Game1()
-        {
-            _graphics = new GraphicsDeviceManager(this);
-            _graphics.PreferredBackBufferWidth = windowWidth;
-            _graphics.PreferredBackBufferHeight = windowHeight;
-            Content.RootDirectory = "Content";
-            IsMouseVisible = true;
-            MediaPlayer.IsRepeating = true;
-        }
-        #endregion
-
-        #region Methodes
-        protected override void Initialize()
-        {
-            // TODO: Add your initialization logic here
-            _musicIsPlaying = true;
             base.Initialize();
-            
+
         }
 
         protected override void LoadContent()
         {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            Globals.SpriteBatch = new SpriteBatch(GraphicsDevice);
+            Globals.ContentLoader = this.Content;
+            Globals.StateManager = new StateManager(new MenuState(this));
+            Globals.GameCamera = new Camera(GraphicsDevice.Viewport);
             #region Load content
             _yonduNormalSize = Content.Load<Texture2D>("Sprites/Yondu_jumping_rsz");
             _yonduTexture = Content.Load<Texture2D>("Sprites/Yondu_V2_rsz");
-            _blockTexture = Content.Load<Texture2D>("Sprites/TestBlock");
-            _flagTexture = Content.Load<Texture2D>("Sprites/Flag");
-            _collectableTexture = Content.Load<Texture2D>("Sprites/STAR");
-            _ronanTexture = Content.Load<Texture2D>("Sprites/RonanSprite");
-            _ronanNormalTexture = Content.Load<Texture2D>("Sprites/Ronan");
-            _backGround=Content.Load<Texture2D>("BackGround/BackGround");
-            _mainTheme = Content.Load<Song>("Music/MainTheme");
-            _song1 = Content.Load<Song>("Music/ComeAndGetYourLove");
-            _song2 = Content.Load<Song>("Music/MrBlueSky");
-            _levelNr = 1;
+
+            _background = new Background("BackGround/BackGround");
+
+            Globals.MainTheme = Content.Load<Song>("Music/MainTheme");
+            Globals.SongLevel1 = Content.Load<Song>("Music/ComeAndGetYourLove");
+            Globals.SongLevel2 = Content.Load<Song>("Music/MrBlueSky");
             #endregion
-            _texturesLevel1 = new Texture2D[]
-            {
-                _blockTexture,
-                _flagTexture,
-                _collectableTexture,
-                                _ronanTexture,
-                _ronanNormalTexture,
-            };
-            _texturesLevel2 = new Texture2D[]
-           {
-                _blockTexture,
-                _flagTexture,
-                _collectableTexture,
-                                _ronanTexture,
-                _ronanNormalTexture,
-           };
-            _camera = new Camera(GraphicsDevice.Viewport);
-                       
-           
-            _currentState = new MenuState(Content, GraphicsDevice, this);
-            
-            #region Music
-             MediaPlayer.Volume = 0.15f;
-             MediaPlayer.Play(_mainTheme);
-            #endregion
-        }
-        public void CreateLevel(byte[,] _tileMap,Texture2D[] _textureArary)
-        {
-            
-            _level = new Level(_tileMap,_textureArary);
-            _level.CreateWorld();
-            _sprites = new List<sprite>()
-            {
-                new Hero(_yonduTexture,_yonduNormalSize)
+
+            Globals.Level1 = new Level(_level1Map);
+
+            SpriteList _tempList = new SpriteList();
+            _tempList.AddOneSpriteToList(
+                new Hero(_yonduTexture, _yonduNormalSize)
                 {
-                    Input=new input()
+                    Input = new input()
                     {
-                        Left=Keys.Left,
-                        Right=Keys.Right,
-                        Space=Keys.Space,
+                        Left = Keys.Left,
+                        Right = Keys.Right,
+                        Space = Keys.Space,
 
 
-                    },Position=new Vector2(66,546),speed=6f
+                    },
+                    Position = new Vector2(66, 546),
+                    speed = 6f
 
-                },
-                
-            };
-            _sprites.AddRange(_level.getBlocks());
+                });
+            _tempList.AddListOfSpritesToList(Globals.Level1.getBlocks());
+            Globals.SpritesLevel1.AddRange(_tempList.GetSpriteList());
+
+            Globals.Level2 = new Level(_level2Map);
+            _tempList = new SpriteList();
+            _tempList.AddOneSpriteToList(
+                   new Hero(_yonduTexture, _yonduNormalSize)
+                   {
+                       Input = new input()
+                       {
+                           Left = Keys.Left,
+                           Right = Keys.Right,
+                           Space = Keys.Space,
+
+
+                       },
+                       Position = new Vector2(66, 546),
+                       speed = 6f
+
+                   });
+            _tempList.AddListOfSpritesToList(Globals.Level2.getBlocks());
+            Globals.SpritesLevel2.AddRange(_tempList.GetSpriteList());
+            _currentState = new MenuState(this);
+
+            #region Music
+            #endregion
         }
-        public void ChangeState(State state)
-        {
-            _nextState = state;
-        }
-
-        private void InitializeContent()
-        {
-        }
-
+      
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-            if(_musicIsPlaying)
-                MediaPlayer.Volume = 0.15f;
-            else
-                MediaPlayer.Volume = 0f;
-            if (_nextState != null)
-            {
-                _currentState = _nextState;
-                _nextState = null;
-            }
-            _currentState.Update(gameTime);
-            _currentState.PostUpdate(gameTime);
+
+            Globals.MusicPlayer.Update();
            
+            
+            Globals.StateManager.Update(gameTime);
+
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.BurlyWood);
-            _spriteBatch.Begin();
+            Globals.SpriteBatch.Begin();
 
-            _spriteBatch.Draw(_backGround, new Rectangle(0, 0, windowWidth, windowHeight), Color.White);
+            _background.Draw();
 
-            _spriteBatch.End();
-            _currentState.Draw(gameTime, _spriteBatch);
+            Globals.SpriteBatch.End();
+            Globals.StateManager.Draw(gameTime);
 
             base.Draw(gameTime);
         }

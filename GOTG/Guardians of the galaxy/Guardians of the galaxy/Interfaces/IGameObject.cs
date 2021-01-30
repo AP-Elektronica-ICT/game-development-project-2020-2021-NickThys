@@ -10,6 +10,6 @@ namespace Guardians_of_the_galaxy.Interfaces
     interface IGameObject
     {
         void Update(GameTime gameTime, List<sprite> sprites);
-        void Draw(SpriteBatch spriteBatch);
+        void Draw();
     }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Guardians_of_the_galaxy.Components;
+using Guardians_of_the_galaxy.Interfaces;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -10,22 +12,32 @@ namespace Guardians_of_the_galaxy.States
    public abstract class State
     {
         #region Fields
-        protected ContentManager _content;
-        protected GraphicsDevice _graphicsDevice;
         protected Game1 _game;
+        private List<IComponent> _components;
+
+        public List<IComponent> Components { get => _components; set => _components = value; }
+
         #endregion
 
         #region Methods
-        public abstract void Draw(GameTime _gameTime, SpriteBatch _spriteBatch);
-        public abstract void PostUpdate(GameTime _gameTime);
-        
-        protected State(ContentManager _content, GraphicsDevice _graphicsDevice, Game1 _game)
+        public virtual void Draw(GameTime _gameTime)
         {
-            this._content = _content;
-            this._graphicsDevice = _graphicsDevice;
+            Globals.SpriteBatch.Begin();
+
+            foreach (var component in _components)
+                component.Draw(_gameTime);
+            Globals.SpriteBatch.End();
+
+        }
+
+        protected State( Game1 _game)
+        {
             this._game = _game;
         }
-        public abstract void Update(GameTime _gameTime);
+        public virtual void Update(GameTime _gameTime) {
+            foreach (var component in _components)
+                component.Update(_gameTime);
+        }
         #endregion
     }
 }

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Guardians_of_the_galaxy.Components
 {
-    public class Header : Component
+    public class Header : IComponent
     {
         #region Fields
         private Texture2D _headerTexture;
@@ -31,12 +31,12 @@ namespace Guardians_of_the_galaxy.Components
         #endregion
 
         #region Methodes
-        public override void Draw(GameTime _gameTime, SpriteBatch _spriteBatch)
+        public  void Draw(GameTime _gameTime)
         {
-            _spriteBatch.Draw(_headerTexture, Rectangle, Color.White);
+            Globals.SpriteBatch.Draw(_headerTexture, Rectangle, Color.White);
         }
 
-        public override void Update(GameTime _gameTime)
+        public  void Update(GameTime _gameTime)
         {
         }
         #endregion

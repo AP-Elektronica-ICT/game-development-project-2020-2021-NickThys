@@ -32,7 +32,7 @@ namespace Guardians_of_the_galaxy.GameObjects
             _spriteEffect = SpriteEffects.None;
             this.Position = _position;
             this._boundryLeft = _boundryLeft;
-            this._boundryRight = _boundryRight- 94;
+            this._boundryRight = _boundryRight;
             Velocity.X = 3;
             _dir = 3;
             _animationRunning = new Animatie();
@@ -44,9 +44,9 @@ namespace Guardians_of_the_galaxy.GameObjects
         #endregion
 
         #region Methodes
-        public override void Draw(SpriteBatch spriteBatch)
+        public override void Draw()
         {
-            spriteBatch.Draw(EnemyTexture, this.Position, _animationRunning.Current.SourceRectangle, Color.White, 0, new Vector2(0, 0), 1f, _spriteEffect, 0);
+            Globals.SpriteBatch.Draw(EnemyTexture, this.Position, _animationRunning.Current.SourceRectangle, Color.White, 0, new Vector2(0, 0), 1f, _spriteEffect, 0);
         }
 
         public override void Update(GameTime gameTime, List<sprite> sprites)
