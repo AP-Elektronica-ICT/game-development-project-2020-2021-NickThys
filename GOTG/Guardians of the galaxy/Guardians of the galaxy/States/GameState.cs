@@ -21,17 +21,16 @@ namespace Guardians_of_the_galaxy.States
         #endregion
 
         #region Constructor
+        
         public GameState(Game1 game) : base(game)
         {
             switch (Globals.CurrentLevel)
             {
                 case 1:
-                  //  _level = Globals.Level1;
                     _sprites = Globals.SpritesLevel1;
                     _song = Globals.SongLevel1;
                     break;
                 default:
-                  //  _level = Globals.Level2;
                     _sprites = Globals.SpritesLevel2;
                     _song = Globals.SongLevel2;
                     break;
