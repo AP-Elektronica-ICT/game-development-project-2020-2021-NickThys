@@ -59,7 +59,7 @@ namespace Guardians_of_the_galaxy.States
                     _enemy.HasDied = false;
                 }
             }
-            MediaPlayer.Play(_song);
+            Globals.MusicPlayer.PlaySong(_song);
         }
         #endregion
 

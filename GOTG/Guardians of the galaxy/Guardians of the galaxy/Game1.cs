@@ -1,5 +1,6 @@
 using Guardians_of_the_galaxy.GameObjects;
 using Guardians_of_the_galaxy.Input;
+using Guardians_of_the_galaxy.Music;
 using Guardians_of_the_galaxy.Sprites;
 using Guardians_of_the_galaxy.States;
 using Guardians_of_the_galaxy.WorldDesign;
@@ -36,7 +37,7 @@ namespace Guardians_of_the_galaxy
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            MediaPlayer.IsRepeating = true;
+            //MediaPlayer.IsRepeating = true;
         }
         #endregion
 
@@ -50,6 +51,9 @@ namespace Guardians_of_the_galaxy
             Globals.Offset = 15;
             Globals.SpritesLevel1  = new List<sprite>();
             Globals.SpritesLevel2 = new List<sprite>();
+            Globals.Volume = 0.15f;
+            Globals.MusicPlayer = new MusicPlayer();
+            Globals.MusicIsPlaying = true;
             _graphics.PreferredBackBufferWidth = Globals.WindowWidth;
             _graphics.PreferredBackBufferHeight = Globals.WindowHeight;
             _graphics.ApplyChanges();
@@ -90,7 +94,6 @@ namespace Guardians_of_the_galaxy
             {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
             };
 
-            Globals.MusicIsPlaying = true;
             base.Initialize();
 
         }
@@ -107,7 +110,7 @@ namespace Guardians_of_the_galaxy
 
             _background = new Background("BackGround/BackGround");
 
-            _mainTheme = Content.Load<Song>("Music/MainTheme");
+            Globals.MainTheme = Content.Load<Song>("Music/MainTheme");
             Globals.SongLevel1 = Content.Load<Song>("Music/ComeAndGetYourLove");
             Globals.SongLevel2 = Content.Load<Song>("Music/MrBlueSky");
             #endregion
@@ -155,18 +158,17 @@ namespace Guardians_of_the_galaxy
             _currentState = new MenuState(this);
 
             #region Music
-            MediaPlayer.Volume = 0.15f;
-            MediaPlayer.Play(_mainTheme);
+            //MediaPlayer.Volume = 0.15f;
+            //MediaPlayer.Play(_mainTheme);
             #endregion
         }
       
         protected override void Update(GameTime gameTime)
         {
 
-            if (Globals.MusicIsPlaying)
-                MediaPlayer.Volume = 0.15f;
-            else
-                MediaPlayer.Volume = 0f;
+            Globals.MusicPlayer.Update();
+           
+            
             Globals.StateManager.Update(gameTime);
 
             base.Update(gameTime);
