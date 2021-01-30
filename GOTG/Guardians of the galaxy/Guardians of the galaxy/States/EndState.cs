@@ -1,25 +1,24 @@
 ﻿using Guardians_of_the_galaxy.Components;
+using Guardians_of_the_galaxy.Interfaces;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Guardians_of_the_galaxy.States
 {
-    public class DeathState : State
+    class EndState : State
     {
-   
 
         #region Constructor
-        public DeathState(Game1 _game) : base(_game)
+
+        public EndState(Game1 _game) : base(_game)
         {
             #region Load Content
             Texture2D _restartBtnTexture = Globals.ContentLoader.Load<Texture2D>("Buttons/Replay_BTN");
             Texture2D _exitBtnTexture = Globals.ContentLoader.Load<Texture2D>("Buttons/Close_BTN");
-            Texture2D _headerTexture = Globals.ContentLoader.Load<Texture2D>("Headers/LostHeader");
+            Texture2D _headerTexture = Globals.ContentLoader.Load<Texture2D>("Headers/WonHeader");
             #endregion
             #region Create buttons & header
             button _reStartBtn = new button(_restartBtnTexture)
@@ -58,10 +57,10 @@ namespace Guardians_of_the_galaxy.States
 
         private void _reStartBtn_Click(object sender, EventArgs e)
         {
+            Globals.CurrentLevel = 1;
             Globals.StateManager.ChangeState(new GameState(_game));
         }
-        #endregion 
+        #endregion
 
-      
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Guardians_of_the_galaxy.Components;
+using Guardians_of_the_galaxy.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -11,8 +12,8 @@ namespace Guardians_of_the_galaxy.States
     class VictoryState:State
     {
         #region Fields
-        private List<IComponent> _components;
         private int _collectedItems,_positionStars,_positionBtns;
+
         #endregion
 
         #region Constructor
@@ -82,7 +83,8 @@ namespace Guardians_of_the_galaxy.States
             #endregion
 
             #region Add components to the list
-            _components = new List<IComponent>()
+
+            Components = new List<IComponent>()
             {
                 _replayLevelBtn,
                 _nextLevelBtn,
@@ -94,9 +96,9 @@ namespace Guardians_of_the_galaxy.States
             };
             int i = 1;
             //Show number of collected stars
-            foreach (IComponent _component  in _components)
+            foreach (IComponent _component in Components)
             {
-                if (_component is Star && i<=_collectedItems)
+                if (_component is Star && i <= _collectedItems)
                 {
                     Star _star = _component as Star;
                     _star.StarTexture = _goldStarTexture;
@@ -129,28 +131,12 @@ namespace Guardians_of_the_galaxy.States
             else
             {
                 //End game state
+                Globals.StateManager.ChangeState(new EndState(_game));
             }
 
         }
         #endregion 
 
-        #region Methodes
-        public override void Draw(GameTime _gameTime)
-        {
-            Globals.SpriteBatch.Begin();
-
-            foreach (var component in _components)
-                component.Draw(_gameTime);
-            Globals.SpriteBatch.End();
-
-        }
-
-
-        public override void Update(GameTime _gameTime)
-        {
-            foreach (var component in _components)
-                component.Update(_gameTime);
-        }
-        #endregion
+     
     }
 }
