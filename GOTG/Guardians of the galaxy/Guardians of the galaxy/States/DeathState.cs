@@ -11,7 +11,6 @@ namespace Guardians_of_the_galaxy.States
 {
     public class DeathState : State
     {
-   
 
         #region Constructor
         public DeathState(Game1 _game) : base(_game)
@@ -21,8 +20,10 @@ namespace Guardians_of_the_galaxy.States
             Texture2D _exitBtnTexture = Globals.ContentLoader.Load<Texture2D>("Buttons/Close_BTN");
             Texture2D _headerTexture = Globals.ContentLoader.Load<Texture2D>("Headers/LostHeader");
             #endregion
-           
-            #region Create buttons & header
+
+            #region Create components
+  
+            #region buttons
 
             #region RestartButton
             button _reStartBtn = new RegularButton(_restartBtnTexture, new Vector2(Globals.WindowWidth / 3 - _restartBtnTexture.Width / 2, Globals.WindowHeight / 3 + _restartBtnTexture.Height / 2)) { };
@@ -34,19 +35,23 @@ namespace Guardians_of_the_galaxy.States
             _exitBtn.Click += _exitBtn_Click;
             #endregion
 
+            #region SoundBtn
+            button _soundBtn = new SoundButton();
+            _soundBtn.Click += _soundBtn_Click;
+            #endregion
+            #endregion
+
+            #region Header
+
             #region Death header
             Header _deathHeader = new Header(_headerTexture)
             {
                 Position = new Vector2(Globals.WindowWidth / 2 - _headerTexture.Width / 2, Globals.WindowHeight / 6 + _headerTexture.Height / 2),
             };
             #endregion
-
-            #region SoundBtn
-            button _soundBtn = new SoundButton();
-            _soundBtn.Click += _soundBtn_Click;
+            #endregion 
             #endregion
 
-            #endregion
             #region Add buttons to the list
             Components = new List<IComponent>()
             {

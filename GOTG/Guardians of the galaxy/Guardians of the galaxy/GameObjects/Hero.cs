@@ -15,7 +15,7 @@ namespace Guardians_of_the_galaxy
         #region Fields
         private Texture2D _heroTexture;
         private SpriteEffects _spriteEffect;
-        private bool _isJumping,_hasDied,_hasWon;
+        private bool _isJumping, _hasDied, _hasWon;
         private Animatie animationR, animationL, currentAnimation, animationStanding, animationJumping;
         private int _nbrOfCollectedItems, _isChanged;
         #endregion
@@ -26,9 +26,10 @@ namespace Guardians_of_the_galaxy
             get { return _nbrOfCollectedItems; }
             set { _nbrOfCollectedItems = value; }
         }
-        public bool HasDied {
-            get {return _hasDied; }
-            set {_hasDied=value; } 
+        public bool HasDied
+        {
+            get { return _hasDied; }
+            set { _hasDied = value; }
         }
         public bool HasWon
         {
@@ -43,7 +44,7 @@ namespace Guardians_of_the_galaxy
             _isJumping = true;
             _hasDied = false;
             _hasWon = false;
-            _spriteEffect =SpriteEffects.None;
+            _spriteEffect = SpriteEffects.None;
             _heroTexture = texture;
 
             #region add frames to animation       
@@ -79,10 +80,10 @@ namespace Guardians_of_the_galaxy
         {
             Globals.SpriteBatch.Draw(_heroTexture, this.Position, currentAnimation.Current.SourceRectangle, Color.White, 0, new Vector2(0, 0), 1f, _spriteEffect, 0);
         }
- 
+
         public override void Update(GameTime gameTime, List<sprite> sprites)
         {
-             _isChanged = 0;
+            _isChanged = 0;
             _spriteEffect = SpriteEffects.None;
             currentAnimation = animationStanding;
             Move();
@@ -122,16 +123,16 @@ namespace Guardians_of_the_galaxy
 
                     else
                     {
-                         if (_isChanged == 0)
-                           {
-                               _isJumping = true;
-                          }
-                         }
-                    if (this.Position.Y > 792 - currentAnimation.Current.SourceRectangle.Height)
+                        if (_isChanged == 0)
+                        {
+                            _isJumping = true;
+                        }
+                    }
+                    if (this.Position.Y > Globals.WindowHeight - currentAnimation.Current.SourceRectangle.Height)
                     {
                         _hasDied = true;
                     }
-                  
+
                 }
                 #endregion
 
@@ -147,7 +148,7 @@ namespace Guardians_of_the_galaxy
                     if (this.CollisionRectangle.Intersects(sprite.CollisionRectangle))
                     {
                         Collectable _collectable = sprite as Collectable;
-                        if(!_collectable.IsCollected)
+                        if (!_collectable.IsCollected)
                             _nbrOfCollectedItems++;
 
                         _collectable.IsCollected = true;
@@ -174,11 +175,11 @@ namespace Guardians_of_the_galaxy
                 #endregion
             }
             #region Set animation
-            if (Velocity.X <0)
+            if (Velocity.X < 0)
                 currentAnimation = animationL;
-            else if (Velocity.X >0)
+            else if (Velocity.X > 0)
                 currentAnimation = animationR;
-           if (Velocity.Y != 0)
+            if (Velocity.Y != 0)
             {
                 currentAnimation = animationJumping;
                 if (Velocity.X < 0)
@@ -208,7 +209,7 @@ namespace Guardians_of_the_galaxy
             }
             if (_isJumping)
             {
-                float i =1;
+                float i = 1;
                 Velocity.Y += 1.5f * i;
             }
             if (!_isJumping)

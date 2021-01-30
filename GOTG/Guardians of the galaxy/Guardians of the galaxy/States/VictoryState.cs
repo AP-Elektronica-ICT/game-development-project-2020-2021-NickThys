@@ -9,17 +9,16 @@ using System.Text;
 
 namespace Guardians_of_the_galaxy.States
 {
-    class VictoryState:State
+    class VictoryState : State
     {
         #region Fields
-        private int _collectedItems,_positionStars,_positionBtns;
+        private int _positionStars, _positionBtns;
 
         #endregion
 
         #region Constructor
         public VictoryState(Game1 _game, int _CollectedItems) : base(_game)
         {
-            this._collectedItems = _CollectedItems;
 
             #region Load Content
             Texture2D _nextLevelBtnTexture = Globals.ContentLoader.Load<Texture2D>("Buttons/Play_BTN");
@@ -36,16 +35,17 @@ namespace Guardians_of_the_galaxy.States
             #endregion
 
             #region Create Compontents
+
             #region Buttons
 
             #region Replay button
             button _replayLevelBtn = new RegularButton(_replayBtnTexture, new Vector2((int)(Globals.WindowWidth * (1.5 / 6)) - _replayBtnTexture.Width / 2, _positionBtns)) { };
-            _replayLevelBtn.Click += _replayLevelBtn_Click; 
+            _replayLevelBtn.Click += _replayLevelBtn_Click;
             #endregion
 
             #region Next level button
             button _nextLevelBtn = new RegularButton(_nextLevelBtnTexture, new Vector2((int)(Globals.WindowWidth * (3.0 / 6)) - _nextLevelBtnTexture.Width / 2, _positionBtns)) { };
-            _nextLevelBtn.Click += _nextLevelBtn_Click; 
+            _nextLevelBtn.Click += _nextLevelBtn_Click;
             #endregion
 
             #region Exit button
@@ -54,10 +54,9 @@ namespace Guardians_of_the_galaxy.States
             #endregion
 
             #region Sound button
-            button _soundBtn = new SoundButton(new Vector2(25,25));
+            button _soundBtn = new SoundButton(new Vector2(25, 25));
             _soundBtn.Click += _soundBtn_Click;
             #endregion
-
             #endregion
 
             #region Header
@@ -65,24 +64,23 @@ namespace Guardians_of_the_galaxy.States
             {
                 Position = new Vector2(Globals.WindowWidth / 2 - _headerTexture.Width / 2, Globals.WindowHeight / 2 - _headerTexture.Height / 2 + 50),
 
-        };
+            };
             #endregion
 
             #region Score
             Star _firstStar = new Star(_emptyStarTexture)
             {
-                Position = new Vector2((int)(Globals.WindowWidth / 1.2 - _emptyStarTexture.Width / 2 -50), _positionStars),
+                Position = new Vector2((int)(Globals.WindowWidth / 1.2 - _emptyStarTexture.Width / 2 - 50), _positionStars),
             };
             Star _secondStar = new Star(_emptyStarTexture)
             {
-                Position = new Vector2(Globals.WindowWidth / 2 - _emptyStarTexture.Width / 2, _positionStars-50),
+                Position = new Vector2(Globals.WindowWidth / 2 - _emptyStarTexture.Width / 2, _positionStars - 50),
             };
             Star _thirdStar = new Star(_emptyStarTexture)
             {
-                Position = new Vector2(Globals.WindowWidth / 6 - _emptyStarTexture.Width / 2+50, _positionStars),
+                Position = new Vector2(Globals.WindowWidth / 6 - _emptyStarTexture.Width / 2 + 50, _positionStars),
             };
             #endregion
-
             #endregion
 
             #region Add components to the list
@@ -102,7 +100,7 @@ namespace Guardians_of_the_galaxy.States
             //Show number of collected stars
             foreach (IComponent _component in Components)
             {
-                if (_component is Star && i <= _collectedItems)
+                if (_component is Star && i <= _CollectedItems)
                 {
                     Star _star = _component as Star;
                     _star.StarTexture = _goldStarTexture;
@@ -112,17 +110,12 @@ namespace Guardians_of_the_galaxy.States
             #endregion
         }
 
-        private void _soundBtn_Click(object sender, EventArgs e)
-        {
-            Globals.MusicIsPlaying = !Globals.MusicIsPlaying;
-        }
-
         #endregion
 
         #region On click handlers
         private void _replayLevelBtn_Click(object sender, EventArgs e)
         {
-            Globals.StateManager.ChangeState(new GameState( _game));
+            Globals.StateManager.ChangeState(new GameState(_game));
         }
 
         private void _exitBtn_Click(object sender, EventArgs e)
@@ -135,7 +128,7 @@ namespace Guardians_of_the_galaxy.States
             Globals.CurrentLevel++;
             if (Globals.CurrentLevel != 3)
             {
-                Globals.StateManager.ChangeState(new GameState( _game));
+                Globals.StateManager.ChangeState(new GameState(_game));
             }
             else
             {
@@ -144,8 +137,13 @@ namespace Guardians_of_the_galaxy.States
             }
 
         }
-        #endregion 
 
-     
+        private void _soundBtn_Click(object sender, EventArgs e)
+        {
+            Globals.MusicIsPlaying = !Globals.MusicIsPlaying;
+        }
+        #endregion
+
+
     }
 }
