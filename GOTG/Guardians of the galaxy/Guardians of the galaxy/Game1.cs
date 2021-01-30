@@ -20,15 +20,11 @@ namespace Guardians_of_the_galaxy
         #region Fields
         private GraphicsDeviceManager _graphics;
         private State _currentState, _nextState;
-        private Song _mainTheme;
         static private Texture2D _yonduNormalSize, _yonduTexture;
         private Background _background;
         private byte[,] _level1Map, _level2Map;
         #endregion
 
-        #region Properties
-
-        #endregion
 
         #region Constructor
         public Game1()
@@ -37,7 +33,6 @@ namespace Guardians_of_the_galaxy
 
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            //MediaPlayer.IsRepeating = true;
         }
         #endregion
 
@@ -158,8 +153,6 @@ namespace Guardians_of_the_galaxy
             _currentState = new MenuState(this);
 
             #region Music
-            //MediaPlayer.Volume = 0.15f;
-            //MediaPlayer.Play(_mainTheme);
             #endregion
         }
       

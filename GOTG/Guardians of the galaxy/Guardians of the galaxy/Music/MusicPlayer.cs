@@ -11,19 +11,19 @@ namespace Guardians_of_the_galaxy.Music
         {
             MediaPlayer.Volume = Globals.Volume;
             MediaPlayer.IsRepeating = true;
-            MediaPlayer.Volume = 0.15f;
+            MediaPlayer.Volume = 10f;
         }
         public void PlaySong(Song song)
         {
             MediaPlayer.Play(song);
+           
         }
         public void Update()
         {
-            if (Globals.MusicIsPlaying)
+            if (Globals.MusicIsPlaying )
                 MediaPlayer.Volume = Globals.Volume;
             else
                 MediaPlayer.Volume = 0f;
-
         }
     }
 }
