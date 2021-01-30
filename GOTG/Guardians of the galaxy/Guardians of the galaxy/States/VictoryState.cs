@@ -37,19 +37,29 @@ namespace Guardians_of_the_galaxy.States
 
             #region Create Compontents
             #region Buttons
+
+            #region Replay button
             button _replayLevelBtn = new RegularButton(_replayBtnTexture, new Vector2((int)(Globals.WindowWidth * (1.5 / 6)) - _replayBtnTexture.Width / 2, _positionBtns)) { };
-
-            _replayLevelBtn.Click += _replayLevelBtn_Click;
-            button _nextLevelBtn = new RegularButton(_nextLevelBtnTexture, new Vector2((int)(Globals.WindowWidth * (3.0 / 6)) - _nextLevelBtnTexture.Width / 2, _positionBtns)) { };
-
-            _nextLevelBtn.Click += _nextLevelBtn_Click;
-            button _exitBtn = new RegularButton(_exitBtnTexture, new Vector2((int)(Globals.WindowWidth * (4.5 / 6)) - _nextLevelBtnTexture.Width / 2, _positionBtns)) { };
-
-            _exitBtn.Click += _exitBtn_Click;
-          
-            
+            _replayLevelBtn.Click += _replayLevelBtn_Click; 
             #endregion
-            
+
+            #region Next level button
+            button _nextLevelBtn = new RegularButton(_nextLevelBtnTexture, new Vector2((int)(Globals.WindowWidth * (3.0 / 6)) - _nextLevelBtnTexture.Width / 2, _positionBtns)) { };
+            _nextLevelBtn.Click += _nextLevelBtn_Click; 
+            #endregion
+
+            #region Exit button
+            button _exitBtn = new RegularButton(_exitBtnTexture, new Vector2((int)(Globals.WindowWidth * (4.5 / 6)) - _nextLevelBtnTexture.Width / 2, _positionBtns)) { };
+            _exitBtn.Click += _exitBtn_Click;
+            #endregion
+
+            #region Sound button
+            button _soundBtn = new SoundButton(new Vector2(25,25));
+            _soundBtn.Click += _soundBtn_Click;
+            #endregion
+
+            #endregion
+
             #region Header
             Header _victoryHeader = new Header(_headerTexture)
             {
@@ -86,6 +96,7 @@ namespace Guardians_of_the_galaxy.States
                 _secondStar,
                 _thirdStar,
                 _firstStar,
+                _soundBtn,
             };
             int i = 1;
             //Show number of collected stars
@@ -99,6 +110,11 @@ namespace Guardians_of_the_galaxy.States
                 }
             }
             #endregion
+        }
+
+        private void _soundBtn_Click(object sender, EventArgs e)
+        {
+            Globals.MusicIsPlaying = !Globals.MusicIsPlaying;
         }
 
         #endregion

@@ -15,6 +15,12 @@ namespace Guardians_of_the_galaxy.Components
             _textureBtnOff= Globals.ContentLoader.Load<Texture2D>("Buttons/Sound_BTN");
             _textureBtnOn= Globals.ContentLoader.Load<Texture2D>("Buttons/ActiveSound_BTN");
         }
+        public SoundButton(Vector2 position)
+        {
+            Position = position;
+            _textureBtnOff = Globals.ContentLoader.Load<Texture2D>("Buttons/Sound_BTN");
+            _textureBtnOn = Globals.ContentLoader.Load<Texture2D>("Buttons/ActiveSound_BTN");
+        }
         public SoundButton(Vector2 position,Texture2D textureOff,Texture2D textureOn)
         {
             Position = position;
