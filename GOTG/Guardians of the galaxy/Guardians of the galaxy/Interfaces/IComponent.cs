@@ -9,6 +9,6 @@ namespace Guardians_of_the_galaxy.Components
    public interface IComponent
     {
         public  void Draw(GameTime _gameTime);
-        public  void Update(GameTime _gameTime);
+        public virtual void Update(GameTime _gameTime) { }
     }
 }
