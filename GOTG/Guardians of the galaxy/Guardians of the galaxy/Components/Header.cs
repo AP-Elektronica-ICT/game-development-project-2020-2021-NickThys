@@ -35,10 +35,6 @@ namespace Guardians_of_the_galaxy.Components
         {
             Globals.SpriteBatch.Draw(_headerTexture, Rectangle, Color.White);
         }
-
-        public  void Update(GameTime _gameTime)
-        {
-        }
         #endregion
 
     }
