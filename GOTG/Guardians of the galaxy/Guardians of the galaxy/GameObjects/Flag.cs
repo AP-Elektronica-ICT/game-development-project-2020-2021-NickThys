@@ -25,11 +25,6 @@ namespace Guardians_of_the_galaxy.GameObjects
         {
             Globals.SpriteBatch.Draw(_flagTexture, this.Position, new Rectangle(0,0,_flagTexture.Width,_flagTexture.Height), Color.White, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
         }
-
-        public override void Update(GameTime gameTime, List<sprite> sprites)
-        {
-
-        }
         #endregion
     }
 }
