@@ -15,7 +15,7 @@ namespace Guardians_of_the_galaxy
         #region Fields
         private Texture2D _heroTexture;
         private SpriteEffects _spriteEffect;
-        private bool _isJumping, _hasDied, _hasWon, _isChanged;
+        private bool _isJumping, _hasDied, _hasWon, _IsJumpingIsChanged;
         private Animatie animationR, animationL, currentAnimation, animationStanding, animationJumping;
         private int _nbrOfCollectedItems;
         private Keys _lastKeyPressed;
@@ -84,7 +84,7 @@ namespace Guardians_of_the_galaxy
 
         public override void Update(GameTime gameTime, List<sprite> sprites)
         {
-            _isChanged = false;
+            _IsJumpingIsChanged = false;
             _spriteEffect = SpriteEffects.None;
             Move();
             foreach (var sprite in sprites)
@@ -102,7 +102,7 @@ namespace Guardians_of_the_galaxy
                         this.Velocity.X = 0;
                     #endregion
 
-                    #region Check if the hero has collided with the left or right side of the sprite
+                    #region Check if the hero has collided with the top or bottom side of the sprite
                     if ((this.Velocity.Y > 0 && this.CollisionManager.IsTouchingTop(sprite) || this.Velocity.Y < 0 && this.CollisionManager.IsTouchingBottom(sprite)))
                     {
                         if (this.Velocity.Y < 0 && this.CollisionManager.IsTouchingBottom(sprite))
@@ -113,25 +113,27 @@ namespace Guardians_of_the_galaxy
                         if (this.CollisionManager.IsTouchingTop(sprite))
                         {
                             _isJumping = false;
-                            _isChanged = true;
-                            this.Velocity.Y = 0;
+                            _IsJumpingIsChanged = true;
 
                         }
+                        this.Velocity.Y = 0;
 
                     }
                     #endregion
 
-                    else
+                    #region Check if _IsJumpingIsChanged is false
+                    else if (!_IsJumpingIsChanged)
                     {
-                        if (!_isChanged)
-                        {
-                            _isJumping = true;
-                        }
+                        _isJumping = true;
                     }
+                    #endregion 
+
+                    #region Check if the hero is below the screen
                     if (this.Position.Y > Globals.WindowHeight - currentAnimation.Current.SourceRectangle.Height)
                     {
                         _hasDied = true;
                     }
+                    #endregion
 
                 }
                 #endregion
@@ -140,10 +142,9 @@ namespace Guardians_of_the_galaxy
                 if (sprite is Flag)
                     if (this.CollisionRectangle.Intersects(sprite.CollisionRectangle))
                         _hasWon = true;
-
                 #endregion
 
-                #region Check if hero has Colided with a Collectable
+                #region Check if hero has colided with a Collectable
                 if (sprite is Collectable)
                     if (this.CollisionRectangle.Intersects(sprite.CollisionRectangle))
                     {
@@ -152,7 +153,6 @@ namespace Guardians_of_the_galaxy
                             _nbrOfCollectedItems++;
 
                         _collectable.IsCollected = true;
-
                     }
                 #endregion
 
@@ -175,16 +175,21 @@ namespace Guardians_of_the_galaxy
                 #endregion
             }
             #region Set animation
+            #region Check if velocity.X is negative
             if (Velocity.X < 0)
                 currentAnimation = animationL;
+            #endregion
+            #region Check if velocity.X is positive
             else if (Velocity.X > 0)
                 currentAnimation = animationR;
+            #endregion
+            #region Check if velocity.y isnt equal to 0 
             if (Velocity.Y != 0)
             {
                 currentAnimation = animationJumping;
                 if (Velocity.X < 0)
                     _spriteEffect = SpriteEffects.FlipHorizontally;
-                if ( Velocity.X == 0)
+                if (Velocity.X == 0)
                 {
                     if (_lastKeyPressed == Keys.L)
                     {
@@ -192,14 +197,18 @@ namespace Guardians_of_the_galaxy
                     }
                 }
             }
-            if (Velocity.Y==0&&Velocity.X==0)
+            #endregion
+            #region Check if the velocity is 0 in both axis
+            if (Velocity.Y == 0 && Velocity.X == 0)
             {
                 currentAnimation = animationStanding;
-                if (_lastKeyPressed==Keys.L)
+                if (_lastKeyPressed == Keys.L)
                 {
                     _spriteEffect = SpriteEffects.FlipHorizontally;
                 }
             }
+            #endregion
+          
             currentAnimation.update(gameTime);
             #endregion
 

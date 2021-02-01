@@ -10,8 +10,7 @@ namespace Guardians_of_the_galaxy.Components
     {
         #region Fields
         private Texture2D _starTexture;
-        #endregion
-     
+        #endregion     
         #region Properties
         public Vector2 Position { get; set; }
         public Rectangle Rectangle
@@ -27,14 +26,12 @@ namespace Guardians_of_the_galaxy.Components
             set { _starTexture = value; }
         }
         #endregion
-
         #region Constructor
         public Star(Texture2D _starTexture)
         {
             this._starTexture = _starTexture;
         }
         #endregion
-
         #region Methodes
         public  void Draw(GameTime _gameTime )
         {

@@ -27,9 +27,6 @@ namespace Guardians_of_the_galaxy.Components
         }
         #endregion
 
-        
-       
-        
         #region Methods
         public virtual void Draw(GameTime _gameTime)
         {

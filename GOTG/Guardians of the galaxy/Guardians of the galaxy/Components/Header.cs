@@ -11,14 +11,6 @@ namespace Guardians_of_the_galaxy.Components
         #region Fields
         private Texture2D _headerTexture;
         #endregion
-
-        #region Constructor
-        public Header(Texture2D headerTexture)
-        {
-            _headerTexture = headerTexture;
-        }
-        #endregion
-
         #region Properties
         public Vector2 Position { get; set; }
         public Rectangle Rectangle
@@ -29,7 +21,12 @@ namespace Guardians_of_the_galaxy.Components
             }
         }
         #endregion
-
+        #region Constructor
+        public Header(Texture2D headerTexture)
+        {
+            _headerTexture = headerTexture;
+        }
+        #endregion    
         #region Methodes
         public  void Draw(GameTime _gameTime)
         {

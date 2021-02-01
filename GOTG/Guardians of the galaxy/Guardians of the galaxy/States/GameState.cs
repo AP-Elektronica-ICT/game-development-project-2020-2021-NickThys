@@ -14,14 +14,12 @@ namespace Guardians_of_the_galaxy.States
     public class GameState : State
     {
         #region Fields
-       //private Level _level;
         private List<sprite> _sprites;
         private Camera _camera;
         private Song _song;
         #endregion
 
-        #region Constructor
-        
+        #region Constructor    
         public GameState(Game1 game) : base(game)
         {
             switch (Globals.CurrentLevel)

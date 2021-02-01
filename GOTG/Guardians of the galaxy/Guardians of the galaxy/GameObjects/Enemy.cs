@@ -42,7 +42,6 @@ namespace Guardians_of_the_galaxy.GameObjects
             }
         }
         #endregion
-
         #region Methodes
         public override void Draw()
         {
