@@ -7,10 +7,16 @@ namespace Guardians_of_the_galaxy.States
 {
     public class StateManager
     {
-        private State _currentState,_nextState;
-        public StateManager(State _currentState ) {
+        #region Fields
+        private State _currentState, _nextState;
+        #endregion
+        #region Constructor
+        public StateManager(State _currentState)
+        {
             this._currentState = _currentState;
         }
+        #endregion
+        #region Methodes
         public void Update(GameTime gameTime)
         {
             if (_nextState != null)
@@ -28,7 +34,8 @@ namespace Guardians_of_the_galaxy.States
         public void Draw(GameTime gameTime)
         {
             _currentState.Draw(gameTime);
-        }
+        } 
+        #endregion
 
 
     }

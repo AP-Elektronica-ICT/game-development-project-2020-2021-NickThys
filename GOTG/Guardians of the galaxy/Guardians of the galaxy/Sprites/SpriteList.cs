@@ -6,12 +6,17 @@ namespace Guardians_of_the_galaxy.Sprites
 {
     class SpriteList
     {
+        #region Fields
         private List<sprite> _sprites;
+        #endregion
+        #region Constructor
         public SpriteList()
         {
             _sprites = new List<sprite>();
 
         }
+        #endregion
+        #region Methodes
         public void AddOneSpriteToList(sprite _sprite)
         {
             _sprites.Add(_sprite);
@@ -23,6 +28,7 @@ namespace Guardians_of_the_galaxy.Sprites
         public List<sprite> GetSpriteList()
         {
             return _sprites;
-        }
+        } 
+        #endregion
     }
 }

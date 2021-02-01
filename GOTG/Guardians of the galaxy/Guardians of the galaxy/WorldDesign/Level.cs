@@ -15,7 +15,6 @@ namespace Guardians_of_the_galaxy.WorldDesign
         private static byte[,] _tileArray;
         private sprite[,] _blokArray;
         #endregion
-
         #region Constructor
         public Level(byte[,] _tileMap)
         {

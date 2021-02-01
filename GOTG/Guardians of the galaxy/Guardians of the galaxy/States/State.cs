@@ -19,6 +19,14 @@ namespace Guardians_of_the_galaxy.States
 
         #endregion
 
+        #region Constructor
+
+        protected State(Game1 _game)
+        {
+            this._game = _game;
+        }
+        #endregion
+
         #region Methods
         public virtual void Draw(GameTime _gameTime)
         {
@@ -30,10 +38,6 @@ namespace Guardians_of_the_galaxy.States
 
         }
 
-        protected State( Game1 _game)
-        {
-            this._game = _game;
-        }
         public virtual void Update(GameTime _gameTime) {
             foreach (var component in _components)
                 component.Update(_gameTime);

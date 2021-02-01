@@ -12,37 +12,28 @@ namespace Guardians_of_the_galaxy.Components
         #region Fields
         private MouseState _currentMouse,_previousMouse;
         private bool _isHovering;
-        private Texture2D _texture;
         #endregion
       
         #region Properties
         public event EventHandler Click;
         public bool Clicked { get; private set; }
         public Vector2 Position { get; set; }
-
-        public Texture2D Texture {
-            get { return _texture; }
-            set { _texture = value; }
-        }
-
+        public Texture2D Texture { get; set; }
         public Rectangle Rectangle {
             get
             {
-             return new Rectangle((int)Position.X,(int) Position.Y,_texture.Width,_texture.Height);
+             return new Rectangle((int)Position.X,(int) Position.Y, Texture.Width, Texture.Height);
             }
         }
         #endregion
 
-        
-       
-        
         #region Methods
         public virtual void Draw(GameTime _gameTime)
         {
             var colour = Color.White;
             if (_isHovering)
                 colour = Color.Gray;
-            Globals.SpriteBatch.Draw(_texture, Rectangle, colour);
+            Globals.SpriteBatch.Draw(Texture, Rectangle, colour);
           
         }
 
@@ -52,7 +43,7 @@ namespace Guardians_of_the_galaxy.Components
             _currentMouse = Mouse.GetState();
             var mouseRectangle = new Rectangle(_currentMouse.X, _currentMouse.Y, 1, 1);
             _isHovering = false;
-            if (mouseRectangle.Intersects(new Rectangle((int)Position.X, (int)Position.Y, _texture.Width, _texture.Height)))
+            if (mouseRectangle.Intersects(new Rectangle((int)Position.X, (int)Position.Y, Texture.Width, Texture.Height)))
             {
                 _isHovering = true;
                 if (_currentMouse.LeftButton == ButtonState.Released && _previousMouse.LeftButton == ButtonState.Pressed)

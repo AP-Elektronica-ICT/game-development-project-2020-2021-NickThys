@@ -8,12 +8,16 @@ namespace Guardians_of_the_galaxy.Components
 {
     public class SoundButton:button
     {
+        #region Fields
         private Texture2D _textureBtnOff, _textureBtnOn;
+        #endregion
+
+        #region Constructors
         public SoundButton()
         {
             Position = new Vector2(50, 50);
-            _textureBtnOff= Globals.ContentLoader.Load<Texture2D>("Buttons/Sound_BTN");
-            _textureBtnOn= Globals.ContentLoader.Load<Texture2D>("Buttons/ActiveSound_BTN");
+            _textureBtnOff = Globals.ContentLoader.Load<Texture2D>("Buttons/Sound_BTN");
+            _textureBtnOn = Globals.ContentLoader.Load<Texture2D>("Buttons/ActiveSound_BTN");
         }
         public SoundButton(Vector2 position)
         {
@@ -21,13 +25,15 @@ namespace Guardians_of_the_galaxy.Components
             _textureBtnOff = Globals.ContentLoader.Load<Texture2D>("Buttons/Sound_BTN");
             _textureBtnOn = Globals.ContentLoader.Load<Texture2D>("Buttons/ActiveSound_BTN");
         }
-        public SoundButton(Vector2 position,Texture2D textureOff,Texture2D textureOn)
+        public SoundButton(Vector2 position, Texture2D textureOff, Texture2D textureOn)
         {
             Position = position;
             _textureBtnOff = textureOff;
             _textureBtnOn = textureOn;
         }
-        
+        #endregion
+
+        #region Methodes
         public override void Update(GameTime _gameTime)
         {
             if (Globals.MusicIsPlaying)
@@ -36,6 +42,7 @@ namespace Guardians_of_the_galaxy.Components
                 Texture = _textureBtnOff;
             base.Update(_gameTime);
 
-        }
+        } 
+        #endregion
     }
 }

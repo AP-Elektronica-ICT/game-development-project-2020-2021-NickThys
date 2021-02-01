@@ -11,17 +11,15 @@ namespace Guardians_of_the_galaxy.Collision
         private sprite _thisSprite;
         private int _offset;
         #endregion
-        #region Properties
 
-        #endregion
         #region Constructor
         public CollisionManager(sprite _sprite,int _offset)
         {
             _thisSprite = _sprite;
             this._offset = _offset;
         }
-
         #endregion
+      
         #region Methodes
         public bool IsTouchingLeft(sprite sprite)
         {
