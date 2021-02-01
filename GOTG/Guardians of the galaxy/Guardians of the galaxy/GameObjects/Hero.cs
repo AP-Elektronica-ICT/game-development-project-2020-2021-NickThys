@@ -18,6 +18,7 @@ namespace Guardians_of_the_galaxy
         private bool _isJumping, _hasDied, _hasWon, _isChanged;
         private Animatie animationR, animationL, currentAnimation, animationStanding, animationJumping;
         private int _nbrOfCollectedItems;
+        private Keys _lastKeyPressed;
         #endregion
 
         #region Properties
@@ -46,7 +47,7 @@ namespace Guardians_of_the_galaxy
             _hasWon = false;
             _spriteEffect = SpriteEffects.None;
             _heroTexture = texture;
-
+            _lastKeyPressed = Keys.Right;
             #region add frames to animation       
             animationJumping = new Animatie();
             animationJumping.addFrame(new AnimationFrame(new Rectangle(0, 0, 72, 90)));
@@ -85,7 +86,6 @@ namespace Guardians_of_the_galaxy
         {
             _isChanged = false;
             _spriteEffect = SpriteEffects.None;
-            currentAnimation = animationStanding;
             Move();
             foreach (var sprite in sprites)
             {
@@ -121,7 +121,7 @@ namespace Guardians_of_the_galaxy
                     }
                     #endregion
 
-                   else
+                    else
                     {
                         if (!_isChanged)
                         {
@@ -184,6 +184,21 @@ namespace Guardians_of_the_galaxy
                 currentAnimation = animationJumping;
                 if (Velocity.X < 0)
                     _spriteEffect = SpriteEffects.FlipHorizontally;
+                if ( Velocity.X == 0)
+                {
+                    if (_lastKeyPressed == Keys.L)
+                    {
+                        _spriteEffect = SpriteEffects.FlipHorizontally;
+                    }
+                }
+            }
+            if (Velocity.Y==0&&Velocity.X==0)
+            {
+                currentAnimation = animationStanding;
+                if (_lastKeyPressed==Keys.L)
+                {
+                    _spriteEffect = SpriteEffects.FlipHorizontally;
+                }
             }
             currentAnimation.update(gameTime);
             #endregion
@@ -198,9 +213,15 @@ namespace Guardians_of_the_galaxy
         private void Move()
         {
             if (Keyboard.GetState().IsKeyDown(Input.Left))
+            {
                 Velocity.X = -speed;
+                _lastKeyPressed = Keys.L;
+            }
             else if (Keyboard.GetState().IsKeyDown(Input.Right))
+            {
                 Velocity.X = speed;
+                _lastKeyPressed = Keys.R;
+            }
             if (Keyboard.GetState().IsKeyDown(Input.Space) && !_isJumping)
             {
                 Position.Y -= 10f;
