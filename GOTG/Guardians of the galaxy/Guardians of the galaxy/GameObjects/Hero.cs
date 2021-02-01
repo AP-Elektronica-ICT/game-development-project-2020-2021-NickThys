@@ -15,9 +15,9 @@ namespace Guardians_of_the_galaxy
         #region Fields
         private Texture2D _heroTexture;
         private SpriteEffects _spriteEffect;
-        private bool _isJumping, _hasDied, _hasWon;
+        private bool _isJumping, _hasDied, _hasWon, _isChanged;
         private Animatie animationR, animationL, currentAnimation, animationStanding, animationJumping;
-        private int _nbrOfCollectedItems, _isChanged;
+        private int _nbrOfCollectedItems;
         #endregion
 
         #region Properties
@@ -83,7 +83,7 @@ namespace Guardians_of_the_galaxy
 
         public override void Update(GameTime gameTime, List<sprite> sprites)
         {
-            _isChanged = 0;
+            _isChanged = false;
             _spriteEffect = SpriteEffects.None;
             currentAnimation = animationStanding;
             Move();
@@ -113,17 +113,17 @@ namespace Guardians_of_the_galaxy
                         if (this.CollisionManager.IsTouchingTop(sprite))
                         {
                             _isJumping = false;
-                            _isChanged = 1;
+                            _isChanged = true;
+                            this.Velocity.Y = 0;
 
                         }
-                        this.Velocity.Y = 0;
 
                     }
                     #endregion
 
-                    else
+                   else
                     {
-                        if (_isChanged == 0)
+                        if (!_isChanged)
                         {
                             _isJumping = true;
                         }
